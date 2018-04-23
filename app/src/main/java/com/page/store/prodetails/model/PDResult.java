@@ -11,8 +11,11 @@ import java.io.Serializable;
 public class PDResult extends BaseResult {
 
 
-    public Data data;
+    public PDData data;
 
+    public static class PDData implements Serializable {
+        public Data productResult;
+    }
     public static class Data implements Serializable {
         public String id;
         public String name;

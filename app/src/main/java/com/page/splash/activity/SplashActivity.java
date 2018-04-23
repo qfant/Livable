@@ -10,6 +10,7 @@ import com.igexin.sdk.PushManager;
 import com.page.home.activity.MainActivity;
 import com.page.uc.LoginActivity;
 import com.page.uc.UCUtils;
+import com.page.uc.bean.LoginResult;
 
 
 /**
@@ -24,11 +25,11 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (UCUtils.getInstance().isLogin()) {
+//                if (UCUtils.getInstance().isLogin()) {
                     startMainActivity();
-                } else {
-                    qStartActivity(LoginActivity.class);
-                }
+//                } else {
+//                    qStartActivity(LoginActivity.class);
+//                }
                 finish();
             }
         },1500);

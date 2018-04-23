@@ -1,5 +1,6 @@
 package com.page.home.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +14,9 @@ import com.framework.app.MainApplication;
 import com.framework.utils.ArrayUtils;
 import com.framework.view.tab.TabLayout;
 import com.haolb.client.R;
-import com.page.login.activity.LoginActivity;
+import com.page.home.MaintainFragment;
+import com.page.home.PatrolFragment;
+import com.page.home.order.OrderFragment;
 import com.page.uc.UserInfoActivity;
 
 import java.util.List;
@@ -42,9 +45,10 @@ public class MainActivity extends MainTabActivity {
         setContentView(R.layout.pub_activity_mian_layout);
         ButterKnife.bind(this);
         tabLayout = tlTab;
-        addTab("待接单", HomeFragment.class, myBundle, R.string.icon_font_home);
-        addTab("已接单", HomeFragment.class, myBundle, R.string.icon_font_home);
-        addTab("已完成", HomeFragment.class, myBundle, R.string.icon_font_home);
+        addTab("维修订单", OrderFragment.class, myBundle, R.string.icon_font_home);
+//        addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_home);
+//        addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_home);
+
         onPostCreate();
         tv_right.setTypeface(MainApplication.getIconFont());
         tv_right.setText(R.string.icon_font_my);
@@ -88,7 +92,7 @@ public class MainActivity extends MainTabActivity {
     boolean onBackPressedWithFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager != null) {
-            List<Fragment> fragments = fragmentManager.getFragments();
+            @SuppressLint("RestrictedApi") List<Fragment> fragments = fragmentManager.getFragments();
             if (!ArrayUtils.isEmpty(fragments)) {
                 for (Fragment fragment : fragments) {
                     if (fragment == null) {

@@ -11,6 +11,7 @@ import com.framework.rvadapter.click.OnItemLongClickListener;
 import com.framework.rvadapter.holder.BaseViewHolder;
 import com.framework.rvadapter.manage.ITypeView;
 import com.framework.rvadapter.manage.TypeViewManage;
+import com.framework.utils.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,8 +123,11 @@ public class MultiAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void setData(List<T> mDatas) {
+
         this.mDatas.clear();
-        this.mDatas.addAll(mDatas);
+        if (!ArrayUtils.isEmpty(mDatas)) {
+            this.mDatas.addAll(mDatas);
+        }
         notifyDataSetChanged();
     }
 

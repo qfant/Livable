@@ -64,6 +64,14 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.page.news.NewsDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.page.store.home.fragment.PlayerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.page.home.activity.WebActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />

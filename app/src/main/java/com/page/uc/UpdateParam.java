@@ -7,5 +7,4 @@ import com.framework.domain.param.BaseParam;
  */
 
 public class UpdateParam extends BaseParam {
-    public int versionCode;
 }

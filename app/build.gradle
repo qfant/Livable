@@ -13,7 +13,7 @@ android {
         multiDexEnabled true
         ndk {
             // 设置支持的 SO 库构架
-            abiFilters 'armeabi'/*, 'x86'*///,'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            abiFilters 'armeabi','armeabi-v7a'/*, 'x86'*///,'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
     }
 
@@ -138,6 +138,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     compile 'com.alibaba:fastjson:1.2.39'
     compile 'org.greenrobot:eventbus:3.0.0'
@@ -167,10 +168,5 @@ dependencies {
     debugCompile 'com.taobao.android:weex_inspector:0.10.0.5'
     debugCompile 'com.journeyapps:zxing-android-embedded:3.4.0'
 
-// taobao weexsdk
-//    compile 'com.ucar:weex_sdk:1.6@aar'
 
-// ucar weexsdk 拓展
-//    compile 'com.ucar:weexext_sdk:1.0.8@aar'
-//    compile 'com.weexext:imagepicker:1.0.1'
 }

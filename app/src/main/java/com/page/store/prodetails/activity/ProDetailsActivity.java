@@ -165,11 +165,11 @@ public class ProDetailsActivity extends BaseActivity implements OnItemClickListe
             PDResult result = (PDResult) param.result;
             if (result != null && result.data != null) {
                 Evaluate evaluate = new Evaluate();
-                evaluate.product = result.data;
+                evaluate.product = result.data.productResult;
                 dataList.remove(0);
                 dataList.add(0, evaluate);
                 adapter.notifyItemChanged(0);
-                tvCollect.setSelected(result.data.isFav != 0);
+                tvCollect.setSelected(result.data.productResult.isFav != 0);
             }
         } else if (param.key == ServiceMap.fav) {
             if (param.result.bstatus.code == 0) {

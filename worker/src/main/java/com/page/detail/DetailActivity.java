@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,6 +65,8 @@ public class DetailActivity extends BaseActivity {
     LinearLayout llBig2;
     @BindView(R.id.image_big2)
     ImageView imageBig2;
+    @BindView(R.id.ed_repaircontent)
+    EditText edRep;
     private DetailData item;
     private String mUrl;
 
@@ -103,15 +106,19 @@ public class DetailActivity extends BaseActivity {
         if (item.status == 3) {
             btnStart.setVisibility(View.VISIBLE);
             btnStart.setText("开始接单");
+            edRep.setVisibility(View.GONE);
         } else if (item.status == 1 || item.status == 4) {
             btnStart.setVisibility(View.VISIBLE);
             btnStart.setText("开始处理");
+            edRep.setVisibility(View.GONE);
         } else if (item.status == 5) {
             image_com.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.VISIBLE);
             btnStart.setText("处理完成");
+            edRep.setVisibility(View.VISIBLE);
         } else {
             btnStart.setVisibility(View.GONE);
+            edRep.setVisibility(View.GONE);
         }
     }
 
@@ -135,6 +142,8 @@ public class DetailActivity extends BaseActivity {
                     DetailParam param = new DetailParam();
                     param.id = item.id;
                     param.endpic = mUrl;
+                    String repaircontent = edRep.getText().toString();
+                    param.repaircontent = repaircontent;
                     Request.startRequest(param, ServiceMap.endRepair, mHandler, BLOCK);
                 }
                 break;

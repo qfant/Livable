@@ -8,15 +8,10 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.framework.activity.BaseFragment;
 import com.framework.activity.FragmentBackHelper;
 import com.framework.app.MainApplication;
 import com.framework.domain.param.BaseParam;
@@ -24,26 +19,23 @@ import com.framework.domain.response.UpgradeInfo;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.net.ServiceMap;
-import com.framework.utils.ArrayUtils;
 import com.framework.utils.ShopCarUtils;
 import com.framework.view.tab.TabItem;
 import com.framework.view.tab.TabLayout;
 import com.framework.view.tab.TabView;
-import com.page.store.home.fragment.ShopHomeFragment;
+import com.page.news.FCFragment;
+import com.page.news.NewsFragment;
+import com.page.store.home.fragment.ClassifyFragment;
 import com.page.store.orderdetails.activity.OrderDetailsActivity;
-import com.page.uc.UpdateParam;
-import com.page.uc.bean.CheckVersionResult;
+import com.page.update.CheckVersionResult;
+import com.page.update.UpdateParam;
 import com.qfant.wuye.R;
-import com.page.community.quickpai.activity.AddQPaiActivity;
-import com.page.uc.UserCenterFragment;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 /**
@@ -65,18 +57,21 @@ public class MainActivity extends MainTabActivity {
         setContentView(R.layout.pub_activity_mian_layout);
         ButterKnife.bind(this);
         tabLayout = tlTab;
-        addTab("主页", HomeFragment.class, myBundle, R.string.icon_font_home);
-        addTab("商城", ShopHomeFragment.class, myBundle, R.string.icon_font_shopping);
-        addTab("随手拍", QpListFragment.class, myBundle, R.string.icon_font_camera);
-        addTab("购物车", ShoppingCartFragment.class, myBundle, R.string.icon_font_buy_car);
-        addTab("我的", UserCenterFragment.class, myBundle, R.string.icon_font_my);
+//        addTab("主页", HomeFragment.class, myBundle, R.string.icon_font_home);
+        addTab("首页", ClassifyFragment.class, myBundle, R.string.icon_font_shopping);
+        addTab("员工风采", FCFragment.class, myBundle, R.string.icon_font_my);
+        addTab("小区新闻", NewsFragment.class, myBundle, R.string.icon_font_news);
+//        addTab("随手拍", QpListFragment.class, myBundle, R.string.icon_font_camera);
+//        addTab("购物车", ShoppingCartFragment.class, myBundle, R.string.icon_font_buy_car);
+//        addTab("我的", UserCenterFragment.class, myBundle, R.string.icon_font_my);
         onPostCreate();
         tabNumberReceiver = new TabNumberReceiver();
         IntentFilter filter = new IntentFilter(REFRESH_TAB_ACTION);
         registerReceiver(tabNumberReceiver, filter);
 
-
+      //        updateDialog(UpgradeInfo.mock());
     }
+
 
     @Override
     public void onNewIntent(Intent intent) {
@@ -89,60 +84,6 @@ public class MainActivity extends MainTabActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(OrderDetailsActivity.ID, "" + id);
                 qBackToActivity(OrderDetailsActivity.class, bundle);
-            }
-        }
-    }
-
-
-    @Override
-    public void onTabClick(TabItem tabItem) {
-//        if ("商城".equals(tabItem.text) || "购物车".equals(tabItem.text)) {
-//            showToast("暂未开放，敬请期待！");
-//        } else {
-            super.onTabClick(tabItem);
-//        }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (!FragmentBackHelper.onBackPressed(this)) {
-            exitBy2Click();
-        }
-    }
-
-    public void exitBy2Click() {
-        Timer tExit;
-        if (!mIsExit) {
-            mIsExit = true;
-            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
-            tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    mIsExit = false;
-                }
-            }, 2000);
-        } else {
-            finish();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(tabNumberReceiver);
-    }
-
-    public class TabNumberReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                TabView shopCarTab = (TabView) tabLayout.getChildAt(3);
-                shopCarTab.setNumber(ShopCarUtils.getInstance().getShopCarSize());
-            } catch (Exception e) {
-
             }
         }
     }
@@ -197,9 +138,62 @@ public class MainActivity extends MainTabActivity {
         super.onResume();
 //        UpdateParam updateParam = new UpdateParam();
 //        updateParam.versionCode = MainApplication.versionCode;
-        Request.startRequest(new BaseParam(), ServiceMap.CHECK_VERSION, mHandler, Request.RequestFeature.CANCELABLE);
+//        Request.startRequest(new BaseParam(), "", ServiceMap.CHECK_VERSION, mHandler, Request.RequestFeature.CANCELABLE);
+
         sendBroadcast(new Intent(REFRESH_TAB_ACTION));
     }
 
+    @Override
+    public void onTabClick(TabItem tabItem) {
+//        if ("商城".equals(tabItem.text) || "购物车".equals(tabItem.text)) {
+//            showToast("暂未开放，敬请期待！");
+//        } else {
+        super.onTabClick(tabItem);
+//        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+//        if (!FragmentBackHelper.onBackPressed(this)) {
+            exitBy2Click();
+//        }
+    }
+
+    public void exitBy2Click() {
+        Timer tExit;
+        if (!mIsExit) {
+            mIsExit = true;
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mIsExit = false;
+                }
+            }, 2000);
+        } else {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(tabNumberReceiver);
+    }
+
+    public class TabNumberReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                TabView shopCarTab = (TabView) tabLayout.getChildAt(3);
+                shopCarTab.setNumber(ShopCarUtils.getInstance().getShopCarSize());
+            } catch (Exception e) {
+
+            }
+        }
+    }
 
 }

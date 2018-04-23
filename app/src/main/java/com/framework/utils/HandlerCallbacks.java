@@ -102,16 +102,16 @@ public class HandlerCallbacks {
                             }
                         } else {
                             synchronized (this) {
-                                if (param.result.bstatus.code == 600) {
-                                    Intent intent = new Intent();
-                                    intent.setClass(MainApplication.applicationContext, LoginActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    MainApplication.applicationContext.startActivity(intent);
-                                } else {
+//                                if (param.result.bstatus.code == 600) {
+//                                    Intent intent = new Intent();
+//                                    intent.setClass(MainApplication.applicationContext, LoginActivity.class);
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    MainApplication.applicationContext.startActivity(intent);
+//                                } else {
                                     if (listener != null) {
                                         listener.onMsgSearchComplete(param);
                                     }
-                                }
+//                                }
                             }
                         }
                         break;

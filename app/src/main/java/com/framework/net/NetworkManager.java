@@ -132,7 +132,7 @@ public class NetworkManager implements TaskListener {
                 switch (networkTask.param.key.getCode()) {
                     default:
                         // 未指定host使用默认
-                        hostUrl = TextUtils.isEmpty(networkTask.param.hostPath) ? AppConstants.COMMON_URL + networkTask.param.key.getDesc()
+                        hostUrl = TextUtils.isEmpty(networkTask.param.hostPath) ? networkTask.param.key.getDesc().contains("http") ? networkTask.param.key.getDesc() : AppConstants.COMMON_URL + networkTask.param.key.getDesc()
                                 : networkTask.param.hostPath;
                         break;
                 }
@@ -277,7 +277,6 @@ public class NetworkManager implements TaskListener {
 //            			String uidStr = UCUtils.getInstance().getUserid();
 //            			int myId = Integer.parseInt(uidStr);
 ////            			friendListResult.categoryResult.friendList = FriendManager.sync(friendListResult.categoryResult.friendList,myId);
-////            			friendListResult.datas.friendList = FriendManager.sync(friendListResult.datas.friendList,myId);
 //            		}
 //            	}
                 return baseResult;
@@ -775,4 +774,3 @@ public class NetworkManager implements TaskListener {
     }
 
 }
-

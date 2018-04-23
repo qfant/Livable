@@ -49,12 +49,12 @@ public class MainTabActivity extends BaseActivity implements TabLayout.OnTabClic
         viewPage.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                HomeFragment fragment = null;
+                BaseFragment fragment = null;
                 try {
                     TabItem tabItem = mTabs.get(position);
-                    fragment = (HomeFragment) tabItem.tagFragmentClz.newInstance();
+                    fragment = tabItem.tagFragmentClz.newInstance();
                     Bundle bundle = new Bundle();
-                    QLog.e("bundle   ::::::     ",position+"");
+                    QLog.e("bundle   ::::::     ", position + "");
                     bundle.putInt("type", position);
                     fragment.setArguments(bundle);
                 } catch (InstantiationException e) {

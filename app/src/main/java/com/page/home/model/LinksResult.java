@@ -1,6 +1,5 @@
 package com.page.home.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.framework.domain.response.BaseResult;
 
 import java.io.Serializable;

@@ -14,7 +14,7 @@ public class ClassifyResult extends BaseResult {
     public Data data;
 
     public static class Data implements Serializable {
-        public List<Datas> datas;
+        public List<Datas> categoryResult;
 
         public static class Datas implements Serializable {
             public int id;
@@ -22,7 +22,7 @@ public class ClassifyResult extends BaseResult {
             public int sort;
             public Object recommend;
             public String imgurl;
-            public List<Produts> produts;
+            public List<Produts> products;
 
             public boolean isSelect;
 

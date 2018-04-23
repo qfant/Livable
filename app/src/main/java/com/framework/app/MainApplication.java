@@ -13,18 +13,14 @@
  */
 package com.framework.app;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
-import com.framework.utils.ArrayUtils;
 import com.igexin.sdk.PushManager;
-import com.igexin.sdk.PushService;
 import com.qfant.wuye.push.IntentService;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;

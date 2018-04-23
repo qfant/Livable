@@ -20,6 +20,7 @@ public class TabItem {
 
 
     public Class<? extends BaseFragment> tagFragmentClz;
+    public BaseFragment fragment;
 
     public TabItem(String text, int[] icon, Class<? extends BaseFragment> tagFragmentClz, Bundle bundle) {
         this.icon = icon;

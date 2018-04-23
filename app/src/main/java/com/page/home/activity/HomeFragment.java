@@ -223,8 +223,8 @@ public class HomeFragment extends BaseFragment {
                             qStartActivity(PayFeeHistoryActivity.class);
                             break;
                         case "超市":
-//                            showToast("暂未开放，敬请期待！");
-                            ((MainActivity) getContext()).setCurrentTab(1);
+                            showToast("暂未开放，敬请期待！");
+//                            ((MainActivity) getContext()).setCurrentTab(1);
                             break;
                         case "周边":
                             showToast("暂未开放，敬请期待！");
@@ -349,12 +349,12 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void updataList(FoodRecResult result) {
-        if (result != null && result.data != null && !ArrayUtils.isEmpty(result.data.products)) {
-            rv711List.setVisibility(View.VISIBLE);
-            adapter711.setData(result.data.products);
-        } else {
-            rv711List.setVisibility(View.GONE);
-        }
+//        if (result != null && result.data != null && !ArrayUtils.isEmpty(result.data.products)) {
+//            rv711List.setVisibility(View.VISIBLE);
+//            adapter711.setData(result.data.products);
+//        } else {
+//            rv711List.setVisibility(View.GONE);
+//        }
     }
 
     @OnClick(R.id.tv_event)

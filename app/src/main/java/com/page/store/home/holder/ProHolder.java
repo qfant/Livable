@@ -39,7 +39,7 @@ public class ProHolder extends BaseViewHolder<Produts> {
     @BindView(R.id.tv_sub)
     TextView tvSub;
     @BindView(R.id.tv_add)
-    TextView tvAdd;
+    TextView air_pay;
     private Produts data;
 
 
