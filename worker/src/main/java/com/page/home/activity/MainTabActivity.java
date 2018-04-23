@@ -2,18 +2,11 @@ package com.page.home.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
 
-
-import com.framework.utils.QLog;
-import com.framework.view.tab.TabItem;
-import com.framework.view.tab.TabLayout;
 import com.framework.activity.BaseActivity;
 import com.framework.activity.BaseFragment;
+import com.framework.view.tabb.TabItem;
+import com.framework.view.tabb.TabLayout;
 import com.haolb.client.R;
 
 import java.util.ArrayList;
@@ -28,7 +21,6 @@ public class MainTabActivity extends BaseActivity implements TabLayout.OnTabClic
 
     //    @BindView(R.id.tl_tab)
     TabLayout tabLayout;
-    private ViewPager viewPage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,63 +36,28 @@ public class MainTabActivity extends BaseActivity implements TabLayout.OnTabClic
     }
 
     protected void onPostCreate() {
-        viewPage = (ViewPager) findViewById(R.id.viewPage);
         tabLayout.initData(mTabs, this);
-        viewPage.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                BaseFragment fragment = null;
-                try {
-                    TabItem tabItem = mTabs.get(position);
-                    fragment = tabItem.tagFragmentClz.newInstance();
-                    Bundle bundle = new Bundle();
-                    QLog.e("bundle   ::::::     ", position + "");
-                    bundle.putInt("type", position);
-                    fragment.setArguments(bundle);
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                return fragment;
-            }
-
-            @Override
-            public int getCount() {
-                return mTabs.size();
-            }
-        });
-        viewPage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tabLayout.setCurrentTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         tabLayout.setCurrentTab(0);
     }
 
     @Override
     public void onTabClick(TabItem tabItem) {
-        int index = mTabs.indexOf(tabItem);
-        viewPage.setCurrentItem(index);
-//        try {
-//            BaseFragment fragment = tabItem.tagFragmentClz.newInstance();
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, fragment).commitAllowingStateLoss();
-//            tabLayout.setCurrentTab(mTabs.indexOf(tabItem));
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            int index = mTabs.indexOf(tabItem);
+            if (index == tabLayout.getCurrentTab()) {
+                return;
+            }
+            BaseFragment fragment = tabItem.tagFragmentClz.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, fragment).commitAllowingStateLoss();
+            setCurrentTab(index);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setCurrentTab(int index) {
+        tabLayout.setCurrentTab(index);
     }
 }

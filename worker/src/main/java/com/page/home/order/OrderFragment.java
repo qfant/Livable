@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.framework.view.tab.TabLayout;
 import com.haolb.client.R;
 import com.page.home.activity.HomeFragment;
+import com.page.uc.UserInfoActivity;
 
 
 /**
@@ -30,9 +31,15 @@ public class OrderFragment extends MainTabFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-            addTab("待接单", HomeFragment.class, myBundle, R.string.icon_font_home);
-            addTab("已接单", HomeFragment.class, myBundle, R.string.icon_font_home);
-            addTab("已完成", HomeFragment.class, myBundle, R.string.icon_font_home);
+        setTitleBar("维修订单", false, "个人中心", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qStartActivity(UserInfoActivity.class);
+            }
+        });
+        addTab("待接单", HomeFragment.class, myBundle, R.string.icon_font_home);
+        addTab("已接单", HomeFragment.class, myBundle, R.string.icon_font_home);
+        addTab("已完成", HomeFragment.class, myBundle, R.string.icon_font_home);
         onPostCreate();
     }
 }

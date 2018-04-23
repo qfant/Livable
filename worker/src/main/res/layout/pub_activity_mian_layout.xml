@@ -9,6 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:visibility="gone"
         android:background="@color/pub_color_blue">
 
         <TextView
@@ -34,23 +35,26 @@
     </RelativeLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/pub_color_gray_line" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPage"
+
+
+    <FrameLayout
+        android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#121212"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_above="@+id/tl_tab" />
 
     <View
         style="@style/line_gray_h"
         android:layout_height="0.5dp"
         android:background="@color/pub_color_gray_line" />
 
-    <com.framework.view.tab.TabLayout
+    <com.framework.view.tabb.TabLayout
         android:id="@+id/tl_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

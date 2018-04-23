@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.framework.app.MainApplication;
 import com.framework.utils.ArrayUtils;
-import com.framework.view.tab.TabLayout;
+import com.framework.view.tabb.TabLayout;
 import com.haolb.client.R;
 import com.page.home.MaintainFragment;
 import com.page.home.PatrolFragment;
@@ -46,18 +46,10 @@ public class MainActivity extends MainTabActivity {
         ButterKnife.bind(this);
         tabLayout = tlTab;
         addTab("维修订单", OrderFragment.class, myBundle, R.string.icon_font_home);
-//        addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_home);
-//        addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_home);
+        addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_home);
+        addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_home);
 
         onPostCreate();
-        tv_right.setTypeface(MainApplication.getIconFont());
-        tv_right.setText(R.string.icon_font_my);
-        tv_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                qStartActivity(UserInfoActivity.class);
-            }
-        });
     }
 
     @Override
