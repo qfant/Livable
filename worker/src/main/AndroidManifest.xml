@@ -70,6 +70,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.page.home.patrol.PatrolHistoryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.page.home.maintain.MaintainSendActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />

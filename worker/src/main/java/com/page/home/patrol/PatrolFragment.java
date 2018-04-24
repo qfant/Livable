@@ -57,7 +57,7 @@ public class PatrolFragment extends BaseFragment {
         } else if (v.equals(llOperation)) {
             qStartActivity(PatrolParentListActivity.class);
         } else if (v.equals(llHistory)) {
-
+            qStartActivity(PatrolHistoryActivity.class);
         }
     }
 

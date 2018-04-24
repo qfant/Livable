@@ -1,20 +1,29 @@
 package com.page.home.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.framework.domain.response.UpgradeInfo;
+import com.framework.net.NetworkParam;
+import com.framework.net.Request;
+import com.framework.net.ServiceMap;
 import com.framework.utils.ArrayUtils;
 import com.framework.view.tabb.TabLayout;
 import com.haolb.client.R;
 import com.page.home.maintain.MaintainFragment;
 import com.page.home.patrol.PatrolFragment;
 import com.page.home.order.OrderFragment;
+import com.page.update.CheckVersionResult;
+import com.page.update.UpdateParam;
 
 import java.util.List;
 import java.util.Timer;
@@ -45,8 +54,57 @@ public class MainActivity extends MainTabActivity {
         addTab("维修订单", OrderFragment.class, myBundle, R.string.icon_font_tab_order);
         addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_tab_maintain);
         addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_tab_patrol);
-
         onPostCreate();
+        checkVersion();
+    }
+
+    private void checkVersion() {
+        Request.startRequest(new UpdateParam(), ServiceMap.CHECK_VERSION, mHandler);
+    }
+
+    @Override
+    public boolean onMsgSearchComplete(NetworkParam param) {
+        if (param.key == ServiceMap.CHECK_VERSION) {
+            final CheckVersionResult checkVersionResult = (CheckVersionResult) param.result;
+            if (checkVersionResult.bstatus.code == 0) {
+                if (checkVersionResult.data != null
+                        && checkVersionResult.data.upgradeInfo != null) {
+                    updateDialog(checkVersionResult.data.upgradeInfo);
+                }
+
+            } else {
+                showToast(param.result.bstatus.des);
+            }
+        }
+
+        return super.onMsgSearchComplete(param);
+    }
+
+    private void updateDialog(final UpgradeInfo upgradeInfo) {
+        AlertDialog.Builder dialog = null;
+        if (dialog == null) {
+            dialog = new AlertDialog.Builder(this);
+            dialog.setCancelable(!upgradeInfo.force);
+            dialog.setTitle("更新提示");
+            dialog.setMessage("最新版本："
+                    + upgradeInfo.nversion
+                    + "\n"
+                    + upgradeInfo.upgradeNote);
+            dialog.setPositiveButton("更新", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog,
+                                    int which) {
+                    Uri uri = Uri
+                            .parse(upgradeInfo.upgradeAddress[0].url);
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                    dialog.dismiss();
+                }
+
+            });
+        }
+        dialog.show();
     }
 
     @Override

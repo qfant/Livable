@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
         tvRig.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.text_send_code, R.id.text_login,R.id.tv_rig})
+    @OnClick({R.id.text_send_code, R.id.text_login, R.id.tv_rig})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.text_send_code:
@@ -67,19 +67,6 @@ public class LoginActivity extends BaseActivity {
 //                qStartActivity(SelectComActivity.class);
                 break;
         }
-    }
-
-
-    public static class LinkParam extends BaseParam {
-        public int type = 1;
-    }
-
-    public void getLink() {
-        Request.startRequest(new LinkParam(), ServiceMap.getLinks, mHandler);
-    }
-
-    public void checkUpdate() {
-        Request.startRequest(new UpdateParam(), ServiceMap.checkVersion, mHandler);
     }
 
     private void sendLogin() {
@@ -139,7 +126,7 @@ public class LoginActivity extends BaseActivity {
                 UCUtils.getInstance().saveUserInfo(result.data);
                 PushManager.getInstance().bindAlias(getContext(), result.data.phone);
                 Tag tag = new Tag();
-                tag.setName("DISTRICT_"+UCUtils.getInstance().getUserInfo().districtid);
+                tag.setName("DISTRICT_" + UCUtils.getInstance().getUserInfo().districtid);
                 PushManager.getInstance().setTag(getContext(), new Tag[]{tag}, "小区ID");
                 qBackToActivity(MainActivity.class, null);
                 finish();

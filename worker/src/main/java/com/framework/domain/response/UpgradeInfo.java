@@ -10,6 +10,8 @@ public class UpgradeInfo implements Serializable {
 //    public int upgradeFlag;//升级标示
     public String nversion;//新版的版本号
     public String versionCode;//新版的版本号
+    public boolean force;
+
     public static class Update implements Serializable{
         public String url;//新版的版本号
         public String source;//新版的版本号

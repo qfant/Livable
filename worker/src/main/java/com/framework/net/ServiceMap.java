@@ -1,6 +1,7 @@
 package com.framework.net;
 
 
+import com.framework.app.AppConstants;
 import com.framework.domain.response.BaseResult;
 import com.framework.utils.Enums;
 import com.page.detail.DetailResult;
@@ -10,6 +11,7 @@ import com.page.home.patrol.PatrolListResult;
 import com.page.home.patrol.PatrolParentListResult;
 import com.page.home.WorkerRepairResult;
 import com.page.login.activity.LoginResult;
+import com.page.update.CheckVersionResult;
 
 /**
  * @author zexu
@@ -17,7 +19,7 @@ import com.page.login.activity.LoginResult;
 public enum ServiceMap implements Enums.IType {
     getWorkerRepairs("/getWorkerRepairs.do", WorkerRepairResult.class), //获取通讯录联系人
     getLinks("/getLinks.do", BaseResult.class),
-    checkVersion("/checkVersion.do", BaseResult.class),
+    CHECK_VERSION(AppConstants.UC_URL + "/checkVersion.do", CheckVersionResult.class),
     getVerificationCode("/getVerificationCode.do", BaseResult.class),
     customerLogin("/workerLogin.do", LoginResult.class),
     receiveRepair("/receiveRepair.do", BaseResult.class),

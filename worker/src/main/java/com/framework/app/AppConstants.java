@@ -21,4 +21,6 @@ public class AppConstants {
 
     public static final boolean DEBUG = true;
 
+    public final static String UC_URL = DEBUG ? "http://139.224.113.86:8081/yjwy/customer" : "http://47.96.183.3:8080/yjwy/customer";
+
 }
