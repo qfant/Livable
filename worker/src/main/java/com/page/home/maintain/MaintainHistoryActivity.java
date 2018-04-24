@@ -10,6 +10,8 @@ import com.framework.net.NetworkParam;
 import com.framework.net.ServiceMap;
 import com.haolb.client.R;
 import com.page.home.maintain.MaintainHistoryListResult.MaintainItem;
+import com.page.home.maintain.RepairResult.Data.RepairList;
+import com.page.home.maintain.details.activity.DetailsActivity;
 import com.page.home.patrol.PatrolHistoryDetailActivity;
 import com.page.home.patrol.PatrolListAdapter;
 import com.page.home.patrol.PatrolListResult;
@@ -38,10 +40,12 @@ public class MaintainHistoryActivity extends BaseActivity {
     }
 
     private void requestData() {
-        List<MaintainItem> patrolItems = new ArrayList<>();
-        MaintainItem item = new MaintainItem();
-        item.name = "世纪城1号泵";
-        item.updateTime = "2015-12-12 12:12:12";
+        List<RepairList> patrolItems = new ArrayList<>();
+        RepairList item = new RepairList();
+        item.intro = "xxxx";
+        item.address = "xxxx";
+        item.statusCN = "xxxx";
+        item.pic = "xxxx";
         patrolItems.add(item);
         patrolItems.add(item);
         patrolItems.add(item);
@@ -53,10 +57,10 @@ public class MaintainHistoryActivity extends BaseActivity {
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         super.onItemClick(adapterView, view, i, l);
-        MaintainItem item = adapter.getItem(i);
+        RepairList item = adapter.getItem(i);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(MaintainItem.TAG, item);
-        qStartActivity(MaintainHistoryDetailActivity.class, bundle);
+        bundle.putString("id", item.id);
+        qStartActivity(DetailsActivity.class, bundle);
     }
 
     @Override
@@ -64,8 +68,8 @@ public class MaintainHistoryActivity extends BaseActivity {
         super.onMsgSearchComplete(param);
         if (param.key == ServiceMap.patrolList) {
             if (param.result.bstatus.code == 0) {
-                MaintainHistoryListResult result = (MaintainHistoryListResult) param.result;
-                adapter.setData(result.data.maintainItems);
+                RepairResult result = (RepairResult) param.result;
+                adapter.setData(result.data.repairList);
             }
         }
         return super.onMsgSearchComplete(param);

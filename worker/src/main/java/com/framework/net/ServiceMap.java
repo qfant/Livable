@@ -7,6 +7,7 @@ import com.framework.utils.Enums;
 import com.page.detail.DetailResult;
 import com.page.detail.UpdateMyPortraitResult;
 import com.page.home.maintain.MaintainHistoryListResult;
+import com.page.home.maintain.details.model.RepairDetailResult;
 import com.page.home.patrol.PatrolListResult;
 import com.page.home.patrol.PatrolParentListResult;
 import com.page.home.WorkerRepairResult;
@@ -17,18 +18,19 @@ import com.page.update.CheckVersionResult;
  * @author zexu
  */
 public enum ServiceMap implements Enums.IType {
+    evaluateRepair("/evaluateRepair", BaseResult.class),//维修评价
     getWorkerRepairs("/getWorkerRepairs.do", WorkerRepairResult.class), //获取通讯录联系人
-    getLinks("/getLinks.do", BaseResult.class),
     CHECK_VERSION(AppConstants.UC_URL + "/checkVersion.do", CheckVersionResult.class),
     getVerificationCode("/getVerificationCode.do", BaseResult.class),
     customerLogin("/workerLogin.do", LoginResult.class),
     receiveRepair("/receiveRepair.do", BaseResult.class),
+    getRepairClient("/getRepair.do", RepairDetailResult.class),
     getRepair("/getRepair.do", DetailResult.class),
     startRepair("/startRepair.do", BaseResult.class),
     endRepair("/endRepair.do", BaseResult.class),
     uploadPic("/uploadPic.do", UpdateMyPortraitResult.class, ServiceMap.NET_TASKTYPE_FILE),
     patrolList("/patrolList.do", PatrolListResult.class),
-    maintainHistory("/maintainHistory.do", MaintainHistoryListResult.class),
+    submitRepair("/submitRepair", BaseResult.class),//add维修
     patrolParentList("/patrolList.do", PatrolParentListResult.class),;
 
     private final String mType;

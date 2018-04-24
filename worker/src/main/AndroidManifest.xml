@@ -78,7 +78,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.page.home.maintain.MaintainHistoryDetailActivity"
+            android:name="com.page.home.maintain.details.activity.DetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
