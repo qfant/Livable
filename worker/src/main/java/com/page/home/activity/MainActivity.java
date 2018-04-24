@@ -6,18 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.framework.app.MainApplication;
 import com.framework.utils.ArrayUtils;
 import com.framework.view.tabb.TabLayout;
 import com.haolb.client.R;
-import com.page.home.MaintainFragment;
-import com.page.home.PatrolFragment;
+import com.page.home.maintain.MaintainFragment;
+import com.page.home.patrol.PatrolFragment;
 import com.page.home.order.OrderFragment;
-import com.page.uc.UserInfoActivity;
 
 import java.util.List;
 import java.util.Timer;
@@ -45,9 +42,9 @@ public class MainActivity extends MainTabActivity {
         setContentView(R.layout.pub_activity_mian_layout);
         ButterKnife.bind(this);
         tabLayout = tlTab;
-        addTab("维修订单", OrderFragment.class, myBundle, R.string.icon_font_home);
-        addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_home);
-        addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_home);
+        addTab("维修订单", OrderFragment.class, myBundle, R.string.icon_font_tab_order);
+        addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_tab_maintain);
+        addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_tab_patrol);
 
         onPostCreate();
     }
@@ -102,10 +99,10 @@ public class MainActivity extends MainTabActivity {
         return false;
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
     }
-
 
 }

@@ -5,6 +5,9 @@ import com.framework.domain.response.BaseResult;
 import com.framework.utils.Enums;
 import com.page.detail.DetailResult;
 import com.page.detail.UpdateMyPortraitResult;
+import com.page.home.maintain.MaintainHistoryListResult;
+import com.page.home.patrol.PatrolListResult;
+import com.page.home.patrol.PatrolParentListResult;
 import com.page.home.WorkerRepairResult;
 import com.page.login.activity.LoginResult;
 
@@ -22,7 +25,9 @@ public enum ServiceMap implements Enums.IType {
     startRepair("/startRepair.do", BaseResult.class),
     endRepair("/endRepair.do", BaseResult.class),
     uploadPic("/uploadPic.do", UpdateMyPortraitResult.class, ServiceMap.NET_TASKTYPE_FILE),
-    ;
+    patrolList("/patrolList.do", PatrolListResult.class),
+    maintainHistory("/maintainHistory.do", MaintainHistoryListResult.class),
+    patrolParentList("/patrolList.do", PatrolParentListResult.class),;
 
     private final String mType;
     private final Class<? extends BaseResult> mClazz;

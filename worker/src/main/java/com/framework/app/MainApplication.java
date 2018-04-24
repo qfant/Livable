@@ -22,6 +22,7 @@ import android.graphics.Typeface;
 import com.haolb.client.push.IntentService;
 import com.haolb.client.push.PushService;
 import com.igexin.sdk.PushManager;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 public class MainApplication extends Application {
 
@@ -47,7 +48,7 @@ public class MainApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        ZXingLibrary.initDisplayOpinion(this);
 
     }
 
