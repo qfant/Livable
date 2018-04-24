@@ -18,5 +18,6 @@ public class LoginResult extends BaseResult {
         public String roomId;
         public String nickname;
         public String districtid;
+        public String type;
     }
 }
