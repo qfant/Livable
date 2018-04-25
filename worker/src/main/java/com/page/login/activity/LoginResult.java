@@ -17,7 +17,7 @@ public class LoginResult extends BaseResult {
         public String phone;
         public String roomId;
         public String nickname;
-        public String districtid;
+        public int districtid;
         public String type;
     }
 }

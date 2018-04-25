@@ -24,6 +24,7 @@ import com.page.chooseavatar.OnChoosePictureListener;
 import com.page.chooseavatar.UpLoadHeadImageDialog;
 import com.page.chooseavatar.YCLTools;
 import com.page.detail.DetailResult.DetailData;
+import com.page.home.activity.WorkersActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,6 +56,8 @@ public class DetailActivity extends BaseActivity {
     TextView tvIntro;
     @BindView(R.id.btn_start)
     Button btnStart;
+    @BindView(R.id.btn_share)
+    Button btnShare;
     @BindView(R.id.btn_end)
     Button btnEnd;
     @BindView(R.id.image_big)
@@ -96,6 +99,7 @@ public class DetailActivity extends BaseActivity {
         tvIntro.setText(item.intro);
         btnStart.setVisibility(View.GONE);
         btnEnd.setVisibility(View.GONE);
+        btnShare.setVisibility(View.GONE);
         if (!TextUtils.isEmpty(item.endpic)) {
             ImageLoader.getInstance(getContext()).loadImage(item.endpic, image_com);
             ImageLoader.getInstance(getContext()).loadImage(item.endpic, imageBig2);
@@ -105,24 +109,28 @@ public class DetailActivity extends BaseActivity {
         }
         if (item.status == 3) {
             btnStart.setVisibility(View.VISIBLE);
+            btnShare.setVisibility(View.VISIBLE);
             btnStart.setText("开始接单");
             edRep.setVisibility(View.GONE);
         } else if (item.status == 1 || item.status == 4) {
             btnStart.setVisibility(View.VISIBLE);
             btnStart.setText("开始处理");
+            btnShare.setVisibility(View.VISIBLE);
             edRep.setVisibility(View.GONE);
         } else if (item.status == 5) {
             image_com.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.VISIBLE);
+            btnShare.setVisibility(View.VISIBLE);
             btnStart.setText("处理完成");
-            edRep.setVisibility(View.VISIBLE);
+            edRep.setVisibility(View.GONE);
         } else {
+            edRep.setVisibility(View.GONE);
             btnStart.setVisibility(View.GONE);
             edRep.setVisibility(View.GONE);
         }
     }
 
-    @OnClick({R.id.btn_start, R.id.btn_end, R.id.image_com})
+    @OnClick({R.id.btn_start, R.id.btn_end, R.id.image_com,R.id.btn_share})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_start:
@@ -157,6 +165,11 @@ public class DetailActivity extends BaseActivity {
                         llBig2.setVisibility(View.VISIBLE);
                     }
                 }
+                break;
+            case R.id.btn_share:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(DetailData.TAG, item);
+                qStartActivity(WorkersActivity.class, bundle);
                 break;
         }
     }

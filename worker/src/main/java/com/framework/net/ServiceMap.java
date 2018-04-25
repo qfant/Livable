@@ -6,10 +6,12 @@ import com.framework.domain.response.BaseResult;
 import com.framework.utils.Enums;
 import com.page.detail.DetailResult;
 import com.page.detail.UpdateMyPortraitResult;
-import com.page.home.maintain.MaintainHistoryListResult;
+import com.page.home.activity.WorkersResult;
 import com.page.home.maintain.details.model.RepairDetailResult;
+import com.page.home.patrol.PatrolCheckOrdersResult;
+import com.page.home.patrol.PatrolDetailResult;
 import com.page.home.patrol.PatrolListResult;
-import com.page.home.patrol.PatrolParentListResult;
+import com.page.home.patrol.PatrolPlacesResult;
 import com.page.home.WorkerRepairResult;
 import com.page.login.activity.LoginResult;
 import com.page.update.CheckVersionResult;
@@ -29,9 +31,17 @@ public enum ServiceMap implements Enums.IType {
     startRepair("/startRepair.do", BaseResult.class),
     endRepair("/endRepair.do", BaseResult.class),
     uploadPic("/uploadPic.do", UpdateMyPortraitResult.class, ServiceMap.NET_TASKTYPE_FILE),
-    patrolList("/patrolList.do", PatrolListResult.class),
+    getProjectPlaces("/getProjectPlaces.do", PatrolPlacesResult.class),
     submitRepair("/submitRepair", BaseResult.class),//add维修
-    patrolParentList("/patrolList.do", PatrolParentListResult.class),;
+    getProjectChecks("/getProjectChecks.do", PatrolListResult.class),
+    getProjectChecksByQrcode("/getProjectChecksByQrcode.do", PatrolListResult.class),
+    getProjectCheckItems("/getProjectCheckItems.do", PatrolDetailResult.class),
+    submitCheck("/submitCheck.do", BaseResult.class),
+    checkOrderList("/checkOrderList.do", PatrolCheckOrdersResult.class),
+    getWorkers("/getWorkers.do", WorkersResult.class),
+    assignRepairOrder("/assignRepairOrder.do", BaseResult.class),
+
+    ;
 
     private final String mType;
     private final Class<? extends BaseResult> mClazz;

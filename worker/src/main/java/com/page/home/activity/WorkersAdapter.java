@@ -1,4 +1,4 @@
-package com.page.home.patrol;
+package com.page.home.activity;
 
 import android.content.Context;
 import android.view.View;
@@ -7,13 +7,15 @@ import android.widget.TextView;
 
 import com.framework.adapter.utils.QSimpleAdapter;
 import com.haolb.client.R;
+import com.page.home.activity.WorkersResult.WorkersItem;
+import com.page.home.patrol.PatrolCheckOrdersResult.CheckOrder;
 
 /**
  * Created by chenxi.cui on 2018/4/24.
  */
 
-class PatrolParentListAdapter extends QSimpleAdapter<PatrolParentListResult.PatrolItem> {
-    public PatrolParentListAdapter(Context context) {
+public class WorkersAdapter extends QSimpleAdapter<WorkersItem> {
+    public WorkersAdapter(Context context) {
         super(context);
     }
 
@@ -23,11 +25,11 @@ class PatrolParentListAdapter extends QSimpleAdapter<PatrolParentListResult.Patr
     }
 
     @Override
-    protected void bindView(View view, Context context, PatrolParentListResult.PatrolItem item, int position) {
+    protected void bindView(View view, Context context, WorkersItem item, int position) {
         TextView textName = (TextView) view.findViewById(R.id.text_name);
         TextView textTime = (TextView) view.findViewById(R.id.text_time);
         textName.setText(item.name);
-        textTime.setText(item.updateTime);
-        textTime.setVisibility(View.GONE);
+        textTime.setText(item.phone);
+//        textTime.setText(item.qrcode);
     }
 }

@@ -14,6 +14,7 @@ import com.framework.activity.BaseFragment;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.net.ServiceMap;
+import com.framework.utils.QLog;
 import com.haolb.client.R;
 import com.page.detail.DetailActivity;
 import com.page.detail.DetailParam;
@@ -42,6 +43,7 @@ public class HomeFragment extends BaseFragment {
     Unbinder unbinder;
     private int type = 0;
     private HomeAdapter adapter;
+    private WorkerRepairResult result;
 
     @Nullable
     @Override
@@ -55,7 +57,11 @@ public class HomeFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         type = myBundle.getInt("type", 0);
+        result = (WorkerRepairResult) myBundle.getSerializable("data");
         initData();
+        if (result != null && result.data != null && result.data.repairList != null) {
+            adapter.setData(result.data.repairList);
+        }
     }
 
 
@@ -63,6 +69,7 @@ public class HomeFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         myBundle.putInt("type", type);
+        myBundle.putSerializable("data",result);
     }
 
     private void initData() {
@@ -88,15 +95,24 @@ public class HomeFragment extends BaseFragment {
                 Request.startRequest(param, ServiceMap.getRepair, mHandler, Request.RequestFeature.BLOCK);
             }
         });
+        loadData();
+    }
+
+    public void onShow() {
+        loadData();
     }
 
     @Override
     public void onResume() {
+        QLog.v("homeFragment", "onResume" + type);
         loadData();
         super.onResume();
     }
 
     private void loadData() {
+        if (mainLv == null) {
+            return;
+        }
         mainSrl.setRefreshing(true);
         WorkerRepairParam param = new WorkerRepairParam();
         param.type = type + 1;
@@ -109,7 +125,7 @@ public class HomeFragment extends BaseFragment {
             return true;
         }
         if (param.key == ServiceMap.getWorkerRepairs) {
-            WorkerRepairResult result = (WorkerRepairResult) param.result;
+             result = (WorkerRepairResult) param.result;
             if (result.bstatus.code == 0) {
                 if (adapter != null) {
                     adapter.setType(type);
@@ -150,4 +166,6 @@ public class HomeFragment extends BaseFragment {
     public void setType(int type) {
         this.type = type;
     }
+
+
 }

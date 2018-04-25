@@ -20,6 +20,7 @@ public class DetailResult extends BaseResult {
     public DetailData data;
 
     public static class DetailData implements BaseData {
+        public static final String TAG = DetailData.class.getSimpleName();
         public String statusCN;
         public String comment;
         public String phone;

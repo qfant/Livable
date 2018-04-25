@@ -29,7 +29,7 @@ public class MaintainFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setTitleBar("发起维修", false, "个人中心", new View.OnClickListener() {
+        setTitleBar("申请维修", false, "个人中心", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 qStartActivity(UserInfoActivity.class);

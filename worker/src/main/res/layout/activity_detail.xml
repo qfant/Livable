@@ -139,7 +139,20 @@
                 android:text="开始处理"
                 android:textColor="#fff"
                 android:textSize="16dp" />
-
+            <Button
+                android:id="@+id/btn_share"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginBottom="100dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/pub_btn_blue_arc_selector"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="重新分配"
+                android:textColor="#fff"
+                android:textSize="16dp" />
             <Button
                 android:id="@+id/btn_end"
                 android:layout_width="match_parent"

@@ -13,12 +13,14 @@ public class PatrolListResult extends BaseResult {
     public PatrolListData data;
 
     public static class PatrolListData implements BaseData {
-        public List<PatrolItem> patrolItemList;
+        public List<PatrolItem> checkList;
     }
 
     public static class PatrolItem implements Serializable {
+        public String id;
         public String name;
-        public String updateTime;
+//        public String qrcode;//编号
+//        public String qrcode;//二维码
         public static final String TAG = PatrolItem.class.getSimpleName();
     }
 }

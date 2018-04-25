@@ -7,14 +7,15 @@ import android.widget.TextView;
 
 import com.framework.adapter.utils.QSimpleAdapter;
 import com.haolb.client.R;
+import com.page.home.patrol.PatrolCheckOrdersResult.CheckOrder;
 import com.page.home.patrol.PatrolListResult.PatrolItem;
 
 /**
  * Created by chenxi.cui on 2018/4/24.
  */
 
-public class PatrolListAdapter extends QSimpleAdapter<PatrolItem> {
-    public PatrolListAdapter(Context context) {
+public class PatrolCheckOrdersAdapter extends QSimpleAdapter<CheckOrder> {
+    public PatrolCheckOrdersAdapter(Context context) {
         super(context);
     }
 
@@ -24,10 +25,10 @@ public class PatrolListAdapter extends QSimpleAdapter<PatrolItem> {
     }
 
     @Override
-    protected void bindView(View view, Context context, PatrolItem item, int position) {
+    protected void bindView(View view, Context context, CheckOrder item, int position) {
         TextView textName = (TextView) view.findViewById(R.id.text_name);
         TextView textTime = (TextView) view.findViewById(R.id.text_time);
-        textName.setText(item.name);
+        textName.setText(item.placename + "/" + item.checkname);
 //        textTime.setText(item.qrcode);
     }
 }

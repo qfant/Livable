@@ -50,11 +50,15 @@
         </activity>
 
         <activity
+            android:name="com.page.home.activity.WorkersActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.page.home.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.page.home.patrol.PatrolParentListActivity"
+            android:name="com.page.home.patrol.PatrolPlacesActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -70,7 +74,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.page.home.patrol.PatrolHistoryActivity"
+            android:name="com.page.home.patrol.PatrolCheckOrdersActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity

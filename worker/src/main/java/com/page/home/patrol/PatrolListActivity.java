@@ -7,11 +7,10 @@ import android.widget.ListView;
 
 import com.framework.activity.BaseActivity;
 import com.framework.net.NetworkParam;
+import com.framework.net.Request;
 import com.framework.net.ServiceMap;
 import com.haolb.client.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.page.home.patrol.PatrolPlacesResult.Patrol;
 
 /**
  * Created by chenxi.cui on 2018/4/24.
@@ -20,11 +19,16 @@ import java.util.List;
 public class PatrolListActivity extends BaseActivity {
     private ListView listView;
     private PatrolListAdapter adapter;
+    private Patrol patrol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pub_activity_patrol_list_layout);
+        patrol = (Patrol) myBundle.getSerializable(Patrol.TAG);
+        if (patrol == null) {
+            return;
+        }
         setTitleBar("巡查站点", true);
         listView = (ListView) findViewById(R.id.list);
         adapter = new PatrolListAdapter(this);
@@ -34,16 +38,10 @@ public class PatrolListActivity extends BaseActivity {
     }
 
     private void requestData() {
-        List<PatrolListResult.PatrolItem> patrolItems = new ArrayList<>();
-        PatrolListResult.PatrolItem item = new PatrolListResult.PatrolItem();
-        item.name = "世纪城1号泵";
-        item.updateTime = "2015-12-12 12:12:12";
-        patrolItems.add(item);
-        patrolItems.add(item);
-        patrolItems.add(item);
-        adapter.setData(patrolItems);
-//        PatrolListParam patrolListParam = new PatrolListParam();
-//        Request.startRequest(patrolListParam, ServiceMap.patrolList, mHandler);
+        PatrolListParam patrolListParam = new PatrolListParam();
+        patrolListParam.qrcode = patrol.serialnum;
+//        Request.startRequest(patrolListParam, ServiceMap.getProjectChecks, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(patrolListParam, ServiceMap.getProjectChecksByQrcode, mHandler, Request.RequestFeature.BLOCK);
     }
 
     @Override
@@ -58,10 +56,10 @@ public class PatrolListActivity extends BaseActivity {
     @Override
     public boolean onMsgSearchComplete(NetworkParam param) {
         super.onMsgSearchComplete(param);
-        if (param.key == ServiceMap.patrolList) {
+        if (param.key == ServiceMap.getProjectChecks||param.key ==ServiceMap.getProjectChecksByQrcode) {
             if (param.result.bstatus.code == 0) {
                 PatrolListResult result = (PatrolListResult) param.result;
-                adapter.setData(result.data.patrolItemList);
+                adapter.setData(result.data.checkList);
             }
         }
         return super.onMsgSearchComplete(param);

@@ -7,5 +7,8 @@ import com.framework.domain.param.BaseParam;
  */
 
 public class PatrolListParam extends BaseParam {
-
+//    public int placeId;
+    public String qrcode;
+    public int pageNo = 1;
+    public int pageSize = 10;
 }

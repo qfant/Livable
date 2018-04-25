@@ -55,9 +55,9 @@ public class PatrolFragment extends BaseFragment {
             Intent intent = new Intent(getContext(), CaptureActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
         } else if (v.equals(llOperation)) {
-            qStartActivity(PatrolParentListActivity.class);
+            qStartActivity(PatrolPlacesActivity.class);
         } else if (v.equals(llHistory)) {
-            qStartActivity(PatrolHistoryActivity.class);
+            qStartActivity(PatrolCheckOrdersActivity.class);
         }
     }
 
@@ -73,8 +73,12 @@ public class PatrolFragment extends BaseFragment {
                 }
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    Toast.makeText(getContext(), "解析结果:" + result, Toast.LENGTH_LONG).show();
-                    qStartActivity(PatrolListActivity.class);
+//                    Toast.makeText(getContext(), "解析结果:" + result, Toast.LENGTH_LONG).show();
+                    PatrolPlacesResult.Patrol item = new PatrolPlacesResult.Patrol();
+                    Bundle bundle1 = new Bundle();
+                    item.qrcode = result;
+                    bundle1.putSerializable(PatrolPlacesResult.Patrol.TAG, item);
+                    qStartActivity(PatrolListActivity.class, bundle);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     Toast.makeText(getContext(), "解析二维码失败", Toast.LENGTH_LONG).show();
                 }

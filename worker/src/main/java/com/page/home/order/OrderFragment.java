@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.framework.utils.QLog;
 import com.framework.view.tab.TabLayout;
 import com.haolb.client.R;
 import com.page.home.activity.HomeFragment;
@@ -41,5 +42,18 @@ public class OrderFragment extends MainTabFragment {
         addTab("已接单", HomeFragment.class, myBundle, R.string.icon_font_home);
         addTab("已完成", HomeFragment.class, myBundle, R.string.icon_font_home);
         onPostCreate();
+    }
+
+    @Override
+    public void onResume() {
+
+        QLog.v("OrderFragment", "onResume" );
+        super.onResume();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        QLog.v("OrderFragment", "onHiddenChanged" +hidden);
     }
 }

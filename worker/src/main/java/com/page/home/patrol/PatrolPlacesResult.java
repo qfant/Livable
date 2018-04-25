@@ -9,19 +9,20 @@ import java.util.List;
  * Created by chenxi.cui on 2018/4/24.
  */
 
-public class PatrolParentListResult extends BaseResult {
+public class PatrolPlacesResult extends BaseResult {
     public PatrolListData data;
 
     public static class PatrolListData implements BaseData {
-        public List<PatrolItem> patrolItemList;
+        public List<Patrol> placesList;
 
     }
 
-    public static class PatrolItem implements Serializable {
+    public static class Patrol implements Serializable {
 
         public String name;
-        public String updateTime;
-
-        public static final String TAG = PatrolItem.class.getSimpleName();
+        public String serialnum;
+        public static final String TAG = Patrol.class.getSimpleName();
+        public String qrcode;
+        public int id;
     }
 }

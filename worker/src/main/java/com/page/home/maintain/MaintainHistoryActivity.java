@@ -9,12 +9,8 @@ import com.framework.activity.BaseActivity;
 import com.framework.net.NetworkParam;
 import com.framework.net.ServiceMap;
 import com.haolb.client.R;
-import com.page.home.maintain.MaintainHistoryListResult.MaintainItem;
 import com.page.home.maintain.RepairResult.Data.RepairList;
 import com.page.home.maintain.details.activity.DetailsActivity;
-import com.page.home.patrol.PatrolHistoryDetailActivity;
-import com.page.home.patrol.PatrolListAdapter;
-import com.page.home.patrol.PatrolListResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +62,7 @@ public class MaintainHistoryActivity extends BaseActivity {
     @Override
     public boolean onMsgSearchComplete(NetworkParam param) {
         super.onMsgSearchComplete(param);
-        if (param.key == ServiceMap.patrolList) {
+        if (param.key == ServiceMap.getProjectPlaces) {
             if (param.result.bstatus.code == 0) {
                 RepairResult result = (RepairResult) param.result;
                 adapter.setData(result.data.repairList);
