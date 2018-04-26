@@ -14,7 +14,8 @@ public class PatrolDetailResult extends BaseResult {
 
     public static class PPatrolDetailtData implements BaseData {
         public List<CheckItem> checkItemsList;
-
+        public int placeId;
+        public int checkId;
     }
 
     public static class CheckItem implements Serializable {

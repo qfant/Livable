@@ -16,14 +16,14 @@ import java.util.ArrayList;
  */
 
 public class PatrolCheckParam extends BaseParam {
-    public String checkId;
-    public String placeId;
+    public int checkId;
+    public int placeId;
     public String pic;
     public ArrayList<CheckParam> itemValues;
 
     public static class CheckParam extends BaseParam {
         public int id;
-        public boolean value;
+        public int value;
         public String remark;
     }
 }

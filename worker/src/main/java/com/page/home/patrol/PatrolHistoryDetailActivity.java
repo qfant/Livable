@@ -1,28 +1,18 @@
 package com.page.home.patrol;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.framework.activity.BaseActivity;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.net.ServiceMap;
 import com.haolb.client.R;
-import com.page.home.activity.MainActivity;
+import com.page.home.patrol.PatrolCheckOrdersResult.CheckOrder;
+import com.page.home.patrol.PatrolHistoryDetailResult.HistoryDetail;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,127 +20,61 @@ import java.util.List;
  */
 
 public class PatrolHistoryDetailActivity extends BaseActivity {
-    private PatrolListResult.PatrolItem patrolItem;
+    private CheckOrder patrolItem;
     private TextView textTitle;
     private LinearLayout llContain;
-    private Button btnSubmit;
-    private List<PatrolDetailResult.CheckItem> mCheckItemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pub_patrol_detail_layout);
+        setContentView(R.layout.pub_patrol_history_detail_layout);
         setTitleBar("巡查项目详情", true);
-        patrolItem = (PatrolListResult.PatrolItem) myBundle.getSerializable(PatrolListResult.PatrolItem.TAG);
+        patrolItem = (CheckOrder) myBundle.getSerializable(CheckOrder.TAG);
         textTitle = (TextView) findViewById(R.id.text_title);
         llContain = (LinearLayout) findViewById(R.id.ll_contain);
-        textTitle.setText(patrolItem.name + "检查项目");
-        btnSubmit = (Button) findViewById(R.id.btn_submit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submit();
-            }
-        });
+        textTitle.setText(patrolItem.placename + "/" + patrolItem.checkname + "检查项目");
         requestData();
     }
 
     private void requestData() {
-        PatrolDetailParam patrolListParam = new PatrolDetailParam();
-        patrolListParam.checkId = patrolItem.id;
-        Request.startRequest(patrolListParam, ServiceMap.getProjectCheckItems, mHandler, Request.RequestFeature.BLOCK);
+        PatrolHistoryDetailParam patrolListParam = new PatrolHistoryDetailParam();
+        patrolListParam.recordId = patrolItem.id;
+        Request.startRequest(patrolListParam, ServiceMap.getRecordDetail, mHandler, Request.RequestFeature.BLOCK);
     }
 
-    private void submit() {
-        PatrolCheckParam patrolCheckParam = new PatrolCheckParam();
-        patrolCheckParam.checkId = patrolItem.id;
-//        patrolCheckParam.placeId = patrolItem.id;
-        patrolCheckParam.itemValues = new ArrayList<>();
-        boolean isCanSubmit = true;
-        for (PatrolDetailResult.CheckItem item : mCheckItemsList) {
-            PatrolCheckParam.CheckParam checkParam = new PatrolCheckParam.CheckParam();
-            checkParam.id = item.id;
-            checkParam.value = item.isCheck;
-            patrolCheckParam.itemValues.add(checkParam);
-            if (item.isCheck) {
-                checkParam.remark = item.remark;
-            }
-            isCanSubmit = item.isCheck || (!item.isCheck && !TextUtils.isEmpty(item.remark));
-            if (!isCanSubmit) {
-                break;
-            }
-        }
-        if (!isCanSubmit) {
-            Toast.makeText(this, "请完成所有项目检查", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        Request.startRequest(patrolCheckParam, ServiceMap.submitCheck, mHandler, Request.RequestFeature.BLOCK);
-    }
 
     public boolean onMsgSearchComplete(NetworkParam param) {
         super.onMsgSearchComplete(param);
-        if (param.key == ServiceMap.getProjectCheckItems) {
+        if (param.key == ServiceMap.getRecordDetail) {
             if (param.result.bstatus.code == 0) {
-                PatrolDetailResult result = (PatrolDetailResult) param.result;
-                setData(result.data.checkItemsList);
-            }
-        } else if (param.key == ServiceMap.submitCheck) {
-//            showToast(param.result.bstatus.des);
-            if (param.result.bstatus.code == 0) {
-                new AlertDialog.Builder(this).setTitle("").setMessage(param.result.bstatus.des)
-                        .setNegativeButton("返回首页", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                qBackToActivity(MainActivity.class, null);
-                            }
-                        }).show();
-
+                PatrolHistoryDetailResult result = (PatrolHistoryDetailResult) param.result;
+                setData(result.data.RecordList);
             }
         }
         return super.onMsgSearchComplete(param);
     }
 
-    private void setData(List<PatrolDetailResult.CheckItem> checkItemsList) {
-        this.mCheckItemsList = checkItemsList;
+    private void setData(List<HistoryDetail> checkItemsList) {
+//        this.mCheckItemsList = RecordList;
         llContain.removeAllViews();
-        for (final PatrolDetailResult.CheckItem item : checkItemsList) {
-            View view = LinearLayout.inflate(this, R.layout.pub_patrol_detail_item_view, null);
+        if (checkItemsList == null) {
+            return;
+        }
+        for (final HistoryDetail item : checkItemsList) {
+            View view = LinearLayout.inflate(this, R.layout.pub_patrol_history_detail_item_view, null);
             TextView textName = (TextView) view.findViewById(R.id.text_name);
-            SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.switch_compat);
-            final EditText editText = (EditText) view.findViewById(R.id.edit_compat);
-            editText.setVisibility(View.VISIBLE);
-            editText.setHint("备注");
-            item.isCheck = false;
-            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (!isChecked) {
-                        editText.setVisibility(View.VISIBLE);
-                    } else {
-                        editText.setVisibility(View.GONE);
-                    }
-                    item.isCheck = isChecked;
-                }
-            });
-            switchCompat.setChecked(false);
-            editText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    item.remark = s.toString();
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-            textName.setText(item.name);
+            TextView text2 = (TextView) view.findViewById(R.id.text2);
+            TextView text3 = (TextView) view.findViewById(R.id.edit_compat);
+            textName.setText(item.itemName);
+            text2.setText(item.chooseValue ? "正常" : "异常");
+            if (item.chooseValue) {
+                text3.setVisibility(View.GONE);
+                text2.setTextColor(getResources().getColor(R.color.pub_color_blue));
+            } else {
+                text2.setTextColor(getResources().getColor(R.color.pub_color_red));
+                text3.setText("异常备注:" + item.remark);
+                text3.setVisibility(View.VISIBLE);
+            }
             llContain.addView(view);
         }
     }

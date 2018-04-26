@@ -133,6 +133,8 @@ public class PatrolTourActivity extends BaseActivity {
                 tourItem.name = result.data.name;
                 tourItem.serialnum = result.data.serialnum;
                 adapter.setData(result.data.placeResult);
+            }else {
+                showToast(param.result.bstatus.des);
             }
         } else if (param.key == ServiceMap.submitPatrol) {
 

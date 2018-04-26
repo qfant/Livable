@@ -11,6 +11,7 @@ import com.page.home.maintain.RepairResult;
 import com.page.home.maintain.details.model.RepairDetailResult;
 import com.page.home.patrol.PatrolCheckOrdersResult;
 import com.page.home.patrol.PatrolDetailResult;
+import com.page.home.patrol.PatrolHistoryDetailResult;
 import com.page.home.patrol.PatrolListResult;
 import com.page.home.patrol.PatrolPlacesResult;
 import com.page.home.WorkerRepairResult;
@@ -42,6 +43,7 @@ public enum ServiceMap implements Enums.IType {
     submitRepairList("/submitRepairList.do", RepairResult.class),//add维修
     getProjectChecks("/getProjectChecks.do", PatrolListResult.class),
     getProjectChecksByQrcode("/getProjectChecksByQrcode.do", PatrolListResult.class),
+    getRecordDetail("/getRecordDetail.do", PatrolHistoryDetailResult.class),
     getProjectCheckItems("/getProjectCheckItems.do", PatrolDetailResult.class),
     submitCheck("/submitCheck.do", BaseResult.class),
     checkOrderList("/checkOrderList.do", PatrolCheckOrdersResult.class),

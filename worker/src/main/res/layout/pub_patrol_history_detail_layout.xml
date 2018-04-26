@@ -11,16 +11,11 @@
         android:layout_height="wrap_content"
         android:textColor="@color/pub_color_black"
         android:textSize="16dp" />
-    <com.page.detail.AddView
-        android:id="@+id/addView"
-        android:layout_below="@+id/text_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_submit"
-        android:layout_below="@+id/addView">
+        android:layout_below="@+id/text_title">
 
         <LinearLayout
             android:id="@+id/ll_contain"
@@ -28,16 +23,5 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"></LinearLayout>
     </ScrollView>
-
-    <Button
-        android:layout_marginTop="10dp"
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/pub_btn_yellow_selector"
-        android:text="提交"
-        android:textColor="@color/pub_color_white"
-        android:textSize="14dp" />
 
 </RelativeLayout>
