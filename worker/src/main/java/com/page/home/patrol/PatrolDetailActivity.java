@@ -1,5 +1,7 @@
 package com.page.home.patrol;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
@@ -97,10 +99,16 @@ public class PatrolDetailActivity extends BaseActivity {
                 setData(result.data.checkItemsList);
             }
         } else if (param.key == ServiceMap.submitCheck) {
-            showToast(param.result.bstatus.des);
+//            showToast(param.result.bstatus.des);
             if (param.result.bstatus.code == 0) {
-//                finish();
-                qBackToActivity(MainActivity.class, null);
+                new AlertDialog.Builder(this).setTitle("").setMessage(param.result.bstatus.des)
+                        .setNegativeButton("返回首页", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                qBackToActivity(MainActivity.class, null);
+                            }
+                        }).show();
+
             }
         }
         return super.onMsgSearchComplete(param);

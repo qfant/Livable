@@ -7,12 +7,15 @@ import com.framework.utils.Enums;
 import com.page.detail.DetailResult;
 import com.page.detail.UpdateMyPortraitResult;
 import com.page.home.activity.WorkersResult;
+import com.page.home.maintain.RepairResult;
 import com.page.home.maintain.details.model.RepairDetailResult;
 import com.page.home.patrol.PatrolCheckOrdersResult;
 import com.page.home.patrol.PatrolDetailResult;
 import com.page.home.patrol.PatrolListResult;
 import com.page.home.patrol.PatrolPlacesResult;
 import com.page.home.WorkerRepairResult;
+import com.page.home.patrol.PatrolTourHistoryResult;
+import com.page.home.patrol.PatrolTourResult;
 import com.page.login.activity.LoginResult;
 import com.page.update.CheckVersionResult;
 
@@ -20,7 +23,7 @@ import com.page.update.CheckVersionResult;
  * @author zexu
  */
 public enum ServiceMap implements Enums.IType {
-    evaluateRepair("/evaluateRepair", BaseResult.class),//维修评价
+    evaluateRepair("/evaluateRepair.do", BaseResult.class),//维修评价
     getWorkerRepairs("/getWorkerRepairs.do", WorkerRepairResult.class), //获取通讯录联系人
     CHECK_VERSION(AppConstants.UC_URL + "/checkVersion.do", CheckVersionResult.class),
     getVerificationCode("/getVerificationCode.do", BaseResult.class),
@@ -32,7 +35,11 @@ public enum ServiceMap implements Enums.IType {
     endRepair("/endRepair.do", BaseResult.class),
     uploadPic("/uploadPic.do", UpdateMyPortraitResult.class, ServiceMap.NET_TASKTYPE_FILE),
     getProjectPlaces("/getProjectPlaces.do", PatrolPlacesResult.class),
-    submitRepair("/submitRepair", BaseResult.class),//add维修
+    getPlaceDetail("/getPlaceDetail.do", PatrolTourResult.class),
+    submitPatrol("/submitPatrol.do", BaseResult.class),
+    patrolList("/patrolList.do", PatrolTourHistoryResult.class),
+    submitRepair("/submitRepair.do", BaseResult.class),//add维修
+    submitRepairList("/submitRepairList.do", RepairResult.class),//add维修
     getProjectChecks("/getProjectChecks.do", PatrolListResult.class),
     getProjectChecksByQrcode("/getProjectChecksByQrcode.do", PatrolListResult.class),
     getProjectCheckItems("/getProjectCheckItems.do", PatrolDetailResult.class),

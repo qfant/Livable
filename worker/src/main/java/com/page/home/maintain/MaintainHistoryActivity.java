@@ -7,13 +7,11 @@ import android.widget.ListView;
 
 import com.framework.activity.BaseActivity;
 import com.framework.net.NetworkParam;
+import com.framework.net.Request;
 import com.framework.net.ServiceMap;
 import com.haolb.client.R;
 import com.page.home.maintain.RepairResult.Data.RepairList;
 import com.page.home.maintain.details.activity.DetailsActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by chenxi.cui on 2018/4/24.
@@ -36,18 +34,8 @@ public class MaintainHistoryActivity extends BaseActivity {
     }
 
     private void requestData() {
-        List<RepairList> patrolItems = new ArrayList<>();
-        RepairList item = new RepairList();
-        item.intro = "xxxx";
-        item.address = "xxxx";
-        item.statusCN = "xxxx";
-        item.pic = "xxxx";
-        patrolItems.add(item);
-        patrolItems.add(item);
-        patrolItems.add(item);
-        adapter.setData(patrolItems);
-//        PatrolListParam patrolListParam = new PatrolListParam();
-//        Request.startRequest(patrolListParam, ServiceMap.maintainHistory, mHandler);
+        MaintainHistoryParam patrolListParam = new MaintainHistoryParam();
+        Request.startRequest(patrolListParam, ServiceMap.submitRepairList, mHandler, Request.RequestFeature.BLOCK);
     }
 
     @Override
@@ -62,10 +50,10 @@ public class MaintainHistoryActivity extends BaseActivity {
     @Override
     public boolean onMsgSearchComplete(NetworkParam param) {
         super.onMsgSearchComplete(param);
-        if (param.key == ServiceMap.getProjectPlaces) {
+        if (param.key == ServiceMap.submitRepairList) {
             if (param.result.bstatus.code == 0) {
                 RepairResult result = (RepairResult) param.result;
-                adapter.setData(result.data.repairList);
+                adapter.setData(result.data.repairList );
             }
         }
         return super.onMsgSearchComplete(param);

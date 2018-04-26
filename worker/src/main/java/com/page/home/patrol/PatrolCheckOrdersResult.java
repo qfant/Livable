@@ -13,7 +13,7 @@ public class PatrolCheckOrdersResult extends BaseResult {
     public PatrolCheckOrdersData data;
 
     public static class PatrolCheckOrdersData implements BaseData {
-        public List<CheckOrder> orderListResult;
+        public List<CheckOrder> checkOrderList;
 
     }
 

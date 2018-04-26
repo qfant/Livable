@@ -14,6 +14,7 @@
     <string name="icon_font_right_arrows">&#xe612;</string>//右箭头
     <string name="icon_font_scan">&#xe6dd;</string>//扫描
     <string name="icon_font_maintain">&#xe63a;</string>//维修
+    <string name="icon_font_dd">&#xe649;</string>//打点
     <string name="icon_font_tab_patrol">&#xe60d;</string>//维修人
     <string name="icon_font_tab_order">&#xe608;</string>//维修人
     <string name="icon_font_tab_maintain">&#xe62c;</string>//维修人

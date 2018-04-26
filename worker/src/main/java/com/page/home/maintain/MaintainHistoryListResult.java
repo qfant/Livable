@@ -13,7 +13,7 @@ public class MaintainHistoryListResult extends BaseResult {
     public MaintainHistoryListData data;
 
     public static class MaintainHistoryListData implements BaseData {
-        public List<MaintainItem> maintainItems;
+        public List<MaintainItem> repairListResult ;
     }
 
     public static class MaintainItem implements Serializable {

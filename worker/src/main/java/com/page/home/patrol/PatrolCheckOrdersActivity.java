@@ -11,9 +11,6 @@ import com.framework.net.Request;
 import com.framework.net.ServiceMap;
 import com.haolb.client.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.page.home.patrol.PatrolCheckOrdersResult.*;
 
 /**
@@ -56,7 +53,7 @@ public class PatrolCheckOrdersActivity extends BaseActivity {
         if (param.key == ServiceMap.checkOrderList) {
             if (param.result.bstatus.code == 0) {
                 PatrolCheckOrdersResult result = (PatrolCheckOrdersResult) param.result;
-                adapter.setData(result.data.orderListResult);
+                adapter.setData(result.data.checkOrderList);
             }
         }
         return super.onMsgSearchComplete(param);
