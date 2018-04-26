@@ -96,7 +96,9 @@ public class PatrolDetailActivity extends BaseActivity {
         if (param.key == ServiceMap.getProjectCheckItems) {
             if (param.result.bstatus.code == 0) {
                 PatrolDetailResult result = (PatrolDetailResult) param.result;
-                setData(result.data.checkItemsList);
+                if (result.data.checkItemsList!=null) {
+                    setData(result.data.checkItemsList);
+                }
             }
         } else if (param.key == ServiceMap.submitCheck) {
 //            showToast(param.result.bstatus.des);

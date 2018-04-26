@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import com.haolb.client.R;
 import com.page.home.maintain.MaintainFragment;
 import com.page.home.patrol.PatrolFragment;
 import com.page.home.order.OrderFragment;
+import com.page.login.UCUtils;
+import com.page.login.activity.LoginActivity;
 import com.page.update.CheckVersionResult;
 import com.page.update.UpdateParam;
 
@@ -109,6 +112,9 @@ public class MainActivity extends MainTabActivity {
 
     @Override
     protected void onResume() {
+        if (TextUtils.isEmpty(UCUtils.getInstance().getUserInfo().token)) {
+            qStartActivity(LoginActivity.class);
+        }
         super.onResume();
     }
 

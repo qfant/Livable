@@ -42,7 +42,7 @@ public class PatrolTourActivity extends BaseActivity {
         setContentView(R.layout.pub_activity_patrol_list_layout);
         setTitleBar("巡更详情", true);
         qrcode = myBundle.getString("qrcode");
-        qrcode = "015E8B83AE6EA4A4";
+//        qrcode = "015E8B83AE6EA4A4";
         listView = (ListView) findViewById(R.id.list);
         adapter = new PatrolTourAdapter(this);
         listView.setAdapter(adapter);
@@ -113,7 +113,7 @@ public class PatrolTourActivity extends BaseActivity {
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         super.onItemClick(adapterView, view, i, l);
-        TourItem item = adapter.getItem(i);
+//        TourItem item = adapter.getItem(i);
         PatrolSubmitPatrolParam patrolListParam = new PatrolSubmitPatrolParam();
         patrolListParam.qrcode = qrcode;
         patrolListParam.longitude = longitude;

@@ -175,6 +175,7 @@ public class DetailsActivity extends BaseActivity {
 
     @Override
     public boolean onMsgSearchComplete(NetworkParam param) {
+        super.onMsgSearchComplete(param);
         if (param.key == ServiceMap.getRepairClient) {
             RepairDetailResult result = (RepairDetailResult) param.result;
             if (result != null && result.data != null) {

@@ -59,6 +59,7 @@ import com.framework.view.QProgressDialogFragment;
 import com.framework.view.SystemBarTintManager;
 import com.framework.view.TitleBar;
 import com.haolb.client.R;
+import com.page.login.activity.LoginActivity;
 
 import java.util.List;
 
@@ -676,7 +677,11 @@ public abstract class BaseActivity extends FragmentActivity implements
     }
 
     @Override
-    public boolean onMsgSearchComplete(NetworkParam param) {
+    public boolean onMsgSearchComplete(final NetworkParam param) {
+        if (param.result.bstatus.code == 600) {
+            qStartActivity(LoginActivity.class);
+            return true;
+        }
         return false;
     }
 
