@@ -134,7 +134,13 @@ public class PatrolTourActivity extends BaseActivity {
                 tourItem.serialnum = result.data.serialnum;
                 adapter.setData(result.data.placeResult);
             }else {
-                showToast(param.result.bstatus.des);
+                new AlertDialog.Builder(this).setTitle("").setMessage(param.result.bstatus.des)
+                        .setNegativeButton("返回首页", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                qBackToActivity(MainActivity.class, null);
+                            }
+                        }).show();
             }
         } else if (param.key == ServiceMap.submitPatrol) {
 
@@ -148,7 +154,13 @@ public class PatrolTourActivity extends BaseActivity {
                         }).show();
 
             }else {
-                showToast(param.result.bstatus.des);
+                new AlertDialog.Builder(this).setTitle("").setMessage(param.result.bstatus.des)
+                        .setNegativeButton("返回首页", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                qBackToActivity(MainActivity.class, null);
+                            }
+                        }).show();
             }
         }
         return super.onMsgSearchComplete(param);

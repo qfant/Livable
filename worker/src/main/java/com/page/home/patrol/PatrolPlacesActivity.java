@@ -1,5 +1,7 @@
 package com.page.home.patrol;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +12,7 @@ import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.net.ServiceMap;
 import com.haolb.client.R;
+import com.page.home.activity.MainActivity;
 
 /**
  * Created by chenxi.cui on 2018/4/24.
@@ -52,6 +55,14 @@ public class PatrolPlacesActivity extends BaseActivity {
             if (param.result.bstatus.code == 0) {
                 PatrolPlacesResult result = (PatrolPlacesResult) param.result;
                 adapter.setData(result.data.placesList);
+            }else {
+                new AlertDialog.Builder(this).setTitle("").setMessage(param.result.bstatus.des)
+                        .setNegativeButton("返回首页", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                qBackToActivity(MainActivity.class, null);
+                            }
+                        }).show();
             }
         }
         return super.onMsgSearchComplete(param);

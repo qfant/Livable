@@ -90,7 +90,7 @@ public class PatrolFragment extends BaseFragment {
                     Bundle bundle1 = new Bundle();
                     item.qrcode = result;
                     bundle1.putSerializable(PatrolPlacesResult.Patrol.TAG, item);
-                    qStartActivity(PatrolListActivity.class, bundle);
+                    qStartActivity(PatrolListActivity.class, bundle1);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     Toast.makeText(getContext(), "解析二维码失败", Toast.LENGTH_LONG).show();
                 }
@@ -105,11 +105,11 @@ public class PatrolFragment extends BaseFragment {
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
 //                    Toast.makeText(getContext(), "解析结果:" + result, Toast.LENGTH_LONG).show();
-                    PatrolPlacesResult.Patrol item = new PatrolPlacesResult.Patrol();
+//                    PatrolPlacesResult.Patrol item = new PatrolPlacesResult.Patrol();
                     Bundle bundle1 = new Bundle();
-                    item.qrcode = result;
+//                    item.qrcode = result;
                     bundle1.putString("qrcode", result);
-                    qStartActivity(PatrolTourActivity.class, bundle);
+                    qStartActivity(PatrolTourActivity.class, bundle1);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     Toast.makeText(getContext(), "解析二维码失败", Toast.LENGTH_LONG).show();
                 }
