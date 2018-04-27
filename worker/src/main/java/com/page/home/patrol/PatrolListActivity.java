@@ -43,7 +43,7 @@ public class PatrolListActivity extends BaseActivity {
 
     private void requestData() {
         PatrolListParam patrolListParam = new PatrolListParam();
-        patrolListParam.qrcode = patrol.qrcode;
+        patrolListParam.qrcode = patrol.serialnum;
 //        Request.startRequest(patrolListParam, ServiceMap.getProjectChecks, mHandler, Request.RequestFeature.BLOCK);
         Request.startRequest(patrolListParam, ServiceMap.getProjectChecksByQrcode, mHandler, Request.RequestFeature.BLOCK);
     }
