@@ -88,7 +88,7 @@ public class PatrolFragment extends BaseFragment {
 //                    Toast.makeText(getContext(), "解析结果:" + result, Toast.LENGTH_LONG).show();
                     PatrolPlacesResult.Patrol item = new PatrolPlacesResult.Patrol();
                     Bundle bundle1 = new Bundle();
-                    item.qrcode = result;
+                    item.serialnum = result;
                     bundle1.putSerializable(PatrolPlacesResult.Patrol.TAG, item);
                     qStartActivity(PatrolListActivity.class, bundle1);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {

@@ -11,16 +11,25 @@
         android:layout_height="wrap_content"
         android:textColor="@color/pub_color_black"
         android:textSize="16dp" />
-    <com.page.detail.AddView
-        android:id="@+id/addView"
+
+    <LinearLayout
+        android:id="@+id/ll_ass"
         android:layout_below="@+id/text_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:background="@color/pub_color_white"
+        android:layout_height="wrap_content" >
+        <com.page.detail.AddView
+            android:id="@+id/addView"
+            android:layout_below="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_submit"
-        android:layout_below="@+id/addView">
+        android:layout_below="@+id/ll_ass">
 
         <LinearLayout
             android:id="@+id/ll_contain"

@@ -150,7 +150,8 @@ public class PatrolDetailActivity extends BaseActivity {
             final EditText editText = (EditText) view.findViewById(R.id.edit_compat);
             editText.setVisibility(View.VISIBLE);
             editText.setHint("异常备注");
-            item.isCheck = false;
+            item.isCheck = true;
+            editText.setVisibility(View.GONE);
             switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -162,7 +163,7 @@ public class PatrolDetailActivity extends BaseActivity {
                     item.isCheck = isChecked;
                 }
             });
-            switchCompat.setChecked(false);
+            switchCompat.setChecked(true);
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
