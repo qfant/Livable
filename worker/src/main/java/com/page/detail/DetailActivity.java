@@ -128,6 +128,7 @@ public class DetailActivity extends BaseActivity {
             btnStart.setVisibility(View.GONE);
             edRep.setVisibility(View.GONE);
         }
+        btnShare.setVisibility(item.isShowButton?View.VISIBLE:View.GONE);
     }
 
     @OnClick({R.id.btn_start, R.id.btn_end, R.id.image_com,R.id.btn_share})

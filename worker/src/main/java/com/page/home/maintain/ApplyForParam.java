@@ -15,4 +15,5 @@ public class ApplyForParam extends BaseParam {
     public String phone;
     public int type = 2;
     public int repairtype;
+    public int districtid;
 }

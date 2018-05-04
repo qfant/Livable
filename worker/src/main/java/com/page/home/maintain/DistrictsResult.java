@@ -16,18 +16,11 @@ public class DistrictsResult extends BaseResult {
 
     public static class Data implements Serializable {
         public int totalNum;
-        public List<RepairList> districtList;
+        public List<DistrictItem> districts;
 
-        public static class RepairList implements Serializable {
-            public String id;
-            public String address;
-            public String statusCN;
-            public String createtime;
-            public int status;
-            public String phone;
-            public String pic;
-            public String intro;
+        public static class DistrictItem implements Serializable {
+            public int id;
+            public String name;
         }
-
     }
 }

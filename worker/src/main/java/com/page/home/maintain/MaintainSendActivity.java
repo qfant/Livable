@@ -50,6 +50,8 @@ public class MaintainSendActivity extends BaseActivity {
     @BindView(R.id.text_type)
     TextView tvType;
     private int weixiType = -1;
+    private List<DistrictsResult.Data.DistrictItem> districts;
+    private int mSelectistrictId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,7 @@ public class MaintainSendActivity extends BaseActivity {
         param.pic = imageUrls[0];
         param.intro = intro;
         param.repairtype = weixiType;
+        param.districtid = mSelectistrictId;
         param.phone = phone;
         param.address = address;
         Request.startRequest(param, ServiceMap.submitRepair, mHandler, Request.RequestFeature.BLOCK);
@@ -117,9 +120,13 @@ public class MaintainSendActivity extends BaseActivity {
         } else if (param.key == ServiceMap.getDistricts) {
             DistrictsResult result = (DistrictsResult) param.result;
             List<String> list = new ArrayList<>();
-            list.add("xxx");
-            list.add("xxx");
-            list.add("xxx");
+            districts = result.data.districts;
+            if (result.data.districts != null) {
+                for (DistrictsResult.Data.DistrictItem s : result.data.districts
+                        ) {
+                    list.add(s.name);
+                }
+            }
             setDistricts(list);
         }
         return false;
@@ -143,6 +150,8 @@ public class MaintainSendActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 tvXiaoqu.setText(array[which]);
+                DistrictsResult.Data.DistrictItem districtItem = districts.get(which);
+                mSelectistrictId = districtItem.id;
             }
         });
         builder.show();
@@ -168,18 +177,13 @@ public class MaintainSendActivity extends BaseActivity {
                 break;
             case R.id.text_xiaoqu:
                 reqXQ();
-                List<String> list = new ArrayList<>();
-                list.add("xxx");
-                list.add("xxx");
-                list.add("xxx");
-                setDistricts(list);
                 break;
         }
 
     }
 
     public void reqXQ() {
-        Request.startRequest(new BaseParam(), ServiceMap.CHECK_VERSION, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(new BaseParam(), ServiceMap.getDistricts, mHandler, Request.RequestFeature.BLOCK);
     }
 
 
