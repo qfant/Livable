@@ -13,7 +13,6 @@ public class ApplyForParam extends BaseParam {
     public String intro;
     public String address;
     public String phone;
-    public String type = UCUtils.getInstance().getUserInfo().type;
-
-
+    public int type = 2;
+    public int repairtype;
 }

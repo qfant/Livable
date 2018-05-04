@@ -100,6 +100,7 @@ public class DetailActivity extends BaseActivity {
         btnStart.setVisibility(View.GONE);
         btnEnd.setVisibility(View.GONE);
         btnShare.setVisibility(View.GONE);
+        edRep.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(item.endpic)) {
             ImageLoader.getInstance(getContext()).loadImage(item.endpic, image_com);
             ImageLoader.getInstance(getContext()).loadImage(item.endpic, imageBig2);
@@ -111,20 +112,19 @@ public class DetailActivity extends BaseActivity {
             btnStart.setVisibility(View.VISIBLE);
             btnShare.setVisibility(View.VISIBLE);
             btnStart.setText("开始接单");
-            edRep.setVisibility(View.GONE);
+//            edRep.setVisibility(View.GONE);
         } else if (item.status == 1 || item.status == 4) {
             btnStart.setVisibility(View.VISIBLE);
             btnStart.setText("开始处理");
             btnShare.setVisibility(View.VISIBLE);
-            edRep.setVisibility(View.GONE);
+//            edRep.setVisibility(View.GONE);
         } else if (item.status == 5) {
             image_com.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.VISIBLE);
             btnShare.setVisibility(View.VISIBLE);
             btnStart.setText("处理完成");
-            edRep.setVisibility(View.GONE);
+//            edRep.setVisibility(View.GONE);
         } else {
-            edRep.setVisibility(View.GONE);
             btnStart.setVisibility(View.GONE);
             edRep.setVisibility(View.GONE);
         }

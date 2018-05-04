@@ -7,6 +7,7 @@ import com.framework.utils.Enums;
 import com.page.detail.DetailResult;
 import com.page.detail.UpdateMyPortraitResult;
 import com.page.home.activity.WorkersResult;
+import com.page.home.maintain.DistrictsResult;
 import com.page.home.maintain.RepairResult;
 import com.page.home.maintain.details.model.RepairDetailResult;
 import com.page.home.patrol.PatrolCheckOrdersResult;
@@ -31,6 +32,7 @@ public enum ServiceMap implements Enums.IType {
     customerLogin("/workerLogin.do", LoginResult.class),
     receiveRepair("/receiveRepair.do", BaseResult.class),
     getRepairClient("/getRepair.do", RepairDetailResult.class),
+    getDistricts("/getDistricts.do", DistrictsResult.class),
     getRepair("/getRepair.do", DetailResult.class),
     startRepair("/startRepair.do", BaseResult.class),
     endRepair("/endRepair.do", BaseResult.class),

@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.framework.activity.BaseFragment;
+import com.framework.adapter.utils.LoadMoreAdapter;
+import com.framework.adapter.utils.OnLoadMoreListener;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.net.ServiceMap;
@@ -21,9 +22,7 @@ import com.page.detail.DetailParam;
 import com.page.detail.DetailResult;
 import com.page.home.WorkerRepairParam;
 import com.page.home.WorkerRepairResult;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.page.home.WorkerRepairResult.WorkerRepairData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +43,8 @@ public class HomeFragment extends BaseFragment {
     private int type = 0;
     private HomeAdapter adapter;
     private WorkerRepairResult result;
+    private LoadMoreAdapter moreAdapter;
+    private WorkerRepairParam repairParam;
 
     @Nullable
     @Override
@@ -58,10 +59,7 @@ public class HomeFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         type = myBundle.getInt("type", 0);
         result = (WorkerRepairResult) myBundle.getSerializable("data");
-        initData();
-        if (result != null && result.data != null && result.data.repairList != null) {
-            adapter.setData(result.data.repairList);
-        }
+        initView();
     }
 
 
@@ -69,12 +67,11 @@ public class HomeFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         myBundle.putInt("type", type);
-        myBundle.putSerializable("data",result);
+        myBundle.putSerializable("data", result);
     }
 
-    private void initData() {
+    private void initView() {
         adapter = new HomeAdapter(getContext());
-        mainLv.setAdapter(adapter);
         mainSrl.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
         mainSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,11 +80,9 @@ public class HomeFragment extends BaseFragment {
                 loadData();
             }
         });
-
         mainLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HomeAdapter adapter = (HomeAdapter) adapterView.getAdapter();
                 WorkerRepairResult.repair item = adapter.getItem(i);
                 item.type = adapter.getType();
                 DetailParam param = new DetailParam();
@@ -97,6 +92,7 @@ public class HomeFragment extends BaseFragment {
         });
         loadData();
     }
+
 
     public void onShow() {
         loadData();
@@ -114,9 +110,37 @@ public class HomeFragment extends BaseFragment {
             return;
         }
         mainSrl.setRefreshing(true);
-        WorkerRepairParam param = new WorkerRepairParam();
-        param.type = type + 1;
-        Request.startRequest(param, ServiceMap.getWorkerRepairs, mHandler, Request.RequestFeature.ADD_ONORDER);
+        repairParam = new WorkerRepairParam();
+        repairParam.pageNo = 1;
+        repairParam.type = type + 1;
+        Request.startRequest(repairParam, ServiceMap.getWorkerRepairs, mHandler, Request.RequestFeature.ADD_ONORDER);
+    }
+
+    private void loadMoreData() {
+        if (mainLv == null) {
+            return;
+        }
+        repairParam.pageNo++;
+        Request.startRequest(repairParam, ServiceMap.getWorkerRepairs, mHandler, Request.RequestFeature.ADD_ONORDER);
+    }
+
+    private void setData(WorkerRepairData data) {
+        if (mainLv == null) {
+            return;
+        }
+        moreAdapter = new LoadMoreAdapter(getContext(), adapter, data.totalNum);
+        moreAdapter.setAutoLoad(true);
+        moreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoad(AdapterView<?> view) {
+                QLog.v("homeFragment", "more...");
+                loadMoreData();
+            }
+        });
+        mainLv.setAdapter(moreAdapter);
+        adapter.setType(type);
+        adapter.setData(data.repairList);
+
     }
 
     @Override
@@ -125,11 +149,15 @@ public class HomeFragment extends BaseFragment {
             return true;
         }
         if (param.key == ServiceMap.getWorkerRepairs) {
-             result = (WorkerRepairResult) param.result;
+            result = (WorkerRepairResult) param.result;
             if (result.bstatus.code == 0) {
-                if (adapter != null) {
-                    adapter.setType(type);
-                    adapter.setData(result.data.repairList);
+                if (repairParam.pageNo == 1) {
+                    setData(result.data);
+                } else {
+                    adapter.addAll(result.data.repairList);
+                }
+                if (moreAdapter != null) {
+                    moreAdapter.hasMore(result.data.totalNum != adapter.getCount());
                 }
                 if (mainSrl != null) {
                     mainSrl.setRefreshing(false);
@@ -147,6 +175,7 @@ public class HomeFragment extends BaseFragment {
         }
         return super.onMsgSearchComplete(param);
     }
+
 
     @Override
     public void onNetEnd(NetworkParam param) {
