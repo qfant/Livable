@@ -87,7 +87,7 @@ public class PatrolDetailActivity extends BaseActivity {
             checkParam.id = item.id;
             checkParam.value = item.isCheck ? 1 : 0;
             patrolCheckParam.itemValues.add(checkParam);
-            if (item.isCheck) {
+            if (!item.isCheck) {
                 checkParam.remark = item.remark;
             }
             isCanSubmit = item.isCheck || (!item.isCheck && !TextUtils.isEmpty(item.remark));
@@ -146,7 +146,8 @@ public class PatrolDetailActivity extends BaseActivity {
         for (final CheckItem item : checkItemsList) {
             View view = LinearLayout.inflate(this, R.layout.pub_patrol_detail_item_view, null);
             TextView textName = (TextView) view.findViewById(R.id.text_name);
-            CheckBox switchCompat = (CheckBox) view.findViewById(R.id.switch_compat);
+            final CheckBox switchCompat = (CheckBox) view.findViewById(R.id.switch_compat);
+            final CheckBox switchCompat1 = (CheckBox) view.findViewById(R.id.switch_compat1);
             final EditText editText = (EditText) view.findViewById(R.id.edit_compat);
             editText.setVisibility(View.VISIBLE);
             editText.setHint("异常备注");
@@ -161,8 +162,16 @@ public class PatrolDetailActivity extends BaseActivity {
                         editText.setVisibility(View.GONE);
                     }
                     item.isCheck = isChecked;
+                    switchCompat1.setChecked(!isChecked);
                 }
             });
+            switchCompat1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    switchCompat.setChecked(!isChecked);
+                }
+            });
+
             switchCompat.setChecked(true);
             editText.addTextChangedListener(new TextWatcher() {
                 @Override

@@ -35,7 +35,7 @@ public class QProgressDialogFragment extends DialogFragment implements Observer 
     public static QProgressDialogFragment newInstance(String message, boolean cancelable,
             OnCancelListener cancelListener) {
         QProgressDialogFragment frag = new QProgressDialogFragment();
-        frag.setCancelable(cancelable);
+        frag.setCancelable(true);
         frag.setCancelListener(cancelListener);
         Bundle args = new Bundle();
         args.putString("message", message);
@@ -124,6 +124,7 @@ public class QProgressDialogFragment extends DialogFragment implements Observer 
         } else {
             btnCancel.setVisibility(View.INVISIBLE);
         }
+        btnCancel.setVisibility(View.INVISIBLE);
         return onCreateDialog;
     }
 

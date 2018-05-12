@@ -29,7 +29,15 @@
         <CheckBox
             android:id="@+id/switch_compat"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="正常" />
+
+        <CheckBox
+            android:id="@+id/switch_compat1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="不正常" />
     </LinearLayout>
 
     <EditText
@@ -37,8 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:paddingLeft="3dp"
         android:background="@drawable/pub_bg_cornner_grey"
-        android:minLines="2" />
+        android:minLines="2"
+        android:paddingLeft="3dp" />
 
 </LinearLayout>
