@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="发起维修"
+                android:text="发起工单"
                 android:textColor="@color/pub_color_white"
                 android:textSize="14dp" />
         </LinearLayout>
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="维修记录"
+            android:text="工单记录"
             android:textColor="@color/pub_color_black"
             android:textSize="16dp" />
 

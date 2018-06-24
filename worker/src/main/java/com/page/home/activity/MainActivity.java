@@ -55,7 +55,7 @@ public class MainActivity extends MainTabActivity {
         ButterKnife.bind(this);
         tabLayout = tlTab;
         addTab("维修订单", OrderFragment.class, myBundle, R.string.icon_font_tab_order);
-        addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_tab_maintain);
+        addTab("发起工单", MaintainFragment.class, myBundle, R.string.icon_font_tab_maintain);
         addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_tab_patrol);
         onPostCreate();
         checkVersion();
