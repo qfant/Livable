@@ -22,5 +22,6 @@ public class PatrolCheckOrdersResult extends BaseResult {
         public String placename;
         public int id;
         public String checkname;
+        public String createtime;
     }
 }

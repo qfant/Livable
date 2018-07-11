@@ -28,7 +28,7 @@ public class PatrolCheckOrdersAdapter extends QSimpleAdapter<CheckOrder> {
     protected void bindView(View view, Context context, CheckOrder item, int position) {
         TextView textName = (TextView) view.findViewById(R.id.text_name);
         TextView textTime = (TextView) view.findViewById(R.id.text_time);
-        textName.setText(item.placename + "/" + item.checkname);
+        textName.setText(item.placename + "/" + item.checkname+"/"+item.createtime);
 //        textTime.setText(item.qrcode);
     }
 }
