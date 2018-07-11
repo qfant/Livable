@@ -121,6 +121,8 @@ public class PatrolDetailActivity extends BaseActivity {
                 } else {
                     showToast(result.bstatus.des);
                 }
+            }else {
+                showToast(result.bstatus.des);
             }
         } else if (param.key == ServiceMap.submitCheck) {
 
