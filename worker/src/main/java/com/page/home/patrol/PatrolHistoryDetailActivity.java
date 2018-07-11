@@ -59,13 +59,14 @@ public class PatrolHistoryDetailActivity extends BaseActivity {
     private void setData(List<HistoryDetail> checkItemsList) {
 //        this.mCheckItemsList = RecordList;
         llContain.removeAllViews();
+
         if (checkItemsList == null) {
             return;
         }
         for (final HistoryDetail item : checkItemsList) {
             View view = LinearLayout.inflate(this, R.layout.pub_patrol_history_detail_item_view, null);
             TextView textName = (TextView) view.findViewById(R.id.text_name);
-            TextView textCreatetime = (TextView) view.findViewById(R.id.text_createtime);
+//            TextView textCreatetime = (TextView) view.findViewById(R.id.text_createtime);
             TextView text2 = (TextView) view.findViewById(R.id.text2);
             TextView text3 = (TextView) view.findViewById(R.id.edit_compat);
             textName.setText(item.itemName);
