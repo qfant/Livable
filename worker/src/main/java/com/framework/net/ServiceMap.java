@@ -27,7 +27,7 @@ import com.page.update.CheckVersionResult;
 public enum ServiceMap implements Enums.IType {
     evaluateRepair("/evaluateRepair.do", BaseResult.class),//维修评价
     getWorkerRepairs("/getWorkerRepairs.do", WorkerRepairResult.class), //获取通讯录联系人
-    CHECK_VERSION(AppConstants.UC_URL + "/checkVersion.do", CheckVersionResult.class),
+    CHECK_VERSION("/checkVersion.do", CheckVersionResult.class),
     getVerificationCode("/getVerificationCode.do", BaseResult.class),
     customerLogin("/workerLogin.do", LoginResult.class),
     receiveRepair("/receiveRepair.do", BaseResult.class),
