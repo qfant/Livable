@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.framework.domain.param.BaseParam;
 import com.framework.domain.response.UpgradeInfo;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
@@ -62,7 +63,7 @@ public class MainActivity extends MainTabActivity {
     }
 
     private void checkVersion() {
-        Request.startRequest(new UpdateParam(), ServiceMap.CHECK_VERSION, mHandler);
+        Request.startRequest(new BaseParam(), ServiceMap.CHECK_VERSION, mHandler);
     }
 
     @Override
