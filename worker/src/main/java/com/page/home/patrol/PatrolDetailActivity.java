@@ -114,8 +114,8 @@ public class PatrolDetailActivity extends BaseActivity {
         if (param.key == ServiceMap.uploadPic) {
             addView.onMsgSearchComplete(param);
         } else if (param.key == ServiceMap.getProjectCheckItems) {
+            result = (PatrolDetailResult) param.result;
             if (param.result.bstatus.code == 0) {
-                result = (PatrolDetailResult) param.result;
                 if (result.data.checkItemsList != null) {
                     setData(result.data.checkItemsList);
                 } else {
@@ -125,7 +125,6 @@ public class PatrolDetailActivity extends BaseActivity {
                 showToast(result.bstatus.des);
             }
         } else if (param.key == ServiceMap.submitCheck) {
-
             if (param.result.bstatus.code == 0) {
                 new AlertDialog.Builder(this).setTitle("").setMessage(param.result.bstatus.des)
                         .setNegativeButton("返回首页", new DialogInterface.OnClickListener() {
