@@ -10,5 +10,5 @@ import com.page.login.UCUtils;
 public class PatrolPlacesParam extends BaseParam {
     public String type = UCUtils.getInstance().getUserInfo().type;
     public int pageNo = 1;
-    public int pageSize = 100;
+    public int pageSize = 20;
 }

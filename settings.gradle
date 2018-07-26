@@ -1,3 +1,3 @@
-include  "worker"
+include  "worker",'library'
 
 

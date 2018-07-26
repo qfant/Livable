@@ -125,4 +125,5 @@ dependencies {
     implementation 'com.getui:sdk:2.11.1.0'
 
     compile 'cn.yipianfengye.android:zxing-library:2.2'
+    compile project(path: ':library')
 }
