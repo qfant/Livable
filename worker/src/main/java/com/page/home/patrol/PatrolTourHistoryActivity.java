@@ -20,7 +20,7 @@ public class PatrolTourHistoryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pub_activity_patrol_list_layout);
+        setContentView(R.layout.pub_activity_patrol_list_layout3);
         setTitleBar("巡更打点记录", true);
         listView = (ListView) findViewById(R.id.list);
         adapter = new PatrolTourHistoryAdapter(this);
