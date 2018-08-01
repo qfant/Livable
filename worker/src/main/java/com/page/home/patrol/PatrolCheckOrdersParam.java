@@ -17,5 +17,5 @@ import java.util.ArrayList;
 
 public class PatrolCheckOrdersParam extends BaseParam {
     public int pageNo = 1;
-    public int pageSize = 100;
+    public int pageSize = 20;
 }
