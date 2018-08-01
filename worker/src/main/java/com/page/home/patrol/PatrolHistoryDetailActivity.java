@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class PatrolHistoryDetailActivity extends BaseActivity {
-    private CheckOrder patrolItem;
+    private PatrolTourHistoryResult.TourHistoryItem patrolItem;
     private TextView textTitle;
     private TextView textCreatetime;
     private LinearLayout llContain;
@@ -30,11 +30,12 @@ public class PatrolHistoryDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pub_patrol_history_detail_layout);
         setTitleBar("巡查项目详情", true);
-        patrolItem = (CheckOrder) myBundle.getSerializable(CheckOrder.TAG);
+        patrolItem = (PatrolTourHistoryResult.TourHistoryItem) myBundle.getSerializable(PatrolTourHistoryResult.TourHistoryItem.TAG);
         textTitle = (TextView) findViewById(R.id.text_title);
         textCreatetime = (TextView) findViewById(R.id.text_createtime);
         llContain = (LinearLayout) findViewById(R.id.ll_contain);
-        textTitle.setText(patrolItem.placename + "/" + patrolItem.checkname + "检查项目");
+//        textTitle.setText(patrolItem.placename + "/" + patrolItem.checkname + "检查项目");
+        textTitle.setText(patrolItem.placename + "检查项目");
         requestData();
     }
 
