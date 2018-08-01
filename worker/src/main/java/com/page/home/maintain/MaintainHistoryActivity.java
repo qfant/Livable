@@ -24,7 +24,7 @@ public class MaintainHistoryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pub_activity_patrol_list_layout);
+        setContentView(R.layout.pub_activity_patrol_list_layout_repair_record);
         setTitleBar("维修记录", true);
         listView = (ListView) findViewById(R.id.list);
         adapter = new MaintainHistoryListAdapter(this);
