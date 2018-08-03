@@ -112,10 +112,10 @@ public class PatrolTourHistoryActivity extends BaseActivity implements BaseQuick
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        PatrolTourHistoryResult.TourHistoryItem item = (PatrolTourHistoryResult.TourHistoryItem) adapter.getItem(position);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(PatrolTourHistoryResult.TourHistoryItem.TAG, item);
-        qStartActivity(PatrolHistoryDetailActivity.class, bundle);
+//        PatrolTourHistoryResult.TourHistoryItem item = (PatrolTourHistoryResult.TourHistoryItem) adapter.getItem(position);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(PatrolTourHistoryResult.TourHistoryItem.TAG, item);
+//        qStartActivity(PatrolHistoryDetailActivity.class, bundle);
     }
 
     @Override
