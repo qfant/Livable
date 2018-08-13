@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,6 +24,7 @@ import com.page.home.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chenxi.cui on 2018/4/24.
@@ -33,6 +36,8 @@ public class PatrolPlacesActivity extends BaseActivity implements BaseQuickAdapt
     RecyclerView listView;
     @BindView(R.id.refreshLayout)
     SwipRefreshLayout srlDownRefresh;
+    @BindView(R.id.input_search)
+    EditText inputSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +50,13 @@ public class PatrolPlacesActivity extends BaseActivity implements BaseQuickAdapt
         listView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
         srlDownRefresh.setOnRefreshListener(this);
-        startRequest(1);
+        startRequest(1,"");
     }
 
-    private void startRequest(int page) {
+    private void startRequest(int page,String keyword) {
         PatrolPlacesParam param = new PatrolPlacesParam();
         param.pageNo = page;
+        param.keyword=keyword;
         if (page == 1) {
             Request.startRequest(param, page, ServiceMap.getProjectPlaces, mHandler, Request.RequestFeature.BLOCK, Request.RequestFeature.CANCELABLE);
         } else {
@@ -107,12 +113,20 @@ public class PatrolPlacesActivity extends BaseActivity implements BaseQuickAdapt
 
     @Override
     public void onRefresh(int index) {
-        startRequest(1);
+        startRequest(1,"");
     }
 
     @Override
     public void onLoad(int index) {
-        startRequest(index++);
+        startRequest(index++,"");
+    }
+    @OnClick(R.id.text_search)
+    public void onViewClicked() {
+        String s = inputSearch.getText().toString();
+        if (TextUtils.isEmpty(s)) {
+            return;
+        }
+        startRequest(1, s);
     }
 }
 
