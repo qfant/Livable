@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.framework.domain.param.BaseParam;
 import com.framework.domain.response.UpgradeInfo;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
@@ -55,14 +56,14 @@ public class MainActivity extends MainTabActivity {
         ButterKnife.bind(this);
         tabLayout = tlTab;
         addTab("维修订单", OrderFragment.class, myBundle, R.string.icon_font_tab_order);
-        addTab("发起维修", MaintainFragment.class, myBundle, R.string.icon_font_tab_maintain);
+        addTab("发起工单", MaintainFragment.class, myBundle, R.string.icon_font_tab_maintain);
         addTab("站点巡查", PatrolFragment.class, myBundle, R.string.icon_font_tab_patrol);
         onPostCreate();
         checkVersion();
     }
 
     private void checkVersion() {
-        Request.startRequest(new UpdateParam(), ServiceMap.CHECK_VERSION, mHandler);
+        Request.startRequest(new BaseParam(), ServiceMap.CHECK_VERSION, mHandler);
     }
 
     @Override

@@ -11,11 +11,18 @@
         android:layout_height="wrap_content"
         android:textColor="@color/pub_color_black"
         android:textSize="16dp" />
-
+    <TextView
+        android:id="@+id/text_createtime"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_below="@+id/text_title"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pub_color_red"
+        android:textSize="16dp" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_title">
+        android:layout_below="@+id/text_createtime">
 
         <LinearLayout
             android:id="@+id/ll_contain"

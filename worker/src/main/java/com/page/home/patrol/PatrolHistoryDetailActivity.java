@@ -20,8 +20,9 @@ import java.util.List;
  */
 
 public class PatrolHistoryDetailActivity extends BaseActivity {
-    private CheckOrder patrolItem;
+    private PatrolTourHistoryResult.TourHistoryItem patrolItem;
     private TextView textTitle;
+    private TextView textCreatetime;
     private LinearLayout llContain;
 
     @Override
@@ -29,10 +30,12 @@ public class PatrolHistoryDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pub_patrol_history_detail_layout);
         setTitleBar("巡查项目详情", true);
-        patrolItem = (CheckOrder) myBundle.getSerializable(CheckOrder.TAG);
+        patrolItem = (PatrolTourHistoryResult.TourHistoryItem) myBundle.getSerializable(PatrolTourHistoryResult.TourHistoryItem.TAG);
         textTitle = (TextView) findViewById(R.id.text_title);
+        textCreatetime = (TextView) findViewById(R.id.text_createtime);
         llContain = (LinearLayout) findViewById(R.id.ll_contain);
-        textTitle.setText(patrolItem.placename + "/" + patrolItem.checkname + "检查项目");
+//        textTitle.setText(patrolItem.placename + "/" + patrolItem.checkname + "检查项目");
+        textTitle.setText(patrolItem.placename + "检查项目");
         requestData();
     }
 
@@ -57,15 +60,18 @@ public class PatrolHistoryDetailActivity extends BaseActivity {
     private void setData(List<HistoryDetail> checkItemsList) {
 //        this.mCheckItemsList = RecordList;
         llContain.removeAllViews();
+
         if (checkItemsList == null) {
             return;
         }
         for (final HistoryDetail item : checkItemsList) {
             View view = LinearLayout.inflate(this, R.layout.pub_patrol_history_detail_item_view, null);
             TextView textName = (TextView) view.findViewById(R.id.text_name);
+//            TextView textCreatetime = (TextView) view.findViewById(R.id.text_createtime);
             TextView text2 = (TextView) view.findViewById(R.id.text2);
             TextView text3 = (TextView) view.findViewById(R.id.edit_compat);
             textName.setText(item.itemName);
+            textCreatetime.setText(item.createtime);
             text2.setText(item.chooseValue ? "正常" : "异常");
             if (item.chooseValue) {
                 text3.setVisibility(View.GONE);

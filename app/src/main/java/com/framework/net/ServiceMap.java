@@ -55,7 +55,7 @@ import java.io.Serializable;
  * @author zexu
  */
 public enum ServiceMap implements Enums.IType {
-    CHECK_VERSION(AppConstants.UC_URL + "/checkVersion.do", CheckVersionResult.class),
+    CHECK_VERSION("/checkVersion.do", CheckVersionResult.class),
     FENGCAI("/fengcai", FengcaiResult.class),
     news("/news", NewsResult.class),
     getCategorys("/category", ClassifyResult.class),//商品分类

@@ -39,11 +39,11 @@ public class PatrolTourActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pub_activity_patrol_list_layout);
-        setTitleBar("巡更详情", true);
+        setContentView(R.layout.pub_activity_patrol_layout);
+        setTitleBar("巡查点详情", true);
         qrcode = myBundle.getString("qrcode");
 //        qrcode = "015E8B83AE6EA4A4";
-        listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.listview);
         adapter = new PatrolTourAdapter(this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);

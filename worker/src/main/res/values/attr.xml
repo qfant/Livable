@@ -55,5 +55,22 @@
         <attr name="android:textStyle" />
         <attr name="clearableIcon" format="integer" />
     </declare-styleable>
+    <declare-styleable name="SwipRefreshLayout">
+        <attr name="direction">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="both" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+        <attr name="civ_text" format="string" />
+        <attr name="civ_text_color" format="color" />
+        <attr name="civ_text_size" format="float" />
+    </declare-styleable>
 
 </resources>

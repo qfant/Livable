@@ -183,6 +183,7 @@ public class NetworkManager implements TaskListener {
             networkTask.param.param.cparam.token = TextUtils.isEmpty(token) ? "" : token;
             networkTask.param.param.cparam.platform = "1";
             networkTask.param.param.cparam.type = UCUtils.getInstance().getUserInfo().type;
+            networkTask.param.param.cparam.districtid = UCUtils.getInstance().getUserInfo().districtid;
             String bjson = JSON.toJSONString(networkTask.param.param);
             String b = SecureUtil.encode(bjson, networkTask.param.ke);
             networkTask.param.url = "b=" + b + "&key=" + networkTask.param.ke + "&ver=1" ;

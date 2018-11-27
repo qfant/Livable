@@ -10,6 +10,7 @@ import com.page.home.activity.WorkersResult;
 import com.page.home.maintain.DistrictsResult;
 import com.page.home.maintain.RepairResult;
 import com.page.home.maintain.details.model.RepairDetailResult;
+import com.page.home.patrol.PatrolCheckOrderDetailResult;
 import com.page.home.patrol.PatrolCheckOrdersResult;
 import com.page.home.patrol.PatrolDetailResult;
 import com.page.home.patrol.PatrolHistoryDetailResult;
@@ -27,7 +28,7 @@ import com.page.update.CheckVersionResult;
 public enum ServiceMap implements Enums.IType {
     evaluateRepair("/evaluateRepair.do", BaseResult.class),//维修评价
     getWorkerRepairs("/getWorkerRepairs.do", WorkerRepairResult.class), //获取通讯录联系人
-    CHECK_VERSION(AppConstants.UC_URL + "/checkVersion.do", CheckVersionResult.class),
+    CHECK_VERSION("/checkVersion.do", CheckVersionResult.class),
     getVerificationCode("/getVerificationCode.do", BaseResult.class),
     customerLogin("/workerLogin.do", LoginResult.class),
     receiveRepair("/receiveRepair.do", BaseResult.class),
@@ -46,6 +47,7 @@ public enum ServiceMap implements Enums.IType {
     getProjectChecks("/getProjectChecks.do", PatrolListResult.class),
     getProjectChecksByQrcode("/getProjectChecksByQrcode.do", PatrolListResult.class),
     getRecordDetail("/getRecordDetail.do", PatrolHistoryDetailResult.class),
+    getCheckOrderRecordDetail("/getRecordDetail.do", PatrolCheckOrderDetailResult.class),
     getProjectCheckItems("/getProjectCheckItems.do", PatrolDetailResult.class),
     submitCheck("/submitCheck.do", BaseResult.class),
     checkOrderList("/checkOrderList.do", PatrolCheckOrdersResult.class),

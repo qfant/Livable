@@ -15,5 +15,5 @@ public class CommonParam implements Serializable {
     public String token;
     public String platform;
     public String type;
-//    public String type;
+    public Integer districtid;
 }
