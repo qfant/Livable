@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+}
+//apply plugin: 'replugin-host-gradle'
+//repluginHostConfig {
+//    useAppCompat = false
+//}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly fileTree(include: ['*.aar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "cn.jiguang.sdk:jpush:3.1.1"
+    implementation "cn.jiguang.sdk:jcore:1.1.9"
+    implementation "cn.jiguang.sdk:janalytics:1.2.0"
+
+    implementation anko, ankocommons, glide, eventbus, ormLiteLibs
+    implementation newLibHttpAar
+//    , newSupportV4AndRecyclerViewAar
+    implementation "com.qihoo360.replugin:replugin-host-lib:$replugin_version"
+    implementation httpLibs
+    implementation zxing
+    implementation "com.android.support:appcompat-v7:27.1.1"
+    implementation "com.android.support:recyclerview-v7:27.1.1"
+    implementation "com.android.support:support-v4:27.1.1"
+
+    implementation 'com.github.cuichenxi:android-support:bxvipsd-SNAPSHOT'
+    implementation httpLibs
+
+}

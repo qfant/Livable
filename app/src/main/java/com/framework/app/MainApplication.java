@@ -17,10 +17,12 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.support.multidex.MultiDexApplication;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.igexin.sdk.PushManager;
+import com.qfant.wuye.BuildConfig;
+import com.qfant.wuye.R;
 import com.qfant.wuye.push.IntentService;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -30,22 +32,29 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class MainApplication extends MultiDexApplication {
+import cn.jpush.android.api.CustomPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
+import co.bxvip.sdk.BxRePluginAppLicationMakeImpl;
+
+public class MainApplication extends BxRePluginAppLicationMakeImpl {
 
     public static Context applicationContext;
     private static MainApplication instance;
     private static Typeface iconFont;
     public String versionName;
     public static int versionCode;
-
+    protected void attachBaseContext(Context var1) {
+        super.attachBaseContext(var1);
+        MultiDex.install(this);
+    }
     @Override
     public void onCreate() {
         super.onCreate();
         applicationContext = this;
         instance = this;
         try {
-            String pkName = this.getPackageName();
-            PackageInfo packageInfo = this.getPackageManager().getPackageInfo(
+            String pkName = applicationContext.getPackageName();
+            PackageInfo packageInfo = applicationContext.getPackageManager().getPackageInfo(
                     pkName, 0);
             versionName = packageInfo.versionName;
             versionCode = packageInfo.versionCode;
@@ -58,7 +67,7 @@ public class MainApplication extends MultiDexApplication {
         PushManager.getInstance().initialize(this, com.qfant.wuye.push.PushService.class);
         PushManager.getInstance().registerPushIntentService(this, IntentService.class);
 
-        Context context = getApplicationContext();
+        Context context = applicationContext.getApplicationContext();
 // 获取当前包名
         String packageName = context.getPackageName();
 // 获取当前进程名
@@ -72,6 +81,7 @@ public class MainApplication extends MultiDexApplication {
 // CrashReport.initCrashReport(context, strategy);
 
     }
+
 
     public static MainApplication getInstance() {
         return instance;
@@ -119,4 +129,18 @@ public class MainApplication extends MultiDexApplication {
         return null;
     }
 
+    @Override
+    public void initJPushYouNeed() {
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);                         // 初始化 JPush
+        CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(this, R.layout.customer_notitfication_layout, R.id.icon, R.id.title, R.id.text);
+        builder.layoutIconDrawable = R.mipmap.sdklogo;
+        builder.developerArg0 = "developerArg2";
+        JPushInterface.setDefaultPushNotificationBuilder(builder);
+    }
+
+    @Override
+    public void initRePluginYourNeed() {
+
+    }
 }
