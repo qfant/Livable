@@ -1,56 +1,62 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.qfant.wuye"
+        applicationId "com.xfxq.client"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 2
+        targetSdkVersion 26
+        versionCode 200
         versionName "2.0.0"
         multiDexEnabled true
         ndk {
             // 设置支持的 SO 库构架
-            abiFilters 'armeabi'/*, 'x86'*///,'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            abiFilters 'armeabi'
+//            ,'armeabi-v7a'/*, 'x86'*///,'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
+
+        resValue "string", "app_name", "幸运小区"
+        buildConfigField "String", "hostAppId", "\"cxxyxq001\""
+        buildConfigField "String", "APP_NAME", "\"幸运小区\""
     }
 
-    dexOptions {
-        preDexLibraries true
-        javaMaxHeapSize "4g" //最主要是这句, 不过改成8g没有更显著的提升
-    }
+//    dexOptions {
+//        preDexLibraries true
+//        javaMaxHeapSize "4g" //最主要是这句, 不过改成8g没有更显著的提升
+//    }
 
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
         disable 'DefaultLocale', 'SpUsage', 'SimpleDateFormat', 'IconMissingDensityFolder', 'ContentDescription', 'RtlSymmetry', 'RtlHardcoded', 'HardcodedText', 'RelativeOverlap', 'ClickableViewAccessibility', 'MissingRegistered'
     }
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        //noCompress 'foo', 'bar'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "4g" //最主要是这句, 不过改成8g没有更显著的提升
+    }
 
     signingConfigs {
         debug {
-            storeFile file("keystore.jks")
-            storePassword "qifan2013"
-            keyAlias "keystore"
-            keyPassword "qifan2013"
-            v2SigningEnabled true
-        }
-
-        bate {
-            storeFile file("keystore.jks")
-            storePassword "qifan2013"
-            keyAlias "keystore"
-            keyPassword "qifan2013"
-            v2SigningEnabled true
+            storeFile file("mjk.jks")
+            storePassword "mjk123"
+            keyAlias "mjk123"
+            keyPassword "mjk123"
         }
 
         release {
-            storeFile file("keystore.jks")
-            storePassword "qifan2013"
-            keyAlias "keystore"
-            keyPassword "qifan2013"
-            v2SigningEnabled true
+            storeFile file("mjk.jks")
+            storePassword "mjk123"
+            keyAlias "mjk123"
+            keyPassword "mjk123"
         }
     }
 
@@ -59,37 +65,30 @@ android {
             manifestPlaceholders = [
                     GETUI_APP_ID    : "zrCloUNS3jAGFgkPkG9397",
                     GETUI_APP_KEY   : "Ngq0xOTlzo6vyy0iIBkCw3",
-                    GETUI_APP_SECRET: "dgBUwwmp3l8fW8k07OXZK6"
+                    GETUI_APP_SECRET: "dgBUwwmp3l8fW8k07OXZK6",
+                    JPUSH_PKGNAME: "com.xfxq.client",
+                    JPUSH_APPKEY : "73a17a8291c6cbe2e38e88da", //JPush上注册的包名对应的// appkey.
+                    JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
             ]
             zipAlignEnabled false
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
-            versionNameSuffix '-dev'
+//            versionNameSuffix '-dev'
             debuggable true
             jniDebuggable false
             renderscriptDebuggable false
-        }
-        bete {
-            manifestPlaceholders = [
-                    GETUI_APP_ID    : "zrCloUNS3jAGFgkPkG9397",
-                    GETUI_APP_KEY   : "Ngq0xOTlzo6vyy0iIBkCw3",
-                    GETUI_APP_SECRET: "dgBUwwmp3l8fW8k07OXZK6"
-            ]
-            zipAlignEnabled true
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.bate
-            versionNameSuffix '-beta'
-            debuggable true
         }
         release {
             manifestPlaceholders = [
                     GETUI_APP_ID    : "lKQLBlK75I8qLrhyXDqAoA",
                     GETUI_APP_KEY   : "f7cpXWtyrW9zzYTQV1bvj9",
-                    GETUI_APP_SECRET: "r352zIhlxtAuBktJCwRrn8"
+                    GETUI_APP_SECRET: "r352zIhlxtAuBktJCwRrn8",
+                    JPUSH_PKGNAME: "com.xfxq.client",
+                    JPUSH_APPKEY : "73a17a8291c6cbe2e38e88da", //JPush上注册的包名对应的// appkey.
+                    JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可..
+
             ]
             debuggable false
             jniDebuggable false
@@ -99,36 +98,41 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-        applicationVariants.all { variant ->
-            variant.outputs.all {
-                if (outputFileName.endsWith('.apk')) {
-                    if (variant.buildType.name.equals("release")) {
-                        outputFileName = "wuye_v${defaultConfig.versionName}.apk"
-                    } else if (variant.buildType.name.equals("bate")) {
-                        outputFileName = "wuye_bate_v${defaultConfig.versionName}.apk"
-                    } else {
-                        outputFileName = "wuye_debug_v${defaultConfig.versionName}.apk"
-                    }
-                }
-            }
-        }
+//        applicationVariants.all { variant ->
+//            variant.outputs.all {
+//                if (outputFileName.endsWith('.apk')) {
+//                    if (variant.buildType.name.equals("release")) {
+//                        outputFileName = "wuye_v${defaultConfig.versionName}.apk"
+//                    } else if (variant.buildType.name.equals("bate")) {
+//                        outputFileName = "wuye_bate_v${defaultConfig.versionName}.apk"
+//                    } else {
+//                        outputFileName = "wuye_debug_v${defaultConfig.versionName}.apk"
+//                    }
+//                }
+//            }
+//        }
     }
 
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
+//    packagingOptions {
+//        exclude 'META-INF/rxjava.properties'
+//    }
 
+}
+apply plugin: 'replugin-host-gradle'
+repluginHostConfig {
+    useAppCompat = true
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.aar'], dir: 'libs')
+    compile 'com.android.support:support-v4:27.1.1'
+    compile 'com.android.support:design:27.1.1'
+    compile 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:cardview-v7:27.1.1'
+    compile 'com.android.support:gridlayout-v7:27.1.1'
+    compile 'com.android.support:recyclerview-v7:27.1.1'
 
-    compile 'com.android.support:support-v4:25.4.0'
-    compile 'com.android.support:design:25.4.0'
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    compile 'com.android.support:cardview-v7:25.4.0'
-    compile 'com.android.support:gridlayout-v7:25.4.0'
-    compile 'com.android.support:recyclerview-v7:25.4.0'
     compile 'com.android.support:multidex:1.0.2'
 
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
@@ -138,6 +142,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     compile 'com.alibaba:fastjson:1.2.39'
     compile 'org.greenrobot:eventbus:3.0.0'
@@ -155,22 +160,21 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 
-//-------------------------------------------------------------
-    //weex 依赖 Android SDK version > 23
-    compile "com.facebook.fresco:fresco:0.10.0"
-//更新需要
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    //weex chrome 调试相关 debug 引入
-    debugCompile 'com.google.code.findbugs:jsr305:2.0.1'
-    debugCompile 'com.squareup.okhttp:okhttp:2.3.0'
-    debugCompile 'com.squareup.okhttp:okhttp-ws:2.3.0'
-    debugCompile 'com.taobao.android:weex_inspector:0.10.0.5'
-    debugCompile 'com.journeyapps:zxing-android-embedded:3.4.0'
+//     compile projects['bvip']
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "cn.jiguang.sdk:jpush:3.1.1"
+    implementation "cn.jiguang.sdk:jcore:1.1.9"
+    implementation "cn.jiguang.sdk:janalytics:1.2.0"
 
-// taobao weexsdk
-//    compile 'com.ucar:weex_sdk:1.6@aar'
+    implementation anko, ankocommons, glide, eventbus, ormLiteLibs
+    implementation newLibHttpAar
+//    , newSupportV4AndRecyclerViewAar
+    implementation "com.qihoo360.replugin:replugin-host-lib:$replugin_version"
+    implementation httpLibs
+    implementation zxing
+    implementation "com.android.support:appcompat-v7:27.1.1"
+    implementation "com.android.support:recyclerview-v7:27.1.1"
+    implementation "com.android.support:support-v4:27.1.1"
 
-// ucar weexsdk 拓展
-//    compile 'com.ucar:weexext_sdk:1.0.8@aar'
-//    compile 'com.weexext:imagepicker:1.0.1'
+    implementation 'com.github.cuichenxi:android-support:bxvipsd-SNAPSHOT'
 }

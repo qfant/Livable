@@ -10,7 +10,7 @@
     </style>
 
     <style name="Splash" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/pub_splash</item>
+        <!--<item name="android:windowBackground">@drawable/pub_splash</item>-->
     </style>
 
     <style name="list_dialog_style" parent="android:style/Theme.Dialog">

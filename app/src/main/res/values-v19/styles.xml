@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Splash" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/pub_splash</item>
+        <!--<item name="android:windowBackground">@drawable/splash</item>-->
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <!--<item name="android:windowFullscreen">true</item>-->

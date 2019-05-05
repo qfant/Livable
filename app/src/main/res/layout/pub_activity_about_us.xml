@@ -14,7 +14,7 @@
         android:layout_marginTop="50dp"
         android:paddingLeft="3dp"
         android:scaleType="centerInside"
-        android:src="@drawable/logo" />
+        android:src="@mipmap/logo" />
 
     <TextView
         android:id="@+id/about_tv_version"
