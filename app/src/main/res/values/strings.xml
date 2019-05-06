@@ -1,9 +1,7 @@
 <resources>
 
-    <!--<string name="app_name">幸运小区</string>-->
+    <!--<string name="app_name">智慧非公</string>-->
     <string name="rmb">￥</string>
-
-
     <string name="share_content">指尖一按轻松到家，社区公告尽在掌握，好友来访再也不必繁琐登记啦！下载链接: http://dwz.cn/1JON8C</string>
     <string name="app_ip">www.halobang.com</string>
     <string name="app_com">北京乐邦网景科技有限公司</string>
@@ -78,5 +76,8 @@
         <item>明天</item>
         <item>后天</item>
     </string-array>
-
+    <string name="brvah_app_name">Library</string>
+    <string name="brvah_loading">正在加载中...</string>
+    <string name="brvah_load_failed">加载失败，请点我重试</string>
+    <string name="brvah_load_end">没有更多数据</string>
 </resources>

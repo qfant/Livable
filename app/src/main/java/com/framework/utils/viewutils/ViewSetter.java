@@ -21,23 +21,23 @@ public class ViewSetter {
     public ViewSetter() {
     }
 
-    public static ViewSetter.ViewSetting getSetting(View view) {
+    public static ViewSetting getSetting(View view) {
         if(view == null) {
             throw new IllegalArgumentException("view must be not null...");
         } else {
             for(Class clazz = view.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
                 Object setting = null;
                 if(clazz == View.class) {
-                    setting = new ViewSetter.ViewProxy();
+                    setting = new ViewProxy();
                 } else if(clazz == TextView.class) {
-                    setting = new ViewSetter.TextViewProxy();
+                    setting = new TextViewProxy();
                 } else if(clazz == ImageView.class) {
-                    setting = new ViewSetter.ImageViewProxy();
+                    setting = new ImageViewProxy();
                 }
 
                 if(setting != null) {
-                    ((ViewSetter.CommonViewProxy)setting).init(view);
-                    return (ViewSetter.ViewSetting)setting;
+                    ((CommonViewProxy)setting).init(view);
+                    return (ViewSetting)setting;
                 }
             }
 
@@ -45,12 +45,12 @@ public class ViewSetter {
         }
     }
 
-    public static class ImageViewProxy extends ViewSetter.ViewProxy<ImageView> {
+    public static class ImageViewProxy extends ViewProxy<ImageView> {
         public ImageViewProxy() {
         }
 
-        protected boolean set(ViewSetter.Method method, int state, Object... params) {
-            if(method == ViewSetter.Method.Src) {
+        protected boolean set(Method method, int state, Object... params) {
+            if(method == Method.Src) {
                 this.setViewImage((ImageView)this.getView(), params[0]);
                 return this.visible();
             } else {
@@ -60,7 +60,7 @@ public class ViewSetter {
 
         protected void get(List<Method> methods) {
             super.get(methods);
-            methods.add(ViewSetter.Method.Src);
+            methods.add(Method.Src);
         }
 
         private void setViewImage(ImageView view, Object obj) {
@@ -79,12 +79,12 @@ public class ViewSetter {
         }
     }
 
-    public static class TextViewProxy extends ViewSetter.ViewProxy<TextView> {
+    public static class TextViewProxy extends ViewProxy<TextView> {
         public TextViewProxy() {
         }
 
-        protected boolean set(ViewSetter.Method method, int state, Object... params) {
-            if(method == ViewSetter.Method.Text) {
+        protected boolean set(Method method, int state, Object... params) {
+            if(method == Method.Text) {
                 this.setViewText((TextView)this.getView(), params);
                 return this.visible();
             } else {
@@ -93,7 +93,7 @@ public class ViewSetter {
         }
 
         protected void get(List<Method> methods) {
-            methods.add(ViewSetter.Method.Text);
+            methods.add(Method.Text);
         }
 
         private void setViewText(TextView view, Object... obj) {
@@ -117,7 +117,7 @@ public class ViewSetter {
         }
     }
 
-    public static class ViewProxy<T extends View> extends ViewSetter.CommonViewProxy<View> {
+    public static class ViewProxy<T extends View> extends CommonViewProxy<View> {
         public ViewProxy() {
         }
 
@@ -125,8 +125,8 @@ public class ViewSetter {
             return (T) this.mView;
         }
 
-        protected boolean set(ViewSetter.Method method, int state, Object... params) {
-            if(method == ViewSetter.Method.Background) {
+        protected boolean set(Method method, int state, Object... params) {
+            if(method == Method.Background) {
                 this.setBackground(this.mView, params[0]);
                 return this.visible();
             } else {
@@ -148,20 +148,20 @@ public class ViewSetter {
         }
 
         protected void get(List<Method> methods) {
-            methods.add(ViewSetter.Method.Background);
+            methods.add(Method.Background);
         }
     }
 
-    public static class FakeProxy implements ViewSetter.ViewSetting {
+    public static class FakeProxy implements ViewSetting {
         public FakeProxy() {
         }
 
-        public boolean setOr(ViewSetter.Method method, boolean condition, int state, Object... params) {
+        public boolean setOr(Method method, boolean condition, int state, Object... params) {
             return false;
         }
     }
 
-    public abstract static class CommonViewProxy<T extends View> implements ViewSetter.ViewSetting {
+    public abstract static class CommonViewProxy<T extends View> implements ViewSetting {
         protected T mView;
 
         public CommonViewProxy() {
@@ -171,10 +171,10 @@ public class ViewSetter {
             this.mView = view;
         }
 
-        public final boolean setOr(ViewSetter.Method method, boolean condition, int state, Object... params) {
+        public final boolean setOr(Method method, boolean condition, int state, Object... params) {
             if(!condition) {
                 return this.gone(state);
-            } else if(method == ViewSetter.Method.NotCare) {
+            } else if(method == Method.NotCare) {
                 return this.visible();
             } else if(CheckUtils.isContainsEmpty(params)) {
                 return this.gone(state);
@@ -183,20 +183,20 @@ public class ViewSetter {
                 this.get(methods);
                 Iterator var6 = methods.iterator();
 
-                ViewSetter.Method ori;
+                Method ori;
                 do {
                     if(!var6.hasNext()) {
                         throw this.ex(this.mView, params[0]);
                     }
 
-                    ori = (ViewSetter.Method)var6.next();
+                    ori = (Method)var6.next();
                 } while(ori != method);
 
                 return this.set(method, state, params);
             }
         }
 
-        protected abstract boolean set(ViewSetter.Method var1, int var2, Object... var3);
+        protected abstract boolean set(Method var1, int var2, Object... var3);
 
         protected abstract void get(List<Method> var1);
 
@@ -226,6 +226,6 @@ public class ViewSetter {
     }
 
     public interface ViewSetting {
-        boolean setOr(ViewSetter.Method var1, boolean var2, int var3, Object... var4);
+        boolean setOr(Method var1, boolean var2, int var3, Object... var4);
     }
 }

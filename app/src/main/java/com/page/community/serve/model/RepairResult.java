@@ -21,7 +21,6 @@ public class RepairResult extends BaseResult {
         public static class RepairList implements Serializable {
             public String id;
             public String address;
-            public String statusCN;
             public String createtime;
             public int status;
             public String phone;

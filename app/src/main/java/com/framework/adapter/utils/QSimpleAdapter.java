@@ -61,7 +61,7 @@ public abstract class QSimpleAdapter<T> extends QArrayAdapter<T> {
      *
      * @param view Existing view, returned earlier by newView
      * @param context Interface to application's global information
-     * @param item Data at position.
+     * @param item NewsData at position.
      */
     protected abstract void bindView(View view, Context context, T item, int position);
 }

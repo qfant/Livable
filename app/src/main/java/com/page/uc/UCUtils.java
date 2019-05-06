@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.framework.app.MainApplication;
 import com.framework.utils.SPUtils;
-import com.page.uc.bean.LoginResult;
 import com.page.uc.bean.LoginResult.LoginData;
 
 /**
@@ -36,7 +35,7 @@ public class UCUtils {
     }
 
     public String getUserid() {
-        return getUserInfo().userId;
+        return getUserInfo().id;
     }
 
     public String getToken() {
@@ -47,7 +46,7 @@ public class UCUtils {
         return !TextUtils.isEmpty(getToken());
     }
 
-    private static final String userInfokey = "userInfo";
+    public static final String userInfokey = "userInfo";
 
     public void saveUserInfo(LoginData data) {
         userInfo = data;
@@ -76,6 +75,5 @@ public class UCUtils {
         LoginData data = getUserInfo();
         data.nickname = username;
         saveUserInfo(data);
-
     }
 }

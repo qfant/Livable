@@ -1,23 +1,15 @@
 package com.page.store.prodetails.holder;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.framework.rvadapter.holder.BaseViewHolder;
 import com.framework.utils.ArrayUtils;
 import com.framework.utils.BusinessUtils;
-import com.framework.utils.html.HtmlUtils;
-import com.framework.utils.html.ZoomImageView;
 import com.framework.utils.imageload.ImageLoad;
 import com.framework.utils.viewutils.ViewUtils;
 import com.framework.view.sivin.Banner;
@@ -55,34 +47,10 @@ public class HeaderHolder extends BaseViewHolder<PEResult.Evaluate> {
     @BindView(R.id.line_intro)
     View lineIntro;
 
-    private PopupWindow popupWindow;
-    //需要放大的图片
-    private ZoomImageView tecent_chat_image;
-    //加载中的进度条
-    private ProgressBar image_scale_progress;
-
     public HeaderHolder(Context context, View itemView) {
         super(context, itemView);
 //        R.layout.pub_activity_prodetails_item_header_layout;
         ButterKnife.bind(this, itemView);
-        View popView = LayoutInflater.from(mContext).inflate(R.layout.pub_zoom_popwindow_layout, null);
-        tecent_chat_image = (ZoomImageView) popView.findViewById(R.id.image_scale_image);
-        image_scale_progress = (ProgressBar) popView.findViewById(R.id.image_scale_progress);
-
-        popView.findViewById(R.id.image_scale_rll).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popupWindow != null && popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                }
-            }
-        });
-        popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);// 设置允许在外点击消失
-        ColorDrawable dw = new ColorDrawable(0x50000000);
-        popupWindow.setBackgroundDrawable(dw);
-
     }
 
     @Override
@@ -101,7 +69,7 @@ public class HeaderHolder extends BaseViewHolder<PEResult.Evaluate> {
             lineExplain.setVisibility(View.VISIBLE);
             tvIntro.setVisibility(View.VISIBLE);
             lineIntro.setVisibility(View.VISIBLE);
-           HtmlUtils.getHtml(mContext, tvIntro, data.product.intro);
+            tvIntro.setText(data.product.intro);
         }
 
         ViewUtils.setOrGone(llEvaluate, holder.getCount() > 1);
@@ -124,7 +92,7 @@ public class HeaderHolder extends BaseViewHolder<PEResult.Evaluate> {
         } else {
             banner.setVisibility(View.VISIBLE);
         }
-        final BannerAdapter adapter = new BannerAdapter<String>(arrayList) {
+        BannerAdapter adapter = new BannerAdapter<String>(arrayList) {
             @Override
             protected void bindTips(TextView tv, String bannerModel) {
 //                tv.setText(bannerModel.getTips());
@@ -137,26 +105,17 @@ public class HeaderHolder extends BaseViewHolder<PEResult.Evaluate> {
         };
         banner.setBannerAdapter(adapter);
         banner.notifyDataHasChanged();
-        banner.setOnBannerItemClickListener(new Banner.OnBannerItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                String url = (String) adapter.getmDataList().get(position);
-                image_scale_progress.setVisibility(View.GONE);
-                popupWindow.showAtLocation(getConvertView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                ImageLoad.loadPlaceholder(mContext, url, tecent_chat_image);
-            }
-        });
     }
 
     @OnClick({R.id.ll_explain, R.id.ll_evaluate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_explain:
-                if (tvIntro.getVisibility() == View.GONE) {
-                    tvIntro.setVisibility(View.VISIBLE);
+                if (tvTitle.getVisibility() == View.GONE) {
+                    tvTitle.setVisibility(View.VISIBLE);
                     lineIntro.setVisibility(View.VISIBLE);
                 } else {
-                    tvIntro.setVisibility(View.GONE);
+                    tvTitle.setVisibility(View.GONE);
                     lineIntro.setVisibility(View.GONE);
                 }
                 break;

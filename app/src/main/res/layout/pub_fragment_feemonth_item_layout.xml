@@ -20,15 +20,16 @@
 
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="14dp"
+        android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="right"
         android:lines="1"
         android:textColor="@color/pub_color_black"
-        android:textSize="@dimen/text_h16"
+        android:textSize="@dimen/text_h18"
         tools:text="82.80" />
 
 </LinearLayout>

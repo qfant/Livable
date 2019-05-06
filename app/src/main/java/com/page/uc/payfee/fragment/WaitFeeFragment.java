@@ -9,8 +9,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.framework.activity.BaseFragment;
@@ -28,12 +26,12 @@ import com.framework.view.DatePickerDialog;
 import com.framework.view.LineDecoration;
 import com.page.pay.PayActivity;
 import com.page.pay.PayData;
+import com.page.uc.payfee.model.ubmitWuyeFeeResult;
 import com.page.uc.payfee.holder.WaitPayHolder;
 import com.page.uc.payfee.model.WaitFeeParam;
 import com.page.uc.payfee.model.WaitFeeQueryParam;
 import com.page.uc.payfee.model.WaitFeeResult;
 import com.page.uc.payfee.model.WaitFeeResult.Data.Datas;
-import com.page.uc.payfee.model.ubmitWuyeFeeResult;
 import com.qfant.wuye.R;
 
 import java.util.List;
@@ -62,10 +60,6 @@ public class WaitFeeFragment extends BaseFragment implements OnItemClickListener
     TextView tvEndTime;
     @BindView(R.id.tv_query)
     TextView tvQuery;
-    @BindView(R.id.cb_all_select)
-    CheckBox cbAllSelect;
-    @BindView(R.id.tv_month)
-    TextView tvMonth;
     private MultiAdapter adapter;
     private double totalPrices;
 
@@ -82,39 +76,38 @@ public class WaitFeeFragment extends BaseFragment implements OnItemClickListener
         super.onActivityCreated(savedInstanceState);
         setListView();
         startRequest();
-        cbAllSelect.setOnClickListener(this);
     }
 
     private void startRequest() {
-        cbAllSelect.setChecked(false);
         String startTime = tvStartTime.getText().toString().trim();
         String endTime = tvEndTime.getText().toString().trim();
+//        if (TextUtils.isEmpty(startTime)) {
+//            showToast("请选择开始时间");
+//            return;
+//        }
+//        if (TextUtils.isEmpty(endTime)) {
+//            showToast("请选择结束时间");
+//            return;
+//        }
         WaitFeeQueryParam param = new WaitFeeQueryParam();
         param.startdate = DateFormatUtils.format(startTime, "yyyy-M-d", "yyyy-MM-dd");
         param.enddate = DateFormatUtils.format(endTime, "yyyy-M-d", "yyyy-MM-dd");
+        ;
         Request.startRequest(param, ServiceMap.getMyWuyeFees, mHandler, Request.RequestFeature.BLOCK);
     }
 
     private void refreshMoney() {
         totalPrices = 0;
-        int count = 0;
-        boolean isAllSelect = true;
         List<Datas> datas = adapter.getData();
         if (!ArrayUtils.isEmpty(datas)) {
             for (Datas temp : datas) {
                 if (temp.isSelect) {
                     totalPrices = Arith.add(totalPrices, temp.price);
-                    count++;
-                } else {
-                    isAllSelect = false;
                 }
             }
-        } else {
-            isAllSelect = false;
         }
-        tvMonth.setText(String.format("共%d个月 合计：", count));
         tvMoney.setText(getContext().getResources().getString(R.string.rmb) + totalPrices);
-        cbAllSelect.setChecked(isAllSelect);
+
     }
 
     private void setListView() {
@@ -154,9 +147,6 @@ public class WaitFeeFragment extends BaseFragment implements OnItemClickListener
         if (param.params.size() < 1) {
             showToast("没有选中待缴费用项");
             return;
-        } else if (param.params.size() < 3) {
-            showToast("最少缴费三个月");
-            return;
         }
         Request.startRequest(param, ServiceMap.submitWuyeFee, mHandler, Request.RequestFeature.BLOCK);
 
@@ -168,7 +158,6 @@ public class WaitFeeFragment extends BaseFragment implements OnItemClickListener
             WaitFeeResult result = (WaitFeeResult) param.result;
             if (result != null && result.data != null && !ArrayUtils.isEmpty(result.data.datas)) {
                 adapter.setData(result.data.datas);
-                refreshMoney();
             } else {
                 showToast(param.result.bstatus.des);
             }
@@ -193,7 +182,6 @@ public class WaitFeeFragment extends BaseFragment implements OnItemClickListener
         data.isSelect = !isSelect;
         adapter.notifyDataSetChanged();
         refreshMoney();
-
     }
 
     @Override
@@ -242,23 +230,6 @@ public class WaitFeeFragment extends BaseFragment implements OnItemClickListener
                 break;
             case R.id.tv_go_pay:
                 goPay();
-                break;
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        switch (v.getId()) {
-            case R.id.cb_all_select:
-                List<Datas> datas = adapter.getData();
-                if (ArrayUtils.isEmpty(datas)) return;
-                boolean checked = cbAllSelect.isChecked();
-                for (Datas item : datas) {
-                    item.isSelect = checked;
-                }
-                adapter.notifyDataSetChanged();
-                refreshMoney();
                 break;
         }
     }

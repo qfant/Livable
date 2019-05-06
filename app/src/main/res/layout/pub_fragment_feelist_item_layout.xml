@@ -47,6 +47,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:text="支付状态："
             android:textColor="@color/pub_color_gray_666"
             android:textSize="@dimen/text_h15" />
@@ -56,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:textColor="@color/pub_color_black"
             android:textSize="@dimen/text_h16"
             tools:text="单号：" />
@@ -63,7 +65,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -74,6 +75,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:text="支付日期："
             android:textColor="@color/pub_color_gray_666"
             android:textSize="@dimen/text_h15" />
@@ -83,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:textColor="@color/pub_color_black"
             android:textSize="@dimen/text_h16"
             tools:text="单号：" />

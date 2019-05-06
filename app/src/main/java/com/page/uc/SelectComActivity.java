@@ -1,6 +1,5 @@
 package com.page.uc;
 
-import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;

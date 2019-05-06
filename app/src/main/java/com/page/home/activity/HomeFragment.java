@@ -35,7 +35,6 @@ import com.page.community.eventlist.activity.EventListActivity;
 import com.page.community.eventlist.model.EventListParam;
 import com.page.community.eventlist.model.EventListResult;
 import com.page.community.eventlist.model.EventListResult.Data.ActivityList;
-import com.page.community.serve.activity.PhoneActivity;
 import com.page.community.serve.activity.RepairActivity;
 import com.page.community.serve.activity.ServeActivity;
 import com.page.home.holder.SMHolder;
@@ -93,7 +92,6 @@ public class HomeFragment extends BaseFragment {
     private Unbinder unbinder;
     private Object notices;
     private MultiAdapter adapter711;
-    private int status = 0;
 
     @Nullable
     @Override
@@ -114,12 +112,10 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (status < 4) {
-            getNotices();
-            getLinks();
-            getEvents();
-            getRecommend();
-        }
+        getNotices();
+        getLinks();
+        getEvents();
+        getRecommend();
     }
 
     private void setEvent(List<ActivityList> activityList) {
@@ -177,13 +173,13 @@ public class HomeFragment extends BaseFragment {
     private void setModel() {
         ArrayList<HomeModel> list = new ArrayList<>();
         list.add(new HomeModel("维修", R.drawable.weixiu));
-//        list.add(new HomeModel("送水", R.drawable.songshui));
-//        list.add(new HomeModel("租房", R.drawable.pub_zufang_icon));
+        list.add(new HomeModel("送水", R.drawable.songshui));
+        list.add(new HomeModel("洗衣", R.drawable.xiyi));
         list.add(new HomeModel("家政", R.drawable.baojie));
         list.add(new HomeModel("缴费", R.drawable.jiaofei));
         list.add(new HomeModel("超市", R.drawable.chaoshi));
-//        list.add(new HomeModel("周边", R.drawable.zhoubian));
-//        list.add(new HomeModel("电话", R.drawable.dianhua));
+        list.add(new HomeModel("周边", R.drawable.zhoubian));
+        list.add(new HomeModel("电话", R.drawable.dianhua));
 
         for (HomeModel homeModel : list) {
             ModeView itemView = new ModeView(getContext());
@@ -200,14 +196,13 @@ public class HomeFragment extends BaseFragment {
                             qStartActivity(RepairActivity.class, bundle);
                             break;
                         case "送水":
-                            showToast("暂未开放，敬请期待！");
-//                            bundle.putString(TITLE, "送水商家");
-//                            bundle.putSerializable(SERVICEMAP, ServiceMap.getWaters);
-//                            bundle.putSerializable(CLICKMAP, ServiceMap.getWaterDetail);
-//                            qStartActivity(ServeActivity.class, bundle);
+                            bundle.putString(TITLE, "送水商家");
+                            bundle.putSerializable(SERVICEMAP, ServiceMap.getWaters);
+                            bundle.putSerializable(CLICKMAP, ServiceMap.getWaterDetail);
+                            qStartActivity(ServeActivity.class, bundle);
                             break;
-                        case "租房":
-                            bundle.putString(TITLE, "租房");
+                        case "洗衣":
+                            bundle.putString(TITLE, "洗衣店");
                             bundle.putSerializable(SERVICEMAP, ServiceMap.getWashes);
                             bundle.putSerializable(CLICKMAP, ServiceMap.getWashDetail);
                             qStartActivity(ServeActivity.class, bundle);
@@ -223,20 +218,19 @@ public class HomeFragment extends BaseFragment {
                             qStartActivity(PayFeeHistoryActivity.class);
                             break;
                         case "超市":
-//                            showToast("暂未开放，敬请期待！");
+//                            bundle.putString(TITLE, "超市");
                             ((MainActivity) getContext()).setCurrentTab(1);
                             break;
                         case "周边":
-                            showToast("暂未开放，敬请期待！");
-//                            bundle.putString(TITLE, "周边");
-//                            bundle.putSerializable(SERVICEMAP, ServiceMap.getMerchants);
-//                            bundle.putSerializable(CLICKMAP, ServiceMap.getMerchantDetail);
-//                            qStartActivity(ServeActivity.class, bundle);
+                            bundle.putString(TITLE, "周边");
+                            bundle.putSerializable(SERVICEMAP, ServiceMap.getMerchants);
+                            bundle.putSerializable(CLICKMAP, ServiceMap.getMerchantDetail);
+                            qStartActivity(ServeActivity.class, bundle);
                             break;
                         case "电话":
-//                            bundle.putString(TITLE, "电话");
-//                            bundle.putString(WebActivity.URL, AppConstants.COMMON_URL + "/contact.do");
-                            qStartActivity(PhoneActivity.class, bundle);
+                            bundle.putString(TITLE, "电话");
+                            bundle.putString(WebActivity.URL, AppConstants.COMMON_URL + "/contact.do");
+                            qStartActivity(WebActivity.class, bundle);
                             break;
                     }
                 }
@@ -278,26 +272,26 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void getNotices() {
-        Request.startRequest(new BaseParam(), ServiceMap.getNoticeList, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(new BaseParam(), ServiceMap.getNoticeList, mHandler);
     }
 
 
     private void getLinks() {
         LinksParam param = new LinksParam();
         param.type = 1;
-        Request.startRequest(param, ServiceMap.getLinks, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(param, ServiceMap.getLinks, mHandler);
     }
 
 
     private void getEvents() {
         EventListParam param = new EventListParam();
         param.pageNo = 1;
-        param.pageSize = 5;
-        Request.startRequest(param, ServiceMap.getActivityList, mHandler, Request.RequestFeature.BLOCK);
+        param.pageSize = 4;
+        Request.startRequest(param, ServiceMap.getActivityList, mHandler);
     }
 
     private void getRecommend() {
-        Request.startRequest(new BaseParam(), ServiceMap.getRecommendCategorys, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(new BaseParam(), ServiceMap.getRecommendCategorys, mHandler);
     }
 
     @Override
@@ -306,14 +300,12 @@ public class HomeFragment extends BaseFragment {
             LinksResult linksResult = (LinksResult) param.result;
             if (linksResult != null && linksResult.data != null && linksResult.data.links != null) {
                 updataBanner(linksResult.data.links);
-                status++;
             }
 
         } else if (param.key == ServiceMap.getActivityList) {
             EventListResult result = (EventListResult) param.result;
             if (result != null && result.data != null && !ArrayUtils.isEmpty(result.data.activityList)) {
                 setEvent(result.data.activityList);
-                status++;
             }
         } else if (param.key == ServiceMap.getNoticeList) {
             NoticeResult result = (NoticeResult) param.result;
@@ -327,18 +319,16 @@ public class HomeFragment extends BaseFragment {
                         @Override
                         public void onClick(View v) {
                             Bundle bundle = new Bundle();
-                            bundle.putString("content", item.content);
+                            bundle.putString("intro", item.content);
                             qStartActivity(TextViewActivity.class, bundle);
                         }
                     });
                     flipper.addView(view);
                 }
-                status++;
             }
         } else if (param.key == ServiceMap.getRecommendCategorys) {
             FoodRecResult result = (FoodRecResult) param.result;
             updataList(result);
-            status++;
         }
         return false;
     }

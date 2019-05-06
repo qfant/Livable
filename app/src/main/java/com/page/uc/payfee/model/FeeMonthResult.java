@@ -23,7 +23,7 @@ public class FeeMonthResult extends BaseResult {
             public String startdate;
             public String enddate;
             public String monthfee;
-            public double price;
+            public String price;
             public int type;
             public String createtime;
 

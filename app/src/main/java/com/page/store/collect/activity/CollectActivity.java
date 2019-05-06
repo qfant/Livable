@@ -58,6 +58,7 @@ public class CollectActivity extends BaseActivity implements SwipRefreshLayout.O
     private void startRequest(int pager) {
         CollectParam param = new CollectParam();
         param.pageNo = pager;
+        param.pageSize = 7;
         Request.startRequest(param, pager, ServiceMap.getFavList, mHandler);
     }
 

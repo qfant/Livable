@@ -1,6 +1,7 @@
 package com.page.home.activity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.widget.TextView;
 
@@ -9,7 +10,6 @@ import com.framework.domain.param.BaseParam;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.net.ServiceMap;
-import com.framework.utils.html.HtmlUtils;
 import com.page.home.model.ContactResult;
 import com.qfant.wuye.R;
 
@@ -36,14 +36,13 @@ public class TextViewActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         if (myBundle == null) finish();
-        content = myBundle.getString("content");
+        content = myBundle.getString("intro");
         setTitleBar("通知详情", true);
         serviceMap = (ServiceMap) myBundle.getSerializable(SERVICEMAP);
-
         if (TextUtils.isEmpty(content)) {
             Request.startRequest(new BaseParam(), ServiceMap.contact, mHandler, Request.RequestFeature.BLOCK, Request.RequestFeature.CANCELABLE);
         }else {
-            HtmlUtils.getHtml(getContext(),tvContent,content);
+            tvContent.setText(Html.fromHtml(content));
         }
     }
 
@@ -52,7 +51,7 @@ public class TextViewActivity extends BaseActivity {
         if (param.key == ServiceMap.contact) {
             ContactResult result = (ContactResult) param.result;
             if (param.result.bstatus.code == 0) {
-               HtmlUtils.getHtml(getContext(),tvContent,content);
+                tvContent.setText(Html.fromHtml(content));
             }
         }
         return super.onMsgSearchComplete(param);
@@ -61,6 +60,6 @@ public class TextViewActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        myBundle.putString("content", content);
+        myBundle.putString("intro", content);
     }
 }

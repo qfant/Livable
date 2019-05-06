@@ -67,7 +67,7 @@ public class URLImageGetter implements ImageGetter {
         };
 
         targets.add(target);
-        ImageLoad.loadPlaceholder(c, source, target);
+//        ImageLoad.loadPlaceholder(c, source, target);
         return urlDrawable;
     }
 }

@@ -7,7 +7,7 @@ android {
     buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.xfxq.api.client"
+        applicationId "com.zhdj.api.client"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 200
@@ -19,9 +19,9 @@ android {
 //            ,'armeabi-v7a'/*, 'x86'*///,'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
 
-        resValue "string", "app_name", "幸运小区"
-        buildConfigField "String", "hostAppId", "\"cxxyxq001\""
-        buildConfigField "String", "APP_NAME", "\"幸运小区\""
+        resValue "string", "app_name", "掌上智慧党建"
+        buildConfigField "String", "hostAppId", "\"cxzhdj001\""
+        buildConfigField "String", "APP_NAME", "\"掌上智慧党建\""
     }
 
 //    dexOptions {
@@ -46,17 +46,17 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("mjk.jks")
-            storePassword "mjk123"
-            keyAlias "mjk123"
-            keyPassword "mjk123"
+            storeFile file("keystore.jks")
+            storePassword "qifan2013"
+            keyAlias "keystore"
+            keyPassword "qifan2013"
         }
 
         release {
-            storeFile file("mjk.jks")
-            storePassword "mjk123"
-            keyAlias "mjk123"
-            keyPassword "mjk123"
+            storeFile file("keystore.jks")
+            storePassword "qifan2013"
+            keyAlias "keystore"
+            keyPassword "qifan2013"
         }
     }
 
@@ -66,8 +66,8 @@ android {
                     GETUI_APP_ID    : "zrCloUNS3jAGFgkPkG9397",
                     GETUI_APP_KEY   : "Ngq0xOTlzo6vyy0iIBkCw3",
                     GETUI_APP_SECRET: "dgBUwwmp3l8fW8k07OXZK6",
-                    JPUSH_PKGNAME: "com.xfxq.client",
-                    JPUSH_APPKEY : "fecef09e7af4979d9a2cb95c", //JPush上注册的包名对应的// appkey.
+                    JPUSH_PKGNAME: "com.zhdj.api.client",
+                    JPUSH_APPKEY : "b5bc5519a4d2a630de8c71e2", //JPush上注册的包名对应的// appkey.
                     JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
             ]
             zipAlignEnabled false
@@ -85,8 +85,8 @@ android {
                     GETUI_APP_ID    : "lKQLBlK75I8qLrhyXDqAoA",
                     GETUI_APP_KEY   : "f7cpXWtyrW9zzYTQV1bvj9",
                     GETUI_APP_SECRET: "r352zIhlxtAuBktJCwRrn8",
-                    JPUSH_PKGNAME: "com.xfxq.client",
-                    JPUSH_APPKEY : "fecef09e7af4979d9a2cb95c", //JPush上注册的包名对应的// appkey.
+                    JPUSH_PKGNAME: "com.zhdj.api.client",
+                    JPUSH_APPKEY : "b5bc5519a4d2a630de8c71e2", //JPush上注册的包名对应的// appkey.
                     JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可..
 
             ]
@@ -152,6 +152,7 @@ dependencies {
     //banner
 //    compile 'com.xiwenhec:banner:1.0.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
 //不包含微信统计
 //    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //个推

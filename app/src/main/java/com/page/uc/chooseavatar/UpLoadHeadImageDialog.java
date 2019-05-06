@@ -13,7 +13,7 @@ public class UpLoadHeadImageDialog {
         builder = new AlertDialog.Builder(activity);
 //        builder.setTitle("设置头像");
         String[] cities = new String[]{"相机", "相册"};
-        builder.setItems(cities, new android.content.DialogInterface.OnClickListener() {
+        builder.setItems(cities, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 switch (which) {

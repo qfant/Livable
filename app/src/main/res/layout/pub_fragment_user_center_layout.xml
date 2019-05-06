@@ -336,7 +336,6 @@
             android:background="@color/pub_color_gray_line" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_list_6"
             android:layout_width="match_parent"
             android:layout_height="44dp"
@@ -362,13 +361,11 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/pub_color_gray_line" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_list_7"
             android:layout_width="match_parent"
             android:layout_height="44dp"

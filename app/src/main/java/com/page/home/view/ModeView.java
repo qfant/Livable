@@ -35,12 +35,12 @@ public class ModeView extends LinearLayout {
     public ModeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
-        LinearLayout.inflate(getContext(), R.layout.pub_fragment_home_mode_item_layout, this);
+        LinearLayout.inflate(getContext(), R.layout.a_fragment_home_mode_item_layout, this);
         ButterKnife.bind(this);
         GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
                 GridLayout.spec(GridLayout.UNDEFINED, 1f),
                 GridLayout.spec(GridLayout.UNDEFINED, 1f));
-        layoutParams.setMargins(1, 1, 1, 1);
+//        layoutParams.setMargins(1, 1, 1, 1);
         setLayoutParams(layoutParams);
 //        setBackgroundResource(R.drawable.pub_grid_layout_background_selected);
     }

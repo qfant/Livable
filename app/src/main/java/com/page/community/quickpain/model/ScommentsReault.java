@@ -19,11 +19,11 @@ public class ScommentsReault extends BaseResult {
         public List<Datas> datas;
 
         public static class Datas implements Serializable {
-            public String id;
+            public int id;
             public String content;
-            public String customerid;
-            public String refid;
-            public String refuserid;
+            public int customerid;
+            public int refid;
+            public int refuserid;
             public Object refnickname;
             public String headimg;
             public String nickname;

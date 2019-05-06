@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -49,18 +50,18 @@ import com.framework.net.NetworkManager;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.utils.BusinessUtils;
-import com.framework.utils.Dimen;
 import com.framework.utils.Globals;
 import com.framework.utils.HandlerCallbacks;
 import com.framework.utils.IBaseActFrag;
 import com.framework.utils.QLog;
 import com.framework.utils.ToastUtils;
-import com.framework.utils.XStatusBarHelper;
 import com.framework.utils.inject.Injector;
 import com.framework.utils.tuski.Tuski;
 import com.framework.view.QProgressDialogFragment;
 import com.framework.view.SystemBarTintManager;
 import com.framework.view.TitleBar;
+import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.barlibrary.OnKeyboardListener;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.PushService;
 import com.qfant.wuye.R;
@@ -92,6 +93,7 @@ public abstract class BaseActivity extends FragmentActivity implements
     protected QProgressDialogFragment progressDialog;
 
     public static final int REQUEST_CODE_LOGIN = 4096;
+    private ImmersionBar mImmersionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,39 @@ public abstract class BaseActivity extends FragmentActivity implements
         }
         mIsFloat = myBundle.getBoolean("mIsFloat");
         blockTouch = myBundle.getBoolean("blockTouch");
+        setStatusBar();
+    }
+
+    protected void setStatusBar() {
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar
+                .fitsSystemWindows(true)
+                .statusBarColor(R.color.pub_color_theme)
+                .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题，默认为 false，还有一个重载方法，可以指定软键盘 mode
+                .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)  //单独指定软键盘模式
+                .setOnKeyboardListener(new OnKeyboardListener() {    //软键盘监听回调
+                    @Override
+                    public void onKeyboardChange(boolean isPopup, int keyboardHeight) {
+                    }
+                })
+                .init();
+        //状态栏颜色，不写默认透明色
+//                .statusBarDarkFont(true, 0.2f)
+//                    .navigationBarColor((navBar.navBarColor)) //导航栏颜色，不写默认黑色
+//                    .barColor(navBar.navBarColor) //同时自定义状态栏和导航栏颜色，不写默认状态栏为透明色，导航栏为黑色
+//                    .statusBarAlpha(0.2f)  //状态栏透明度，不写默认0.0f
+//                    .navigationBarAlpha(0.4f)  //导航栏透明度，不写默认0.0F
+
+    }
+
+    private void setBarTint() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        }
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.pub_color_theme);
     }
 
     @TargetApi(19)
@@ -127,9 +162,17 @@ public abstract class BaseActivity extends FragmentActivity implements
         super.onStart();
     }
 
-    @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    /**
+     * 返回
+     *
+     * @param view
+     */
+    public void back(View view) {
+        finish();
     }
 
     /**
@@ -154,36 +197,34 @@ public abstract class BaseActivity extends FragmentActivity implements
         return linearLayout;
     }
 
-    public void setContent(View view) {
+    public void setContentView(View view, boolean autoInject) {
+//        final ViewGroup realRoot = genRealRootView();
         mRoot = genRootView();
         mTitleBar = new TitleBar(this);
         mRoot.addView(mTitleBar, -1, -2);
         mRoot.addView(view, -1, -1);
+//        realRoot.addView(mRoot, -1, -1);
         super.setContentView(mRoot);
         mTitleBar.setVisibility(View.GONE);
-//        setStatusBar();
+//        if (autoInject) {
+//            Injector.inject(this);
+//        }
     }
 
-
-    protected void setStatusBar() {
-        if(mTitleBar == null)return;
-        XStatusBarHelper.setDefaultAlpha(0.2f);
-        XStatusBarHelper.setDefaultColor(getResources().getColor(R.color.pub_color_black));
-        XStatusBarHelper.forceFitsSystemWindows(getContext());
-        XStatusBarHelper.immersiveStatusBar(getContext());
-        XStatusBarHelper.setHeightAndPadding(getContext(), mTitleBar);
+    public void setContentView(int layoutResID, boolean autoInject) {
+        final View content = getLayoutInflater().inflate(layoutResID, null);
+        setContentView(content, autoInject);
     }
 
     @Override
     public void setContentView(int layoutResID) {
-        final View content = getLayoutInflater().inflate(layoutResID, null);
-        setContent(content);
+        setContentView(layoutResID, true);
     }
-//
-//    @Override
-//    public void setContentView(View view) {
-//        setContentView(view, true);
-//    }
+
+    @Override
+    public void setContentView(View view) {
+        setContentView(view, true);
+    }
 
     public void openSoftinput(final EditText editText) {
         editText.setFocusable(true);
@@ -423,6 +464,8 @@ public abstract class BaseActivity extends FragmentActivity implements
         }
         Tuski.clearTuskiesForActivity(this);
         NetworkManager.getInstance().cancelTaskByHandler(mHandler);
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();  //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
 
     }
 
@@ -689,7 +732,7 @@ public abstract class BaseActivity extends FragmentActivity implements
                 .inflate(R.layout.tip_dialog, null);
         TextView textView = (TextView) view.findViewById(R.id.textview);// new
         // TextView(this);
-        textView.setText(text);
+        textView.setText(Html.fromHtml(text));
         TextView textView1 = (TextView) view.findViewById(R.id.textview1);// new
         // TextView(this);
         if (TextUtils.isEmpty(title)) {
@@ -698,6 +741,7 @@ public abstract class BaseActivity extends FragmentActivity implements
             textView1.setVisibility(View.VISIBLE);
             textView1.setText(title);
         }
+
         return showTipView(view);
     }
 

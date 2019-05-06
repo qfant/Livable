@@ -15,7 +15,6 @@ public class RepairDetailResult extends BaseResult {
     public static class Data implements Serializable {
         public int id;
         public int status;
-        public String statusCN;
         public String pic;
         public String intro;
         public String phone;
@@ -24,7 +23,5 @@ public class RepairDetailResult extends BaseResult {
         public String comment;
         public String workername;
         public String workerphone;
-        public double price;
-        public String orderno;
     }
 }

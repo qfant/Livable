@@ -111,7 +111,7 @@ public class URLTagHandler implements TagHandler {
                 }
             };
             tecent_chat_image.setTag(target);
-            ImageLoad.loadPlaceholder(context, url, target);
+//            ImageLoad.loadPlaceholder(context, url, target);
         }
     }
 

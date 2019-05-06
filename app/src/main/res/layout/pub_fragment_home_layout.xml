@@ -39,6 +39,7 @@
             android:inAnimation="@anim/in"
             android:outAnimation="@anim/go" />
 
+
         <android.support.v7.widget.GridLayout
             android:id="@+id/gl_mode"
             android:layout_width="match_parent"
@@ -50,7 +51,6 @@
 
         <LinearLayout
             android:id="@+id/ll_711"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/pub_color_white"
@@ -60,6 +60,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:lines="1"
                 android:paddingBottom="14dp"
                 android:paddingLeft="15dp"
                 android:paddingTop="14dp"

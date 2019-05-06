@@ -61,6 +61,7 @@ public class TitleBar extends LinearLayout {
 //        }
 		LayoutInflater.from(context).inflate(R.layout.title_bar, this, true);
 		Injector.inject(this);
+		setBackgroundColor(Color.BLACK);
 	}
 
 	/**

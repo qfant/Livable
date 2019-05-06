@@ -44,7 +44,6 @@
         android:background="@color/pub_color_gray_line" />
 
     <LinearLayout
-        android:visibility="gone"
         android:clickable="true"
         android:id="@+id/ll_pay_wechat"
         android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,7 +37,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.framework.utils.XStatusBarHelper;
 import com.qfant.wuye.R;
 import com.framework.net.NetworkListener;
 import com.framework.net.NetworkManager;
@@ -65,7 +65,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
     private HandlerCallbacks.FragmentCallback hcb;
     protected QProgressDialogFragment progressDialog;
     protected TitleBar mTitleBar;
-    private BaseActivity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,7 +101,8 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
         win.setAttributes(winParams);
     }
 
-    protected View onCreateViewWithTitleBar(LayoutInflater inflater, ViewGroup container, int resource) {
+    protected View onCreateViewWithTitleBar(LayoutInflater inflater,
+                                            ViewGroup container, int resource) {
         final LinearLayout linearLayout = new LinearLayout(this.getContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         mTitleBar = new TitleBar(this.getContext());
@@ -112,22 +112,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
         linearLayout.addView(view, LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         mTitleBar.setVisibility(View.GONE);
-//        setStatusBar();
         return linearLayout;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    protected void setStatusBar() {
-        if (mTitleBar == null) return;
-        XStatusBarHelper.setDefaultAlpha(0.2f);
-        XStatusBarHelper.setDefaultColor(getResources().getColor(R.color.pub_color_black));
-        XStatusBarHelper.forceFitsSystemWindows(getContext());
-        XStatusBarHelper.immersiveStatusBar(getContext());
-        XStatusBarHelper.setHeightAndPadding(getContext(), mTitleBar);
     }
 
     @Override
@@ -344,18 +329,8 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        this.mActivity = (BaseActivity) activity;
-        super.onAttach(activity);
-    }
-
-    @Override
     public BaseActivity getContext() {
-        BaseActivity activity = (BaseActivity) getActivity();
-        if (activity == null) {
-            activity = mActivity;
-        }
-        return activity;
+        return (BaseActivity) getActivity();
     }
 
     @Override
@@ -425,7 +400,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
         }
     }
 
-    private final OnClickListener titleBarClickListener = new OnClickListener() {
+    protected  OnClickListener titleBarClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
 
@@ -434,7 +409,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
             }
         }
 
-        ;
     };
 
     @Override
@@ -548,7 +522,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
                 R.layout.tip_dialog, null);
         TextView textView = (TextView) view.findViewById(R.id.textview);// new
         // TextView(this);
-        textView.setText(text);
+        textView.setText(Html.fromHtml(text));
         TextView textView1 = (TextView) view.findViewById(R.id.textview1);// new
         // TextView(this);
         if (TextUtils.isEmpty(title)) {

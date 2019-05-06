@@ -2,14 +2,10 @@ package com.qfant.wuye;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 
-import com.framework.activity.BaseActivity;
 import com.igexin.sdk.PushManager;
 import com.page.home.activity.MainActivity;
-import com.page.uc.LoginActivity;
-import com.page.uc.UCUtils;
 
 import java.util.concurrent.TimeUnit;
 

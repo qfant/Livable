@@ -5,9 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.framework.rvadapter.holder.BaseViewHolder;
-import com.framework.utils.BusinessUtils;
 import com.framework.utils.DateFormatUtils;
-import com.framework.utils.TextViewUtils;
 import com.page.uc.payfee.model.FeeMonthResult.Data.DatasX;
 import com.qfant.wuye.R;
 
@@ -34,11 +32,8 @@ public class FeeMonthHolder extends BaseViewHolder<DatasX> {
     @Override
     public void onBindViewHolder(BaseViewHolder holder, DatasX data, int position) {
         if (data == null) return;
-        tvTime.setText(String.format("%s - %s", DateFormatUtils.format(data.startdate, "yyyy.MM.dd"), DateFormatUtils.format(data.enddate, "yyyy.MM.dd")));
-        String format = String.format("%s %s元", data.type == 1 ? "在线支付" : "后台收费", BusinessUtils.formatDouble2String(data.price));
-        int color = mContext.getResources().getColor(R.color.pub_color_yellow);
-        CharSequence charSequence = TextViewUtils.genericColorfulText(format, color, BusinessUtils.formatDouble2String(data.price));
-        tvPrice.setText(charSequence);
+        tvTime.setText(String.format("%s - %s 物业费", DateFormatUtils.format(data.startdate, "yyyy.MM"), DateFormatUtils.format(data.enddate, "yyyy.MM")));
+        tvPrice.setText(String.format("%s %s元", data.type == 1 ? "在线支付" : "后台收费", data.price));
     }
 
 }

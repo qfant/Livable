@@ -36,6 +36,7 @@ import com.page.home.model.LinksResult;
 import com.page.home.model.LinksResult.Data.Links;
 import com.page.home.model.ShopRecResult;
 import com.page.home.model.ShopRecResult.Data.ProductList;
+import com.page.store.home.ClassifyActivity;
 import com.page.store.home.model.FoodRecResult;
 import com.page.store.home.model.FoodRecResult.Data.Products;
 import com.page.store.prodetails.activity.ProDetailsActivity;
@@ -103,13 +104,15 @@ public class ShopHomeFragment extends BaseFragment {
         getLinks();
         getHome();
         getRecommend();
+
+
     }
 
 
     private void getLinks() {
         LinksParam param = new LinksParam();
         param.type = 2;
-        Request.startRequest(param, ServiceMap.getLinks, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(param, ServiceMap.getLinks, mHandler);
     }
 
     private void getHome() {
@@ -117,7 +120,7 @@ public class ShopHomeFragment extends BaseFragment {
     }
 
     private void getRecommend() {
-        Request.startRequest(new BaseParam(), ServiceMap.getParticularProducts, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(new BaseParam(), ServiceMap.getParticularProducts, mHandler);
     }
 
     private void setBanner() {

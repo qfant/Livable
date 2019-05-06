@@ -67,7 +67,6 @@
         android:clickable="true"
         android:scaleType="centerCrop"
         android:padding="15dp"
-        android:visibility="gone"
         android:src="@drawable/pub_icon_phone" />
 
 </LinearLayout>

@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -97,7 +96,7 @@ public class AddView extends LinearLayout implements View.OnClickListener {
         llAdd.removeAllViews();
         for (int i = 0; i < number; i++) {
             ImageView imageView = new ImageView(getContext());
-            LinearLayout.LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT);
+            LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT);
             layoutParams.weight = 1;
             int dp7 = Dimen.dpToPx(7);
             layoutParams.setMargins(dp7, dp7, dp7, dp7);
@@ -118,7 +117,7 @@ public class AddView extends LinearLayout implements View.OnClickListener {
         for (int i = 0; i < number; i++) {
             this.imageUrls[i] = imageUrls[i];
             ImageView imageView = new ImageView(getContext());
-            LinearLayout.LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT);
+            LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT);
             layoutParams.weight = 1;
             int dp7 = Dimen.dpToPx(7);
             layoutParams.setMargins(dp7, dp7, dp7, dp7);

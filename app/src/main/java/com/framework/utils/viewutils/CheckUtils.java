@@ -171,7 +171,7 @@ public class CheckUtils {
     public static int runScriptAsRoot(Context ctx, String script) {
         StringBuilder res = new StringBuilder();
         File file = new File(ctx.getCacheDir(), "secopt.sh");
-        CheckUtils.ScriptRunner runner = new CheckUtils.ScriptRunner(file, script, res);
+        ScriptRunner runner = new ScriptRunner(file, script, res);
         runner.start();
 
         try {

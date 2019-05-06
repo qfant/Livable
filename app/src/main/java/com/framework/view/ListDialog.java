@@ -1,11 +1,11 @@
 package com.framework.view;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -18,20 +18,23 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+
+import com.framework.domain.param.BaseParam;
 import com.framework.rvadapter.adapter.MultiAdapter;
 import com.framework.rvadapter.click.OnItemClickListener;
 import com.framework.rvadapter.holder.BaseViewHolder;
 import com.framework.rvadapter.manage.ITypeView;
-import com.page.uc.bean.ComBean;
 import com.qfant.wuye.R;
+import com.page.uc.bean.ComBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by shucheng.qu on 2017/8/7.
  */
 
-public class ListDialog<T> extends AlertDialog implements OnItemClickListener<ComBean> {
+public class ListDialog<T> extends Dialog implements OnItemClickListener<ComBean> {
     private final Context mContext;
     RecyclerView rcvListDialog;
     private int widthPixels;
@@ -41,6 +44,7 @@ public class ListDialog<T> extends AlertDialog implements OnItemClickListener<Co
 
     public ListDialog(@NonNull Context context) {
         this(context, 0);
+
     }
 
 
@@ -55,7 +59,7 @@ public class ListDialog<T> extends AlertDialog implements OnItemClickListener<Co
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             window.setFlags(

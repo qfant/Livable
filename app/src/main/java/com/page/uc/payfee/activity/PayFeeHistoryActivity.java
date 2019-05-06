@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.framework.activity.BaseActivity;
 import com.page.uc.payfee.fragment.FeeListFragment;
 import com.page.uc.payfee.fragment.FeeMonthFragment;
-import com.page.uc.payfee.fragment.OweFragment;
 import com.page.uc.payfee.fragment.WaitFeeFragment;
 import com.qfant.wuye.R;
 
@@ -63,13 +62,11 @@ public class PayFeeHistoryActivity extends BaseActivity {
         fragments.add(new WaitFeeFragment());
         fragments.add(new FeeListFragment());
         fragments.add(new FeeMonthFragment());
-        fragments.add(new OweFragment());
 
         final ArrayList<String> titles = new ArrayList<>();
         titles.add("待缴费");
         titles.add("缴费订单");
         titles.add("已缴费月份");
-        titles.add("历史欠费");
 
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdjustMode(true);

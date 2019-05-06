@@ -82,7 +82,7 @@ public class PayActivity extends BaseActivity {
             goOrderDetail();
         } else if (resp == -2) {
             showToast("取消支付");
-        } else if (resp == -1) {
+        }else if (resp == -1) {
             showToast("支付失败");
         }
         super.onNewIntent(intent);
@@ -124,7 +124,7 @@ public class PayActivity extends BaseActivity {
      * 支付宝支付
      *
      * @param
-     */
+     * */
 
 
     public void airPay(final String payInfo) {
@@ -156,9 +156,9 @@ public class PayActivity extends BaseActivity {
         request.appId = AppConstants.APP_ID;
         request.partnerId = weChatPayResult.data.partnerid;
         request.prepayId = weChatPayResult.data.prepayid;
-        request.packageValue = weChatPayResult.data.packageStr;
-        request.nonceStr = weChatPayResult.data.nonce_str;
-        request.timeStamp = weChatPayResult.data.timestamp;
+        request.packageValue =weChatPayResult.data.packageStr;
+        request.nonceStr =weChatPayResult.data.nonce_str;
+        request.timeStamp =weChatPayResult.data.timestamp;
         request.sign = weChatPayResult.data.sign;
         api.sendReq(request);
     }
@@ -166,9 +166,7 @@ public class PayActivity extends BaseActivity {
     private void goOrderDetail() {
         if (form == -1) {
             qBackToActivity(MainActivity.class, null);
-        } else if (form == -2) {
-
-        } else {
+        }else {
             Bundle bundle = new Bundle();
             bundle.putString("id", order.id + "");
             bundle.putString("orderno", order.orderno + "");
@@ -179,19 +177,15 @@ public class PayActivity extends BaseActivity {
 
     @Override
     public boolean onMsgSearchComplete(NetworkParam param) {
-        if (param.key == ServiceMap.alipayPayProduct || param.key == ServiceMap.alipayPayWuyeFee || param.key == ServiceMap.alipayPayRepair) {
+        if (param.key == ServiceMap.alipayPayProduct || param.key == ServiceMap.alipayPayWuyeFee) {
             if (param.result.bstatus.code == 0) {
                 payResult = (ProductPayResult) param.result;
                 airPay(payResult.data.params);
-            } else {
-                showToast(param.result.bstatus.des);
             }
-        } else if (param.key == ServiceMap.wechatPayProduct || param.key == ServiceMap.wechatPayWuyeFee || param.key == ServiceMap.wechatPayRepair) {
+        } else  if (param.key == ServiceMap.wechatPayProduct || param.key == ServiceMap.wechatPayWuyeFee) {
             if (param.result.bstatus.code == 0) {
                 weChatPayResult = (WeChatPayResult) param.result;
                 weChatPay(weChatPayResult);
-            } else {
-                showToast(param.result.bstatus.des);
             }
         }
         return super.onMsgSearchComplete(param);
@@ -202,16 +196,12 @@ public class PayActivity extends BaseActivity {
         if (payType == 0) {
             if (form == -1) {
                 Request.startRequest(payParam, ServiceMap.alipayPayWuyeFee, mHandler, Request.RequestFeature.BLOCK);
-            } else if (form == -2) {
-                Request.startRequest(payParam, ServiceMap.alipayPayRepair, mHandler, Request.RequestFeature.BLOCK);
             } else {
                 Request.startRequest(payParam, ServiceMap.alipayPayProduct, mHandler, Request.RequestFeature.BLOCK);
             }
         } else {
             if (form == -1) {
                 Request.startRequest(payParam, ServiceMap.wechatPayWuyeFee, mHandler, Request.RequestFeature.BLOCK);
-            } else if (form == -2) {
-                Request.startRequest(payParam, ServiceMap.wechatPayRepair, mHandler, Request.RequestFeature.BLOCK);
             } else {
                 Request.startRequest(payParam, ServiceMap.wechatPayProduct, mHandler, Request.RequestFeature.BLOCK);
             }

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,7 +21,6 @@ import com.framework.view.LineDecoration;
 import com.framework.view.pull.SwipRefreshLayout;
 import com.page.community.quickpain.holder.ContentHolder;
 import com.page.community.quickpain.holder.HeaderHolder;
-import com.page.community.quickpain.model.DelEvaParam;
 import com.page.community.quickpain.model.QpDetailParam;
 import com.page.community.quickpain.model.QpDetailResult;
 import com.page.community.quickpain.model.ScommentParam;
@@ -33,7 +30,6 @@ import com.page.community.quickpain.model.ScommentsReault.Data.Datas;
 import com.qfant.wuye.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +63,7 @@ public class QuickPaiNActivity extends BaseActivity implements SwipRefreshLayout
         if (myBundle == null) {
             finish();
         }
-        setTitleBar("随手拍详情", true);
+        setTitleBar("详情", true);
         datases.add(new Datas());//占位
         id = myBundle.getString(ID);
         setListView();
@@ -98,21 +94,10 @@ public class QuickPaiNActivity extends BaseActivity implements SwipRefreshLayout
     private void startRequestScomment() {
         ScommentParam param = new ScommentParam();
         String content = etScomment.getText().toString();
-        if (TextUtils.isEmpty(content.trim())) {
-            showToast("评论内容不能为空~");
-            return;
-        }
         param.snapshotid = id;
         param.content = content;
         Request.startRequest(param, ServiceMap.scomment, mHandler, Request.RequestFeature.BLOCK);
     }
-
-    public void deletEvaluate(String id, int position) {
-        DelEvaParam param = new DelEvaParam();
-        param.id = id;
-        Request.startRequest(param, position, ServiceMap.deleteScomment, mHandler, Request.RequestFeature.BLOCK);
-    }
-
 
     private void setListView() {
         adapter = new MultiAdapter<Datas>(this, datases).addTypeView(new ITypeView() {
@@ -152,7 +137,7 @@ public class QuickPaiNActivity extends BaseActivity implements SwipRefreshLayout
                     item.hearderData = result.data;
                     datases.remove(0);
                     datases.add(0, item);
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyItemChanged(0);
                 }
             }
         } else if (param.key == ServiceMap.scomments) {
@@ -164,12 +149,13 @@ public class QuickPaiNActivity extends BaseActivity implements SwipRefreshLayout
                     datases.add(temp);
                     datases.addAll(1, result.data.datas);
                     adapter.notifyDataSetChanged();
+
                 } else {
                     adapter.addData(result.data.datas);
                 }
             } else {
                 if ((int) param.ext == 1) {
-//                    showToast("还没有添加评论~");
+                    showToast("还没有添加评论~");
                 } else {
                     showToast("没有更多了");
                 }
@@ -179,14 +165,6 @@ public class QuickPaiNActivity extends BaseActivity implements SwipRefreshLayout
             if (param.result.bstatus.code == 0) {
                 etScomment.setText("");
                 startRequestScomments(1);
-            } else {
-                showToast(param.result.bstatus.des);
-            }
-        } else if (param.key == ServiceMap.deleteScomment) {
-            if (param.result.bstatus.code == 0) {
-                int position = (int) param.ext;
-                adapter.removeData(position);
-                adapter.notifyDataSetChanged();
             } else {
                 showToast(param.result.bstatus.des);
             }

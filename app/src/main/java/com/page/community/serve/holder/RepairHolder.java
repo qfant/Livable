@@ -50,7 +50,7 @@ public class RepairHolder extends BaseViewHolder<RepairList> {
         if (data != null) {
             title.setText(data.intro);
             tvContent.setText(data.address);
-            tvState.setText(data.statusCN);
+            tvState.setText(getState(data.status));
             ImageLoad.loadPlaceholder(mContext, data.pic, ivImage);
         }
     }
@@ -92,10 +92,6 @@ public class RepairHolder extends BaseViewHolder<RepairList> {
                 break;
             case 7:
                 temp += "已评价";
-                color = mContext.getResources().getColor(R.color.pub_color_gray_666);
-                break;
-            case 8:
-                temp += "待支付";
                 color = mContext.getResources().getColor(R.color.pub_color_gray_666);
                 break;
             default:

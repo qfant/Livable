@@ -76,7 +76,7 @@ public class EventActivity extends BaseActivity {
         etTitle.setText(data.title);
         etEventTime.setText(data.time);
         etEventAddress.setText(data.place);
-        etEventPeople.setText(data.persons + "");
+        etEventPeople.setText(data.persons);
         cbLimit.setChecked(data.islimit == 1);
         etEventDetail.setText(data.intro);
     }
@@ -108,12 +108,6 @@ public class EventActivity extends BaseActivity {
             }
             return;
         }
-
-        if (TextUtils.isEmpty(imageUrls[0])) {
-            showToast("请上传照片~");
-            return;
-        }
-
         EventParam param = new EventParam();
         param.pic = imageUrls[0];
         param.title = title;

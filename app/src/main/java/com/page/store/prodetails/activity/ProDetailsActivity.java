@@ -290,7 +290,6 @@ public class ProDetailsActivity extends BaseActivity implements OnItemClickListe
                         product.name = evaluate.product.name;
                         product.num = number;
                         product.pic = evaluate.product.pic1;
-                        product.storage = evaluate.product.storage;
                         ShopCarUtils.getInstance().addProduct(product);
                         refreshTabView();
                         dialog.dismiss();
@@ -310,7 +309,6 @@ public class ProDetailsActivity extends BaseActivity implements OnItemClickListe
                         product.name = evaluate.product.name;
                         product.num = number;
                         product.pic = evaluate.product.pic1;
-                        product.storage = evaluate.product.storage;
                         Bundle bundle = new Bundle();
                         products.add(product);
                         bundle.putSerializable(OrderAffirmActivity.PROLIST, products);

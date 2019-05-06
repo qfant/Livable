@@ -45,7 +45,6 @@ public class RepairActivity extends BaseActivity implements OnItemClickListener<
 
     public static String TITLE = "title";
     public static String SERVICEMAP = "serviceMap";
-    private static final int REQUEST_CODE_REPAIR = 0x01;
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -68,7 +67,7 @@ public class RepairActivity extends BaseActivity implements OnItemClickListener<
         setTitleBar(title, true, getResources().getString(R.string.icon_font_add), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                qStartActivityForResult(ApplyForActivity.class, null, REQUEST_CODE_REPAIR);
+                qStartActivity(ApplyForActivity.class);
             }
         });
         setListView();
@@ -106,6 +105,7 @@ public class RepairActivity extends BaseActivity implements OnItemClickListener<
         if (serviceMap == null) return;
         ServeParam param = new ServeParam();
         param.pageNo = pager;
+        param.pageSize = 7;
         Request.startRequest(param, pager, serviceMap, mHandler);
     }
 
@@ -156,12 +156,4 @@ public class RepairActivity extends BaseActivity implements OnItemClickListener<
         startRequest(++index);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            boolean refresh = data.getBooleanExtra("refresh", false);
-            if (refresh) startRequest(1);
-        }
-    }
 }

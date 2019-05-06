@@ -109,6 +109,7 @@ public class RegisterActivity extends BaseActivity {
                 regiserParam.room_id = comBean4 == null ? 0 : comBean4.id;
                 regiserParam.phone = phone;
                 regiserParam.verificationCode = Integer.parseInt(code);
+
                 Request.startRequest(regiserParam, ServiceMap.quickRegister, mHandler, Request.RequestFeature.BLOCK);
                 break;
         }
@@ -140,7 +141,7 @@ public class RegisterActivity extends BaseActivity {
         } else if (param.key == ServiceMap.quickRegister) {
             RegiserResult regiserResult = (RegiserResult) param.result;
             if (regiserResult.bstatus.code == 0) {
-                qBackToActivity(LoginActivity.class, null);
+                qBackToActivity(AccountLoginActivity.class, null);
                 showToast(regiserResult.bstatus.des);
             }
         }

@@ -21,7 +21,7 @@ public class FeeListResult extends BaseResult {
         public static class DatasX implements Serializable {
             public String orderno;
             public String ordername;
-            public double totalprice;
+            public int totalprice;
             public int status;
             public String statusCN;
             public String paystatus;
@@ -33,7 +33,7 @@ public class FeeListResult extends BaseResult {
                 public String yearmonth;
                 public String startdate;
                 public String enddate;
-                public double price;
+                public int price;
             }
         }
     }
