@@ -130,7 +130,7 @@ public class LoginActivity extends BaseActivity {
         buildSendCodeText();
         LoginSendCodeParam loginSendCodeParam = new LoginSendCodeParam();
         loginSendCodeParam.phone = phone;
-//        Request.startRequest(loginSendCodeParam, ServiceMap.getVerificationCode, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(loginSendCodeParam, ServiceMap.getVerificationCode, mHandler, Request.RequestFeature.BLOCK);
     }
 
     public void buildSendCodeText() {

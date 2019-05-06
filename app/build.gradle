@@ -7,7 +7,7 @@ android {
     buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.xfxq.client"
+        applicationId "com.xfxq.api.client"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 200
@@ -67,7 +67,7 @@ android {
                     GETUI_APP_KEY   : "Ngq0xOTlzo6vyy0iIBkCw3",
                     GETUI_APP_SECRET: "dgBUwwmp3l8fW8k07OXZK6",
                     JPUSH_PKGNAME: "com.xfxq.client",
-                    JPUSH_APPKEY : "73a17a8291c6cbe2e38e88da", //JPush上注册的包名对应的// appkey.
+                    JPUSH_APPKEY : "fecef09e7af4979d9a2cb95c", //JPush上注册的包名对应的// appkey.
                     JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
             ]
             zipAlignEnabled false
@@ -86,7 +86,7 @@ android {
                     GETUI_APP_KEY   : "f7cpXWtyrW9zzYTQV1bvj9",
                     GETUI_APP_SECRET: "r352zIhlxtAuBktJCwRrn8",
                     JPUSH_PKGNAME: "com.xfxq.client",
-                    JPUSH_APPKEY : "73a17a8291c6cbe2e38e88da", //JPush上注册的包名对应的// appkey.
+                    JPUSH_APPKEY : "fecef09e7af4979d9a2cb95c", //JPush上注册的包名对应的// appkey.
                     JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可..
 
             ]
