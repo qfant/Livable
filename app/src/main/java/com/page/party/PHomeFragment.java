@@ -44,6 +44,7 @@ import com.framework.view.circlerefresh.CircleRefreshLayout;
 import com.framework.view.sivin.Banner;
 import com.framework.view.sivin.BannerAdapter;
 import com.page.analysis.AnalysisActivity;
+import com.page.community.serve.model.ServeParam;
 import com.page.home.activity.MainActivity;
 import com.page.home.activity.TextViewActivity;
 import com.page.home.activity.WebActivity;
@@ -55,6 +56,7 @@ import com.page.home.model.NoticeResult;
 import com.page.home.model.NoticeResult.Data.Datas;
 import com.page.information.InfoPlatformActivity;
 import com.page.integral.IntegralActivity;
+import com.page.map.MapActivity;
 import com.page.map.NearbyResult;
 import com.page.map.PointResult;
 import com.page.party.model.NewsResult;
@@ -63,8 +65,10 @@ import com.page.home.view.MRecyclerView;
 import com.page.home.view.ModeView;
 import com.page.partymanger.MeetingListActivity;
 import com.page.political.PoliticalManagerActivity;
+import com.page.political.SignListActivity;
 import com.page.political.SignParam;
 import com.page.political.SignStatusResult;
+import com.page.political.WorkLogListActivity;
 import com.page.store.home.model.FoodRecResult;
 import com.qfant.wuye.R;
 
@@ -123,8 +127,9 @@ public class PHomeFragment extends BaseFragment {
         setRefresh();
         setBanner();
         setModel();
-        setMap();
-//        set711();
+        set711();
+        startRequest(1, "");
+//        setMap();
 //        setFlipper(NoticeResult.Data.mock());
     }
 
@@ -170,17 +175,18 @@ public class PHomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
-        mLocationClient.start();
+//        mMapView.onResume();
+//        mLocationClient.start();
 //        getNotices();
 //        getLinks();
+//        set711();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMapView.onPause();
-        mLocationClient.stop();
+//        mMapView.onPause();
+//        mLocationClient.stop();
     }
 
     private void set711() {
@@ -201,10 +207,10 @@ public class PHomeFragment extends BaseFragment {
         adapter711.setOnItemClickListener(new OnItemClickListener<NewsItem>() {
             @Override
             public void onItemClickListener(View view, NewsItem data, int position) {
-                PNewsInfoActivity.startActivity(getContext(), data.title, data.intro);
+                PNewsInfoActivity.startActivity(getContext(), data.title, data.intro, data.id);
             }
         });
-        adapter711.setData(NewsResult.NewsData.mock());
+//        adapter711.setData(NewsResult.NewsData.mock());
     }
 
     private void initMap() {
@@ -287,13 +293,13 @@ public class PHomeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (mMapView != null) {
-            mMapView.onDestroy();
-        }
-        if (mLocationClient != null) {
-            mLocationClient.stop();
-            mLocationClient = null;
-        }
+//        if (mMapView != null) {
+//            mMapView.onDestroy();
+//        }
+//        if (mLocationClient != null) {
+//            mLocationClient.stop();
+//            mLocationClient = null;
+//        }
     }
 
     @Override
@@ -318,14 +324,17 @@ public class PHomeFragment extends BaseFragment {
 
     private void setModel() {
         ArrayList<HomeModel> list = new ArrayList<>();
-        list.add(new HomeModel("政策宣传", R.drawable.icon_notice));
+//        list.add(new HomeModel("政策宣传", R.drawable.icon_notice));
         list.add(new HomeModel("党建业务", R.drawable.icon_study_count));
         list.add(new HomeModel("工作动态", R.drawable.icon_dynamic_phase));
 //        list.add(new HomeModel("积分管理", R.drawable.icon_party_activity));
 //        list.add(new HomeModel("党员管理", R.drawable.icon_partybranch_introduce));
 //        list.add(new HomeModel("信息平台", R.drawable.icon_three_affairs));
+        list.add(new HomeModel("工作日志", R.drawable.icon_three_affairs));
+        list.add(new HomeModel("考勤记录", R.drawable.icon_partybranch_introduce));
         list.add(new HomeModel("指导员管理", R.drawable.icon_work_guide));
 //        list.add(new HomeModel("统计分析", R.drawable.icon_clear_build));
+        list.add(new HomeModel("党建地图", R.drawable.icon_clear_build));
 
         for (final HomeModel homeModel : list) {
             ModeView itemView = new ModeView(getContext());
@@ -345,6 +354,12 @@ public class PHomeFragment extends BaseFragment {
                         case "工作动态":
                             PNewListActivity.startActivity(getContext(), homeModel.title, 3);
                             break;
+                        case "考勤记录":
+                            qStartActivity(SignListActivity.class);
+                            break;
+                        case "工作日志":
+                            qStartActivity(WorkLogListActivity.class);
+                            break;
                         case "积分管理":
                             qStartActivity(IntegralActivity.class);
                             break;
@@ -362,6 +377,9 @@ public class PHomeFragment extends BaseFragment {
                         case "统计分析":
                             showToast("正在研发中");
 //                            qStartActivity(AnalysisActivity.class);
+                            break;
+                        case "党建地图":
+                            qStartActivity(MapActivity.class);
                             break;
                     }
                 }
@@ -401,6 +419,15 @@ public class PHomeFragment extends BaseFragment {
         });
     }
 
+    private void startRequest(int pager, String keyword) {
+//            if (serviceMap == null) return;
+        ServeParam param = new ServeParam();
+        param.pageNo = pager;
+        param.type = 1;
+        param.keyword = keyword;
+        Request.startRequest(param, pager, ServiceMap.newsList, mHandler, Request.RequestFeature.CANCELABLE, Request.RequestFeature.BLOCK);
+    }
+
     public void getNotices() {
         Request.startRequest(new BaseParam(), ServiceMap.getNoticeList, mHandler);
     }
@@ -433,6 +460,11 @@ public class PHomeFragment extends BaseFragment {
         } else if (param.key == ServiceMap.getRecommendCategorys) {
 //            FoodRecResult result = (FoodRecResult) param.result;
 //            updataList(result);
+        } else if (param.key == ServiceMap.newsList||param.key == ServiceMap.worknewsList) {
+            NewsResult serveResult = (NewsResult) param.result;
+            if (serveResult != null && serveResult.data != null && !ArrayUtils.isEmpty(serveResult.data.newsList)) {
+                adapter711.setData(serveResult.data.newsList);
+            }
         }
         return false;
     }

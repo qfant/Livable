@@ -43,7 +43,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.framework.net.NetworkListener;
 import com.framework.net.NetworkManager;
@@ -55,15 +54,12 @@ import com.framework.utils.HandlerCallbacks;
 import com.framework.utils.IBaseActFrag;
 import com.framework.utils.QLog;
 import com.framework.utils.ToastUtils;
-import com.framework.utils.inject.Injector;
 import com.framework.utils.tuski.Tuski;
 import com.framework.view.QProgressDialogFragment;
 import com.framework.view.SystemBarTintManager;
 import com.framework.view.TitleBar;
 import com.gyf.barlibrary.ImmersionBar;
 import com.gyf.barlibrary.OnKeyboardListener;
-import com.igexin.sdk.PushManager;
-import com.igexin.sdk.PushService;
 import com.qfant.wuye.R;
 
 import java.util.List;

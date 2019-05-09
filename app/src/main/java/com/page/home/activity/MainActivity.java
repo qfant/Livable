@@ -51,7 +51,7 @@ public class MainActivity extends MainTabActivity {
         ButterKnife.bind(this);
         tabLayout = tlTab;
         addTab("首页", PHomeFragment.class, myBundle, R.string.icon_font_home);
-        addTab("党建地图", MapFragment.class, myBundle, R.string.icon_font_manger);
+//        addTab("党建地图", MapFragment.class, myBundle, R.string.icon_font_manger);
         addTab("个人中心", MineFragment.class, myBundle, R.string.icon_font_my);
         onPostCreate();
     }

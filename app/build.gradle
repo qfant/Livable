@@ -19,9 +19,9 @@ android {
 //            ,'armeabi-v7a'/*, 'x86'*///,'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
 
-        resValue "string", "app_name", "掌上智慧党建"
+        resValue "string", "app_name", "掌上智慧非公"
         buildConfigField "String", "hostAppId", "\"cxzhdj001\""
-        buildConfigField "String", "APP_NAME", "\"掌上智慧党建\""
+        buildConfigField "String", "APP_NAME", "\"掌上智慧非公\""
     }
 
 //    dexOptions {
