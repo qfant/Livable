@@ -30,6 +30,7 @@ import com.framework.utils.imageload.ImageLoad;
 import com.framework.view.IFView;
 import com.framework.view.sivin.Banner;
 import com.framework.view.sivin.BannerAdapter;
+import com.page.community.applyfor.activity.ApplyForActivity;
 import com.page.community.eventdetails.activity.EventDetailActivity;
 import com.page.community.eventlist.activity.EventListActivity;
 import com.page.community.eventlist.model.EventListParam;
@@ -38,6 +39,7 @@ import com.page.community.eventlist.model.EventListResult.Data.ActivityList;
 import com.page.community.serve.activity.PhoneActivity;
 import com.page.community.serve.activity.RepairActivity;
 import com.page.community.serve.activity.ServeActivity;
+import com.page.home.QpListActivity;
 import com.page.home.holder.SMHolder;
 import com.page.home.model.HomeModel;
 import com.page.home.model.LinksParam;
@@ -176,14 +178,16 @@ public class HomeFragment extends BaseFragment {
 
     private void setModel() {
         ArrayList<HomeModel> list = new ArrayList<>();
-        list.add(new HomeModel("维修", R.drawable.weixiu));
-//        list.add(new HomeModel("送水", R.drawable.songshui));
+        list.add(new HomeModel("宜居缴费", R.drawable.jiaofei));
+        list.add(new HomeModel("申请维修", R.drawable.weixiu));
 //        list.add(new HomeModel("租房", R.drawable.pub_zufang_icon));
-        list.add(new HomeModel("家政", R.drawable.baojie));
-        list.add(new HomeModel("缴费", R.drawable.jiaofei));
-        list.add(new HomeModel("超市", R.drawable.chaoshi));
+        list.add(new HomeModel("宜居家政", R.drawable.baojie));
+
+        list.add(new HomeModel("附近超市", R.drawable.chaoshi));
 //        list.add(new HomeModel("周边", R.drawable.zhoubian));
-//        list.add(new HomeModel("电话", R.drawable.dianhua));
+        list.add(new HomeModel("小区活动", R.drawable.zhoubian));
+        list.add(new HomeModel("小区送水", R.drawable.songshui));
+//        list.add(new HomeModel("随手拍", R.drawable.dianhua));
 
         for (HomeModel homeModel : list) {
             ModeView itemView = new ModeView(getContext());
@@ -194,17 +198,24 @@ public class HomeFragment extends BaseFragment {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     switch ((String) v.getTag()) {
-                        case "维修":
-                            bundle.putString(TITLE, "维修列表");
-                            bundle.putSerializable(SERVICEMAP, ServiceMap.getMyRepairs);
-                            qStartActivity(RepairActivity.class, bundle);
+                        case "小区活动":
+                            qStartActivity(EventListActivity.class);
                             break;
-                        case "送水":
-                            showToast("暂未开放，敬请期待！");
-//                            bundle.putString(TITLE, "送水商家");
-//                            bundle.putSerializable(SERVICEMAP, ServiceMap.getWaters);
-//                            bundle.putSerializable(CLICKMAP, ServiceMap.getWaterDetail);
-//                            qStartActivity(ServeActivity.class, bundle);
+                        case "随手拍":
+                            qStartActivity(QpListActivity.class, null);
+                            break;
+                        case "申请维修":
+//                            bundle.putString(TITLE, "申请维修列表");
+//                            bundle.putSerializable(SERVICEMAP, ServiceMap.getMyRepairs);
+//                            qStartActivity(RepairActivity.class, bundle);
+                            qStartActivity(ApplyForActivity.class);
+                            break;
+                        case "小区送水":
+//                            showToast("暂未开放，敬请期待！");
+                            bundle.putString(TITLE, "送水商家");
+                            bundle.putSerializable(SERVICEMAP, ServiceMap.getWaters);
+                            bundle.putSerializable(CLICKMAP, ServiceMap.getWaterDetail);
+                            qStartActivity(ServeActivity.class, bundle);
                             break;
                         case "租房":
                             bundle.putString(TITLE, "租房");
@@ -212,19 +223,20 @@ public class HomeFragment extends BaseFragment {
                             bundle.putSerializable(CLICKMAP, ServiceMap.getWashDetail);
                             qStartActivity(ServeActivity.class, bundle);
                             break;
-                        case "家政":
-                            bundle.putString(TITLE, "家政");
+                        case "宜居家政":
+                            bundle.putString(TITLE, "宜居家政");
                             bundle.putSerializable(SERVICEMAP, ServiceMap.getHouses);
                             bundle.putSerializable(CLICKMAP, ServiceMap.getHouseDetail);
                             qStartActivity(ServeActivity.class, bundle);
                             break;
-                        case "缴费":
-                            bundle.putString(TITLE, "缴费");
+                        case "宜居缴费":
+                            bundle.putString(TITLE, "宜居缴费");
                             qStartActivity(PayFeeHistoryActivity.class);
                             break;
-                        case "超市":
+                        case "附近超市":
 //                            showToast("暂未开放，敬请期待！");
-                            ((MainActivity) getContext()).setCurrentTab(1);
+//                            ((MainActivity) getContext()).setCurrentTab(1);
+                            qStartActivity(QpListActivity.class);
                             break;
                         case "周边":
                             showToast("暂未开放，敬请期待！");
@@ -269,7 +281,7 @@ public class HomeFragment extends BaseFragment {
                     Bundle bundle = new Bundle();
                     bundle.putString(TITLE, links.title);
                     bundle.putString(WebActivity.URL, links.link);
-                    qStartActivity(WebActivity.class, bundle);
+//                    qStartActivity(WebActivity.class, bundle);
                 } catch (Exception e) {
 
                 }
@@ -278,14 +290,14 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void getNotices() {
-        Request.startRequest(new BaseParam(), ServiceMap.getNoticeList, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(new BaseParam(), ServiceMap.getNoticeList, mHandler, Request.RequestFeature.CANCELABLE);
     }
 
 
     private void getLinks() {
         LinksParam param = new LinksParam();
         param.type = 1;
-        Request.startRequest(param, ServiceMap.getLinks, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(param, ServiceMap.getLinks, mHandler, Request.RequestFeature.CANCELABLE);
     }
 
 
@@ -293,11 +305,11 @@ public class HomeFragment extends BaseFragment {
         EventListParam param = new EventListParam();
         param.pageNo = 1;
         param.pageSize = 5;
-        Request.startRequest(param, ServiceMap.getActivityList, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(param, ServiceMap.getActivityList, mHandler, Request.RequestFeature.CANCELABLE);
     }
 
     private void getRecommend() {
-        Request.startRequest(new BaseParam(), ServiceMap.getRecommendCategorys, mHandler, Request.RequestFeature.BLOCK);
+        Request.startRequest(new BaseParam(), ServiceMap.getRecommendCategorys, mHandler, Request.RequestFeature.CANCELABLE);
     }
 
     @Override
@@ -359,7 +371,7 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick(R.id.tv_event)
     public void onViewClicked(View view) {
-        qStartActivity(EventListActivity.class);
+//        qStartActivity(EventListActivity.class);
     }
 
     @OnClick(R.id.tv_711_more)

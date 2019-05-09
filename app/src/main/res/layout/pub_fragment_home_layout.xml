@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/pub_color_gray_line"
-            app:columnCount="4"
+            app:columnCount="3"
             app:orientation="horizontal"
             app:rowCount="2" />
 
@@ -74,6 +74,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="更多>"
+                android:visibility="gone"
                 android:textColor="@color/pub_color_blue"
                 android:textSize="@dimen/text_h14" />
 
@@ -116,6 +117,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="更多>"
+                android:visibility="gone"
                 android:textColor="@color/pub_color_blue"
                 android:textSize="@dimen/text_h14" />
 

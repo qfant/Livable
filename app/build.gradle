@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -19,9 +20,9 @@ android {
 //            ,'armeabi-v7a'/*, 'x86'*///,'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
 
-        resValue "string", "app_name", "幸运小区"
+        resValue "string", "app_name", "幸福宜居物业"
         buildConfigField "String", "hostAppId", "\"cxxyxq001\""
-        buildConfigField "String", "APP_NAME", "\"幸运小区\""
+        buildConfigField "String", "APP_NAME", "\"幸福宜居物业\""
     }
 
 //    dexOptions {
