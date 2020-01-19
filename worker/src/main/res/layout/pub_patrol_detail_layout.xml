@@ -25,17 +25,54 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/repair_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pub_color_white"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_ass"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:text="工单类型(必选)"
+            android:textColor="@color/pub_color_red"
+            android:textSize="@dimen/text_h16" />
+
+        <TextView
+            android:id="@+id/repair_text_type_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="请选择"
+            android:paddingBottom="6dp"
+            android:textColor="@color/pub_color_black"
+            android:textSize="@dimen/text_h16" />
+
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_submit"
-        android:layout_below="@+id/ll_ass">
-
+        android:layout_below="@+id/repair_type">
         <LinearLayout
-            android:id="@+id/ll_contain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:background="@color/pub_color_white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_contain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
     <Button

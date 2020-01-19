@@ -3,8 +3,8 @@ package com.page.home.patrol;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,12 +24,15 @@ import com.framework.net.ServiceMap;
 import com.haolb.client.R;
 import com.page.detail.AddView;
 import com.page.home.activity.MainActivity;
-import com.page.home.maintain.RepairResult;
 import com.page.home.patrol.PatrolCheckParam.CheckParam;
 import com.page.home.patrol.PatrolDetailResult.CheckItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chenxi.cui on 2018/4/24.
@@ -43,7 +46,10 @@ public class PatrolDetailActivity extends BaseActivity {
     private List<CheckItem> mCheckItemsList;
     private AddView addView;
     private PatrolDetailResult result;
-
+    @BindView(R.id.repair_text_type_select)
+    TextView repairType;
+    private int repairChooseValue = -1;
+    private int isException = 1;//是否有异常 1 否
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +69,8 @@ public class PatrolDetailActivity extends BaseActivity {
             }
         });
         requestData();
-        addView.setAddNumber(1);
+        ButterKnife.bind(this);
+        addView.setAddNumber(3);
     }
 
     private void requestData() {
@@ -76,9 +83,14 @@ public class PatrolDetailActivity extends BaseActivity {
         if (result == null || result.data == null || result.data.checkItemsList == null) {
             return;
         }
+        if (isException==0 && repairChooseValue == -1 ) {
+            showToast("选择维修类型");
+            return;
+        }
         PatrolCheckParam patrolCheckParam = new PatrolCheckParam();
         patrolCheckParam.checkId = result.data.checkId;
         patrolCheckParam.placeId = result.data.placeId;
+        patrolCheckParam.repairChooseValue=repairChooseValue;
 //        patrolCheckParam.placeId = patrolItem.id;
         patrolCheckParam.itemValues = new ArrayList<>();
         boolean isCanSubmit = true;
@@ -101,6 +113,8 @@ public class PatrolDetailActivity extends BaseActivity {
             return;
         }
         patrolCheckParam.pic = imageUrls[0];
+        patrolCheckParam.pic2 = imageUrls[1];
+        patrolCheckParam.pic3 = imageUrls[2];
         if (!isCanSubmit) {
             Toast.makeText(this, "请完成所有项目检查", Toast.LENGTH_LONG).show();
             return;
@@ -150,15 +164,16 @@ public class PatrolDetailActivity extends BaseActivity {
             final EditText editText = (EditText) view.findViewById(R.id.edit_compat);
             editText.setVisibility(View.VISIBLE);
             editText.setHint("异常备注");
-            item.isCheck = true;
+            item.isCheck = false;
             editText.setVisibility(View.GONE);
             switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (!isChecked) {
-                        editText.setVisibility(View.VISIBLE);
-                    } else {
+                    if (isChecked) {
                         editText.setVisibility(View.GONE);
+                    } else {
+                        isException=0;
+                        editText.setVisibility(View.VISIBLE);
                     }
                     item.isCheck = isChecked;
                     switchCompat1.setChecked(!isChecked);
@@ -168,10 +183,16 @@ public class PatrolDetailActivity extends BaseActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     switchCompat.setChecked(!isChecked);
+                    if (isChecked) {
+                        isException=0;
+                        editText.setVisibility(View.VISIBLE);
+                    } else {
+                        editText.setVisibility(View.GONE);
+                    }
                 }
             });
 
-            switchCompat.setChecked(true);
+//            switchCompat.setChecked(true);
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -189,6 +210,8 @@ public class PatrolDetailActivity extends BaseActivity {
                 }
             });
             textName.setText(item.name);
+
+            textName.setTextColor((item.color!=null && item.color!="")?Color.parseColor(item.color):Color.parseColor("#ff0000"));
             llContain.addView(view);
         }
     }
@@ -197,5 +220,19 @@ public class PatrolDetailActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         addView.onActivityResult(requestCode, resultCode, data);
+    }
+    @OnClick({R.id.repair_text_type_select})
+    public void onClick(View view) {
+        final String[] arr = {"居家报修", "小区报修", "小区卫生", "小区绿化", "小区安全"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setItems(arr, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                repairType.setText(arr[which]);
+                repairChooseValue = which + 1;
+            }
+        });
+        builder.show();
+
     }
 }

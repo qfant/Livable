@@ -1,4 +1,4 @@
-package com.page.home.patrol;
+package com.page.home.maintain;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,7 +19,13 @@ import com.framework.view.LineDecoration;
 import com.framework.view.pull.SwipRefreshLayout;
 import com.haolb.client.R;
 import com.page.home.activity.MainActivity;
-import com.page.home.patrol.PatrolPlacesResult.Patrol;
+import com.page.home.maintain.RepairResult.Data.RepairList;
+import com.page.home.maintain.details.activity.DetailsActivity;
+import com.page.home.patrol.PatrolListAdapter1;
+import com.page.home.patrol.PatrolListParam;
+import com.page.home.patrol.PatrolListResult;
+import com.page.home.patrol.PatrolPlacesResult;
+import com.page.home.patrol.UnPatrolListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,56 +34,53 @@ import butterknife.ButterKnife;
  * Created by chenxi.cui on 2018/4/24.
  */
 
-public class PatrolListActivity extends BaseActivity implements SwipRefreshLayout.OnRefreshListener, BaseQuickAdapter.OnItemClickListener {
-    private PatrolListAdapter1 adapter;
-    private Patrol patrol;
-    @BindView(R.id.list)
-    RecyclerView rvList;
-    @BindView(R.id.refreshLayout)
+public class UnPatrolActivity extends BaseActivity implements SwipRefreshLayout.OnRefreshListener, BaseQuickAdapter.OnItemClickListener {
+    private UnPatrolListAdapter adapter;
+    @BindView(R.id.unPatrolList)
+    RecyclerView unPatrolList;
+    @BindView(R.id.unPatrolRefreshLayout)
     SwipRefreshLayout srlDownRefresh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pub_activity_patrol_list_layout1);
+        setContentView(R.layout.pub_activity_un_patrol);
         ButterKnife.bind(this);
-        patrol = (Patrol) myBundle.getSerializable(Patrol.TAG);
-        if (patrol == null) {
-            finish();
-            return;
-        }
-        setTitleBar("巡查设备", true);
-        adapter = new PatrolListAdapter1(R.layout.pub_patrol_list_item_view);
-        rvList.addItemDecoration(new LineDecoration(this));
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvList.setAdapter(adapter);
+        setTitleBar("未按时巡查设备", true);
+        adapter = new UnPatrolListAdapter(R.layout.pub_un_patrol_list_item_view);
+        unPatrolList.addItemDecoration(new LineDecoration(this));
+        unPatrolList.setLayoutManager(new LinearLayoutManager(getContext()));
+        unPatrolList.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
         srlDownRefresh.setOnRefreshListener(this);
         startRequest(1);
     }
     private void startRequest(int page) {
         PatrolListParam param = new PatrolListParam();
-        param.qrcode = patrol.serialnum;
         param.pageNo = page;
         if (page == 1) {
-            Request.startRequest(param, page, ServiceMap.getProjectChecksByQrcode, mHandler, Request.RequestFeature.BLOCK, Request.RequestFeature.CANCELABLE);
+            Request.startRequest(param, page, ServiceMap.unPatrolList, mHandler, Request.RequestFeature.BLOCK, Request.RequestFeature.CANCELABLE);
         } else {
-            Request.startRequest(param, page, ServiceMap.getProjectChecksByQrcode, mHandler);
+            Request.startRequest(param, page, ServiceMap.unPatrolList, mHandler);
         }
     }
+//    private void requestData() {
+//        MaintainHistoryParam patrolListParam = new MaintainHistoryParam();
+//        Request.startRequest(patrolListParam, ServiceMap.unPatrolList, mHandler, Request.RequestFeature.BLOCK);
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        super.onItemClick(adapterView, view, i, l);
-        PatrolListResult.PatrolItem item = adapter.getItem(i);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(PatrolListResult.PatrolItem.TAG, item);
-        qStartActivity(PatrolDetailActivity.class, bundle);
+//        super.onItemClick(adapterView, view, i, l);
+//        RepairList item = adapter.getItem(i);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id", item.id);
+//        qStartActivity(DetailsActivity.class, bundle);
     }
 
     @Override
     public boolean onMsgSearchComplete(NetworkParam param) {
         super.onMsgSearchComplete(param);
-        if (param.key == ServiceMap.getProjectChecks || param.key == ServiceMap.getProjectChecksByQrcode) {
+        if (param.key == ServiceMap.unPatrolList) {
             if (param.result.bstatus.code == 0) {
                 PatrolListResult result = (PatrolListResult) param.result;
                 if (result != null && result.data != null && !ArrayUtils.isEmpty(result.data.checkList)) {
@@ -105,22 +108,18 @@ public class PatrolListActivity extends BaseActivity implements SwipRefreshLayou
     }
 
     @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+    }
+
+    @Override
     public void onRefresh(int index) {
-         startRequest(1);
+
     }
 
     @Override
     public void onLoad(int index) {
         startRequest(index++);
-
-    }
-
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        PatrolListResult.PatrolItem item = (PatrolListResult.PatrolItem) adapter.getItem(position);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(PatrolListResult.PatrolItem.TAG, item);
-        qStartActivity(PatrolDetailActivity.class, bundle);
     }
 }
 

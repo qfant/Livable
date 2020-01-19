@@ -10,5 +10,5 @@ public class PatrolListParam extends BaseParam {
 //    public int placeId;
     public String qrcode;
     public int pageNo = 1;
-    public int pageSize = 100;
+    public int pageSize = 20;
 }

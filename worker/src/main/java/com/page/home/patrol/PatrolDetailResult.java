@@ -21,6 +21,7 @@ public class PatrolDetailResult extends BaseResult {
     public static class CheckItem implements Serializable {
         public static final String TAG = CheckItem.class.getSimpleName();
         public String name;
+        public String color;
         public int id;
         public boolean isCheck;
         public String remark;

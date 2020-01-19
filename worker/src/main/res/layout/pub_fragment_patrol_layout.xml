@@ -149,4 +149,29 @@
             android:textColor="@color/pub_color_black"
             android:textSize="18dp" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_un_patrol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:background="@drawable/pub_bg_cornner_grey"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="未按时巡查设备"
+            android:textColor="@color/pub_color_black"
+            android:textSize="16dp" />
+
+        <com.framework.view.IFView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_font_right_arrows"
+            android:textColor="@color/pub_color_black"
+            android:textSize="18dp" />
+    </LinearLayout>
 </LinearLayout>

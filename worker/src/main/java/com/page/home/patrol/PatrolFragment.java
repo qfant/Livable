@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.framework.activity.BaseFragment;
 import com.haolb.client.R;
+import com.page.home.maintain.UnPatrolActivity;
 import com.page.uc.UserInfoActivity;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -26,7 +27,7 @@ public class PatrolFragment extends BaseFragment {
     private View llHistory;
     private View llDD;
     private View llHistoryTour;
-
+    private View unPatrol;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +54,9 @@ public class PatrolFragment extends BaseFragment {
         llOperation.setOnClickListener(this);
         llHistory.setOnClickListener(this);
         llHistoryTour.setOnClickListener(this);
+
+        unPatrol = getView().findViewById(R.id.ll_un_patrol);
+        unPatrol.setOnClickListener(this);
     }
 
     @Override
@@ -70,6 +74,8 @@ public class PatrolFragment extends BaseFragment {
         } else if (v.equals(llDD)) {
             Intent intent = new Intent(getContext(), CaptureActivity.class);
             startActivityForResult(intent, REQUEST_CODE_DD);
+        }else if (v.equals(unPatrol)){
+            qStartActivity(UnPatrolActivity.class);
         }
     }
 

@@ -31,6 +31,8 @@ public class DetailResult extends BaseResult {
         public int evaluate;
         public String address;
         public String endpic;
+        public String endpic2;
+        public String endpic3;
         public boolean isShowButton;
     }
 }

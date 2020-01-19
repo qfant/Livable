@@ -9,5 +9,7 @@ import com.framework.domain.param.BaseParam;
 public class DetailParam extends BaseParam {
     public int id;
     public String endpic;
+    public String endpic2;
+    public String endpic3;
     public String repaircontent;
 }

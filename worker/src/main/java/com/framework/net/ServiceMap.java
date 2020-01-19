@@ -42,6 +42,7 @@ public enum ServiceMap implements Enums.IType {
     getPlaceDetail("/getPlaceDetail.do", PatrolTourResult.class),
     submitPatrol("/submitPatrol.do", BaseResult.class),
     patrolList("/patrolList.do", PatrolTourHistoryResult.class),
+    unPatrolList("/getUnPatrolChecks.do", PatrolListResult.class),
     submitRepair("/submitRepair.do", BaseResult.class),//add维修
     submitRepairList("/submitRepairList.do", RepairResult.class),//add维修
     getProjectChecks("/getProjectChecks.do", PatrolListResult.class),

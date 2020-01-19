@@ -36,18 +36,30 @@ public class MaintainFragment extends BaseFragment {
             }
         });
         llSendMaintain = getView().findViewById(R.id.ll_send_maintain);
+        llSendMaintain.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                qStartActivity(MaintainSendActivity.class);
+            }
+        });
         llHistory = getView().findViewById(R.id.ll_history);
-        llSendMaintain.setOnClickListener(this);
-        llHistory.setOnClickListener(this);
+        llHistory.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                qStartActivity(MaintainHistoryActivity.class);
+            }
+        });
+
     }
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
-        if (v.equals(llHistory)) {
-            qStartActivity(MaintainHistoryActivity.class);
-        } else if (v.equals(llSendMaintain)) {
-            qStartActivity(MaintainSendActivity.class);
-        }
+//        super.onClick(v);
+//        if (v.equals(llHistory)) {
+//            qStartActivity(MaintainHistoryActivity.class);
+//        } else if (v.equals(llSendMaintain)) {
+//            qStartActivity(MaintainSendActivity.class);
+//        }
     }
 }
